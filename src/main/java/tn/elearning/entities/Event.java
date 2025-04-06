@@ -1,46 +1,42 @@
 package tn.elearning.entities;
 
-
-
-
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "events")
 public class Event {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NotBlank
-    @Column(nullable = false)
+    private int id;
     private String titre;
-
-    @Column(columnDefinition = "TEXT")
     private String description;
+    private LocalDateTime dateDebut;
+    private LocalDateTime dateFin;
+    private String type;
+    private String localisation;
+    private double prix;
+    private String image;
+    private List<Participation> participations; // Relation One-to-Many avec Participation
 
-    @NotNull
-    private LocalDateTime date;
+    // Constructeurs
+    public Event() {}
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private List<Participation> participations = new ArrayList<>();
-
-    public Event() {
-        this.participations = new ArrayList<>();
+    public Event(int id, String titre, String description, LocalDateTime dateDebut, 
+                LocalDateTime dateFin, String type, String localisation, double prix, String image) {
+        this.id = id;
+        this.titre = titre;
+        this.description = description;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.type = type;
+        this.localisation = localisation;
+        this.prix = prix;
+        this.image = image;
     }
 
-    public Integer getId() {
+    // Getters et Setters
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -60,12 +56,52 @@ public class Event {
         this.description = description;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getDateDebut() {
+        return dateDebut;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setDateDebut(LocalDateTime dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public LocalDateTime getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(LocalDateTime dateFin) {
+        this.dateFin = dateFin;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getLocalisation() {
+        return localisation;
+    }
+
+    public void setLocalisation(String localisation) {
+        this.localisation = localisation;
+    }
+
+    public double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public List<Participation> getParticipations() {
@@ -76,13 +112,18 @@ public class Event {
         this.participations = participations;
     }
 
-    public void addParticipation(Participation participation) {
-        participations.add(participation);
-        participation.setEvent(this);
-    }
-
-    public void removeParticipation(Participation participation) {
-        participations.remove(participation);
-        participation.setEvent(null);
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", titre='" + titre + '\'' +
+                ", description='" + description + '\'' +
+                ", dateDebut=" + dateDebut +
+                ", dateFin=" + dateFin +
+                ", type='" + type + '\'' +
+                ", localisation='" + localisation + '\'' +
+                ", prix=" + prix +
+                ", image='" + image + '\'' +
+                '}';
     }
 }
