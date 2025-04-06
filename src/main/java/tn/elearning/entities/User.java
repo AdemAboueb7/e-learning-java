@@ -1,74 +1,54 @@
 package tn.elearning.entities;
 
-
-
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Email;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NotBlank
-    @Email
-    @Column(unique = true, nullable = false)
+    private int id;
     private String email;
-
-    @NotBlank
     private String nom;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
+    private String phonenumber;
     private String matiere;
     private Integer experience;
     private String reason;
-
-    @NotBlank
     private String password;
-
-    @ElementCollection
-    @CollectionTable(name = "user_roles")
-    private List<String> roles = new ArrayList<>();
-
+    private String roles;
     private String work;
-    private String address;
+    private String adress;
     private String pref;
+    private boolean isActive;
+    private Module module; // Relation avec Module (idmatiere_id)
+    private List<Article> articles; // Relation One-to-Many avec Article
+    private List<Comment> comments; // Relation One-to-Many avec Comment
+    private List<Participation> participations; // Relation One-to-Many avec Participation
+    private List<Paiement> paiements; // Relation One-to-Many avec Paiement
 
-    @Column(name = "is_active")
-    private boolean isActive = false;
+    // Constructeurs
+    public User() {}
 
-    @ManyToOne
-    @JoinColumn(name = "id_matiere")
-    private Module idMatiere;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Article> articles = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Participation> participations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Paiement> paiements = new ArrayList<>();
-
-    public User() {
+    public User(int id, String email, String nom, String phonenumber, String matiere, 
+                Integer experience, String reason, String password, String roles, 
+                String work, String adress, String pref, boolean isActive) {
+        this.id = id;
+        this.email = email;
+        this.nom = nom;
+        this.phonenumber = phonenumber;
+        this.matiere = matiere;
+        this.experience = experience;
+        this.reason = reason;
+        this.password = password;
+        this.roles = roles;
+        this.work = work;
+        this.adress = adress;
+        this.pref = pref;
+        this.isActive = isActive;
     }
 
-    public Integer getId() {
+    // Getters et Setters
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -88,12 +68,12 @@ public class User {
         this.nom = nom;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhonenumber() {
+        return phonenumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 
     public String getMatiere() {
@@ -128,11 +108,11 @@ public class User {
         this.password = password;
     }
 
-    public List<String> getRoles() {
+    public String getRoles() {
         return roles;
     }
 
-    public void setRoles(List<String> roles) {
+    public void setRoles(String roles) {
         this.roles = roles;
     }
 
@@ -144,12 +124,12 @@ public class User {
         this.work = work;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAdress() {
+        return adress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
     public String getPref() {
@@ -168,20 +148,12 @@ public class User {
         isActive = active;
     }
 
-    public Module getIdMatiere() {
-        return idMatiere;
+    public Module getModule() {
+        return module;
     }
 
-    public void setIdMatiere(Module idMatiere) {
-        this.idMatiere = idMatiere;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void setModule(Module module) {
+        this.module = module;
     }
 
     public List<Article> getArticles() {
@@ -190,6 +162,14 @@ public class User {
 
     public void setArticles(List<Article> articles) {
         this.articles = articles;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public List<Participation> getParticipations() {
@@ -206,5 +186,23 @@ public class User {
 
     public void setPaiements(List<Paiement> paiements) {
         this.paiements = paiements;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", nom='" + nom + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", matiere='" + matiere + '\'' +
+                ", experience=" + experience +
+                ", reason='" + reason + '\'' +
+                ", roles='" + roles + '\'' +
+                ", work='" + work + '\'' +
+                ", adress='" + adress + '\'' +
+                ", pref='" + pref + '\'' +
+                ", isActive=" + isActive +
+                '}';
     }
 }
