@@ -1,39 +1,27 @@
 package tn.elearning.entities;
 
-
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "modules")
 public class Module {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NotBlank
-    @Column(nullable = false)
+    private int id;
     private String nom;
+    private List<User> users; // Relation One-to-Many avec User
+    private List<Chapitre> chapitres; // Relation One-to-Many avec Chapitre
 
-    @OneToMany(mappedBy = "module", cascade = CascadeType.ALL)
-    private List<Chapitre> chapitres = new ArrayList<>();
+    // Constructeurs
+    public Module() {}
 
-    @OneToMany(mappedBy = "idMatiere")
-    private List<User> users = new ArrayList<>();
-
-    public Module() {
-        this.chapitres = new ArrayList<>();
-        this.users = new ArrayList<>();
+    public Module(int id, String nom) {
+        this.id = id;
+        this.nom = nom;
     }
 
-    public Integer getId() {
+    // Getters et Setters
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -45,14 +33,6 @@ public class Module {
         this.nom = nom;
     }
 
-    public List<Chapitre> getChapitres() {
-        return chapitres;
-    }
-
-    public void setChapitres(List<Chapitre> chapitres) {
-        this.chapitres = chapitres;
-    }
-
     public List<User> getUsers() {
         return users;
     }
@@ -61,13 +41,19 @@ public class Module {
         this.users = users;
     }
 
-    public void addChapitre(Chapitre chapitre) {
-        chapitres.add(chapitre);
-        chapitre.setModule(this);
+    public List<Chapitre> getChapitres() {
+        return chapitres;
     }
 
-    public void removeChapitre(Chapitre chapitre) {
-        chapitres.remove(chapitre);
-        chapitre.setModule(null);
+    public void setChapitres(List<Chapitre> chapitres) {
+        this.chapitres = chapitres;
+    }
+
+    @Override
+    public String toString() {
+        return "Module{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                '}';
     }
 }
