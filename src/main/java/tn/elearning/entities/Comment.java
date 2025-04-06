@@ -1,45 +1,48 @@
 package tn.elearning.entities;
 
-
-
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "comments")
 public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NotBlank
-    @Column(columnDefinition = "TEXT")
-    private String contenu;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "article_id", nullable = false)
+    private int id;
     private Article article;
+    private int userId;
+    private String contenu;
+    private LocalDateTime createdAt;
 
     public Comment() {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Integer getId() {
+    public Comment(int id, Article article, int userId, String contenu, LocalDateTime createdAt) {
+        this.id = id;
+        this.article = article;
+        this.userId = userId;
+        this.contenu = contenu;
+        this.createdAt = createdAt;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getContenu() {
@@ -58,19 +61,13 @@ public class Comment {
         this.createdAt = createdAt;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", contenu='" + contenu + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }
