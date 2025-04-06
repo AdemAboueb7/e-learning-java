@@ -1,72 +1,46 @@
 package tn.elearning.entities;
 
+import java.time.LocalDate;
 
-
-
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "paiements")
 public class Paiement {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
+    private Abonnement abonnement; // Relation Many-to-One avec Abonnement
+    private User user; // Relation Many-to-One avec User
+    private String nom;
+    private String email;
+    private String typeCarte;
+    private String numCarte;
+    private LocalDate dateExpiration;
+    private int cvv;
+    private double montant;
+    private LocalDate datePaiement;
 
-    @NotNull
-    @Positive
-    private Double montant;
+    // Constructeurs
+    public Paiement() {}
 
-    @NotNull
-    private LocalDateTime date;
-
-    private String status;
-
-    @ManyToOne
-    @JoinColumn(name = "id_abonnement", nullable = false)
-    private Abonnement abonnement;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    public Paiement() {
-        this.date = LocalDateTime.now();
+    public Paiement(int id, Abonnement abonnement, User user, String nom, String email, 
+                   String typeCarte, String numCarte, LocalDate dateExpiration, 
+                   int cvv, double montant, LocalDate datePaiement) {
+        this.id = id;
+        this.abonnement = abonnement;
+        this.user = user;
+        this.nom = nom;
+        this.email = email;
+        this.typeCarte = typeCarte;
+        this.numCarte = numCarte;
+        this.dateExpiration = dateExpiration;
+        this.cvv = cvv;
+        this.montant = montant;
+        this.datePaiement = datePaiement;
     }
 
-    public Integer getId() {
+    // Getters et Setters
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public Double getMontant() {
-        return montant;
-    }
-
-    public void setMontant(Double montant) {
-        this.montant = montant;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Abonnement getAbonnement() {
@@ -83,5 +57,84 @@ public class Paiement {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTypeCarte() {
+        return typeCarte;
+    }
+
+    public void setTypeCarte(String typeCarte) {
+        this.typeCarte = typeCarte;
+    }
+
+    public String getNumCarte() {
+        return numCarte;
+    }
+
+    public void setNumCarte(String numCarte) {
+        this.numCarte = numCarte;
+    }
+
+    public LocalDate getDateExpiration() {
+        return dateExpiration;
+    }
+
+    public void setDateExpiration(LocalDate dateExpiration) {
+        this.dateExpiration = dateExpiration;
+    }
+
+    public int getCvv() {
+        return cvv;
+    }
+
+    public void setCvv(int cvv) {
+        this.cvv = cvv;
+    }
+
+    public double getMontant() {
+        return montant;
+    }
+
+    public void setMontant(double montant) {
+        this.montant = montant;
+    }
+
+    public LocalDate getDatePaiement() {
+        return datePaiement;
+    }
+
+    public void setDatePaiement(LocalDate datePaiement) {
+        this.datePaiement = datePaiement;
+    }
+
+    @Override
+    public String toString() {
+        return "Paiement{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", email='" + email + '\'' +
+                ", typeCarte='" + typeCarte + '\'' +
+                ", numCarte='" + numCarte + '\'' +
+                ", dateExpiration=" + dateExpiration +
+                ", cvv=" + cvv +
+                ", montant=" + montant +
+                ", datePaiement=" + datePaiement +
+                '}';
     }
 }
