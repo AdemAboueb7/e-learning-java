@@ -4,7 +4,9 @@ import tn.elearning.tools.MyDataBase;
 
 public class main {
     public static void main(String[] args) {
-        MyDataBase db = new MyDataBase();
+        MyDataBase db = MyDataBase.getInstance();
+        MyDataBase db1 = MyDataBase.getInstance();
+        MyDataBase db2 = MyDataBase.getInstance();
 
     }
 }
