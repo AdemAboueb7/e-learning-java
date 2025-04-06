@@ -1,47 +1,32 @@
 package tn.elearning.entities;
 
-
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "abonnements")
 public class Abonnement {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NotBlank
-    @Column(nullable = false)
+    private int id;
     private String type;
-
-    @NotNull
-    @Positive
-    private Double prix;
-
-    @Column(length = 1000)
+    private double prix;
+    private String duree;
     private String description;
+    private List<Paiement> paiements; // Relation One-to-Many avec Paiement
 
-    @Positive
-    private Integer duree;
+    // Constructeurs
+    public Abonnement() {}
 
-    @OneToMany(mappedBy = "abonnement", cascade = CascadeType.ALL)
-    private List<Paiement> paiements = new ArrayList<>();
-
-    public Abonnement() {
-        this.paiements = new ArrayList<>();
+    public Abonnement(int id, String type, double prix, String duree, String description) {
+        this.id = id;
+        this.type = type;
+        this.prix = prix;
+        this.duree = duree;
+        this.description = description;
     }
 
-    public Integer getId() {
+    // Getters et Setters
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -53,12 +38,20 @@ public class Abonnement {
         this.type = type;
     }
 
-    public Double getPrix() {
+    public double getPrix() {
         return prix;
     }
 
-    public void setPrix(Double prix) {
+    public void setPrix(double prix) {
         this.prix = prix;
+    }
+
+    public String getDuree() {
+        return duree;
+    }
+
+    public void setDuree(String duree) {
+        this.duree = duree;
     }
 
     public String getDescription() {
@@ -69,14 +62,6 @@ public class Abonnement {
         this.description = description;
     }
 
-    public Integer getDuree() {
-        return duree;
-    }
-
-    public void setDuree(Integer duree) {
-        this.duree = duree;
-    }
-
     public List<Paiement> getPaiements() {
         return paiements;
     }
@@ -85,13 +70,14 @@ public class Abonnement {
         this.paiements = paiements;
     }
 
-    public void addPaiement(Paiement paiement) {
-        paiements.add(paiement);
-        paiement.setAbonnement(this);
-    }
-
-    public void removePaiement(Paiement paiement) {
-        paiements.remove(paiement);
-        paiement.setAbonnement(null);
+    @Override
+    public String toString() {
+        return "Abonnement{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", prix=" + prix +
+                ", duree='" + duree + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
