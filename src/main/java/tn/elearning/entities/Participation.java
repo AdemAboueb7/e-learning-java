@@ -1,11 +1,8 @@
 package tn.elearning.entities;
 
-
-
-
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
-
 
 @Entity
 @Table(name = "participations")
@@ -22,9 +19,16 @@ public class Participation {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    private String status;
+    private LocalDateTime createdAt;
 
     public Participation() {
+    }
+
+    public Participation(Integer id, Event event, User user, LocalDateTime createdAt) {
+        this.id = id;
+        this.event = event;
+        this.user = user;
+        this.createdAt = createdAt;
     }
 
     public Integer getId() {
@@ -51,11 +55,19 @@ public class Participation {
         this.user = user;
     }
 
-    public String getStatus() {
-        return status;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Participation{" +
+                "id=" + id +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }
