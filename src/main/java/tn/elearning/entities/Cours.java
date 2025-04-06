@@ -1,43 +1,40 @@
 package tn.elearning.entities;
 
-
-
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "cours")
 public class Cours {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NotBlank
-    @Column(nullable = false)
+    private int id;
+    private Chapitre chapitre; // Relation Many-to-One avec Chapitre
     private String titre;
-
-    @Column(name = "contenu_fichier")
     private String contenuFichier;
-
-    @ManyToOne
-    @JoinColumn(name = "chapitre_id", nullable = false)
-    private Chapitre chapitre;
-
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public Cours() {
-        this.updatedAt = LocalDateTime.now();
+    // Constructeurs
+    public Cours() {}
+
+    public Cours(int id, Chapitre chapitre, String titre, String contenuFichier, LocalDateTime updatedAt) {
+        this.id = id;
+        this.chapitre = chapitre;
+        this.titre = titre;
+        this.contenuFichier = contenuFichier;
+        this.updatedAt = updatedAt;
     }
 
-    public Integer getId() {
+    // Getters et Setters
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public Chapitre getChapitre() {
+        return chapitre;
+    }
+
+    public void setChapitre(Chapitre chapitre) {
+        this.chapitre = chapitre;
     }
 
     public String getTitre() {
@@ -56,19 +53,21 @@ public class Cours {
         this.contenuFichier = contenuFichier;
     }
 
-    public Chapitre getChapitre() {
-        return chapitre;
-    }
-
-    public void setChapitre(Chapitre chapitre) {
-        this.chapitre = chapitre;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Cours{" +
+                "id=" + id +
+                ", titre='" + titre + '\'' +
+                ", contenuFichier='" + contenuFichier + '\'' +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }
