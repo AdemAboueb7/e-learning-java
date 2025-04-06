@@ -17,6 +17,7 @@ public class Module {
     @NotBlank
     @Column(nullable = false)
     private String nom;
+    private String description;
 
     @OneToMany(mappedBy = "module", cascade = CascadeType.ALL)
     private List<Chapitre> chapitres = new ArrayList<>();
@@ -61,6 +62,14 @@ public class Module {
         this.users = users;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public void addChapitre(Chapitre chapitre) {
         chapitres.add(chapitre);
         chapitre.setModule(this);
@@ -69,5 +78,16 @@ public class Module {
     public void removeChapitre(Chapitre chapitre) {
         chapitres.remove(chapitre);
         chapitre.setModule(null);
+    }
+
+    @Override
+    public String toString() {
+        return "Module{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", description='" + description + '\'' +
+                ", chapitres=" + chapitres +
+                ", users=" + users +
+                '}';
     }
 }

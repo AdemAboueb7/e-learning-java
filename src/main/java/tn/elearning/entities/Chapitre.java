@@ -22,6 +22,7 @@ public class Chapitre {
     @ManyToOne
     @JoinColumn(name = "module_id", nullable = false)
     private Module module;
+    private String description;
 
     @OneToMany(mappedBy = "chapitre", cascade = CascadeType.ALL)
     private List<Cours> cours = new ArrayList<>();
@@ -70,5 +71,24 @@ public class Chapitre {
     public void removeCours(Cours cours) {
         this.cours.remove(cours);
         cours.setChapitre(null);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Chapitre{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", module=" + module +
+                ", description='" + description + '\'' +
+                ", cours=" + cours +
+                '}';
     }
 }

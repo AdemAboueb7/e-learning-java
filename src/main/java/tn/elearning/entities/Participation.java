@@ -6,6 +6,8 @@ package tn.elearning.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "participations")
@@ -22,7 +24,7 @@ public class Participation {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    private String status;
+    private LocalDateTime created_at;
 
     public Participation() {
     }
@@ -51,11 +53,20 @@ public class Participation {
         this.user = user;
     }
 
-    public String getStatus() {
-        return status;
-    }
+   public LocalDateTime getCreated_at() {
+        return created_at;
+   }
+   public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
+   }
 
-    public void setStatus(String status) {
-        this.status = status;
+    @Override
+    public String toString() {
+        return "Participation{" +
+                "id=" + id +
+                ", event=" + event +
+                ", user=" + user +
+                ", created_at=" + created_at +
+                '}';
     }
 }

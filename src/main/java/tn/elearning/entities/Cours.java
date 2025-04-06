@@ -27,6 +27,7 @@ public class Cours {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    private String description;
 
     public Cours() {
         this.updatedAt = LocalDateTime.now();
@@ -70,5 +71,25 @@ public class Cours {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Cours{" +
+                "id=" + id +
+                ", titre='" + titre + '\'' +
+                ", contenuFichier='" + contenuFichier + '\'' +
+                ", chapitre=" + chapitre +
+                ", updatedAt=" + updatedAt +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

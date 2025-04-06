@@ -12,6 +12,8 @@ import java.util.List;
 @Entity
 @Table(name = "abonnements")
 public class Abonnement {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -36,6 +38,14 @@ public class Abonnement {
     public Abonnement() {
         this.paiements = new ArrayList<>();
     }
+    public Abonnement(String type, Double prix, String description, Integer duree) {
+        this.type = type;
+        this.prix = prix;
+        this.description = description;
+        this.duree = duree;
+        this.paiements = new ArrayList<>();
+    }
+
 
     public Integer getId() {
         return id;
@@ -94,4 +104,15 @@ public class Abonnement {
         paiements.remove(paiement);
         paiement.setAbonnement(null);
     }
+    @Override
+    public String toString() {
+        return "Abonnement{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", prix=" + prix +
+                ", description='" + description + '\'' +
+                ", duree=" + duree +
+                '}';
+    }
+
 }

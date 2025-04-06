@@ -21,8 +21,8 @@ public class Paiement {
     private Double montant;
 
     @NotNull
-    private LocalDateTime date;
-
+    private LocalDateTime date_paiement;
+    private String stripe_session_id;
     private String status;
 
     @ManyToOne
@@ -34,7 +34,7 @@ public class Paiement {
     private User user;
 
     public Paiement() {
-        this.date = LocalDateTime.now();
+        this.date_paiement = LocalDateTime.now();
     }
 
     public Integer getId() {
@@ -54,11 +54,11 @@ public class Paiement {
     }
 
     public LocalDateTime getDate() {
-        return date;
+        return date_paiement;
     }
 
     public void setDate(LocalDateTime date) {
-        this.date = date;
+        this.date_paiement = date;
     }
 
     public String getStatus() {
@@ -83,5 +83,25 @@ public class Paiement {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getStripe_session_id() {
+        return stripe_session_id;
+    }
+    public void setStripe_session_id(String stripe_session_id) {
+        this.stripe_session_id = stripe_session_id;
+    }
+
+    @Override
+    public String toString() {
+        return "Paiement{" +
+                "id=" + id +
+                ", montant=" + montant +
+                ", date_paiement=" + date_paiement +
+                ", stripe_session_id='" + stripe_session_id + '\'' +
+                ", status='" + status + '\'' +
+                ", abonnement=" + abonnement +
+                ", user=" + user +
+                '}';
     }
 }

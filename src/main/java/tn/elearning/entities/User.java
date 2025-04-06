@@ -207,4 +207,28 @@ public class User {
     public void setPaiements(List<Paiement> paiements) {
         this.paiements = paiements;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", nom='" + nom + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", matiere='" + matiere + '\'' +
+                ", experience=" + experience +
+                ", reason='" + reason + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                ", work='" + work + '\'' +
+                ", address='" + address + '\'' +
+                ", pref='" + pref + '\'' +
+                ", isActive=" + isActive +
+                ", idMatiere=" + idMatiere +
+                ", comments=" + comments +
+                ", articles=" + articles +
+                ", participations=" + participations +
+                ", paiements=" + paiements +
+                '}';
+    }
 }
