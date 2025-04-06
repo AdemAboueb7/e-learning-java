@@ -1,7 +1,5 @@
 package tn.elearning.entities;
 
-
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -24,13 +22,17 @@ public class Article {
     private String contenu;
 
     @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP) // ou DATE si vous voulez seulement la date
     private LocalDateTime createdAt;
 
     private String image;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(name = "user_id")
+    private Integer userId;
+
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
@@ -80,12 +82,20 @@ public class Article {
         this.image = image;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public List<Comment> getComments() {
@@ -104,5 +114,18 @@ public class Article {
     public void removeComment(Comment comment) {
         comments.remove(comment);
         comment.setArticle(null);
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", titre='" + titre + '\'' +
+                ", contenu='" + contenu + '\'' +
+                ", createdAt=" + createdAt +
+                ", image='" + image + '\'' +
+                ", userId=" + userId +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }
