@@ -1,49 +1,29 @@
 package tn.elearning.entities;
 
-
-
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "chapitres")
 public class Chapitre {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NotBlank
-    @Column(nullable = false)
+    private int id;
+    private Module module; // Relation Many-to-One avec Module
     private String nom;
+    private List<Cours> cours; // Relation One-to-Many avec Cours
 
-    @ManyToOne
-    @JoinColumn(name = "module_id", nullable = false)
-    private Module module;
+    // Constructeurs
+    public Chapitre() {}
 
-    @OneToMany(mappedBy = "chapitre", cascade = CascadeType.ALL)
-    private List<Cours> cours = new ArrayList<>();
-
-    public Chapitre() {
-        this.cours = new ArrayList<>();
+    public Chapitre(int id, Module module, String nom) {
+        this.id = id;
+        this.module = module;
+        this.nom = nom;
     }
 
-    public Integer getId() {
+    // Getters et Setters
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
     }
 
     public Module getModule() {
@@ -54,6 +34,14 @@ public class Chapitre {
         this.module = module;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
     public List<Cours> getCours() {
         return cours;
     }
@@ -62,13 +50,11 @@ public class Chapitre {
         this.cours = cours;
     }
 
-    public void addCours(Cours cours) {
-        this.cours.add(cours);
-        cours.setChapitre(this);
-    }
-
-    public void removeCours(Cours cours) {
-        this.cours.remove(cours);
-        cours.setChapitre(null);
+    @Override
+    public String toString() {
+        return "Chapitre{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                '}';
     }
 }
