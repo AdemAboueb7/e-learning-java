@@ -1,12 +1,13 @@
 package tn.elearning.services;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IServices<T> {
-    void ajouter(T t);
-    void supprimerParId(int id);
-    void supprimer(T t);
-    void modifier(int id);
-    List<T> recuperer();
-    T recupererParId(int id);
+    void ajouter(T t) throws SQLException;
+
+    void supprimer(T t) throws SQLException;
+    void modifier(int id)throws SQLException;;
+    List<T> recuperer() throws SQLException;
+    T recupererParId(int id) throws SQLException;
 }

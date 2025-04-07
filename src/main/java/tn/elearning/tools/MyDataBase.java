@@ -26,6 +26,7 @@ public class MyDataBase {
     }
 
     public Connection getCnx() {
+
         return cnx;
     }
 }
