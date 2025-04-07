@@ -8,13 +8,14 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.time.LocalDateTime;
+import java.sql.Date;
 
 @Entity
 @Table(name = "paiements")
 public class Paiement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @NotNull
     @Positive
@@ -23,7 +24,7 @@ public class Paiement {
     @NotNull
     private LocalDateTime date_paiement;
     private String stripe_session_id;
-    private String status;
+
 
     @ManyToOne
     @JoinColumn(name = "id_abonnement", nullable = false)
@@ -33,15 +34,24 @@ public class Paiement {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Paiement() {
-        this.date_paiement = LocalDateTime.now();
+    public Paiement(int id,Double montant,Abonnement abonnement, LocalDateTime date_paiement,User user) {
+        this.id = id;
+        this.montant = montant;
+        this.abonnement = abonnement;
+        this.date_paiement = date_paiement;
+        this.user = user;
+
     }
 
-    public Integer getId() {
+    public Paiement() {
+
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -61,13 +71,6 @@ public class Paiement {
         this.date_paiement = date;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public Abonnement getAbonnement() {
         return abonnement;
@@ -99,7 +102,6 @@ public class Paiement {
                 ", montant=" + montant +
                 ", date_paiement=" + date_paiement +
                 ", stripe_session_id='" + stripe_session_id + '\'' +
-                ", status='" + status + '\'' +
                 ", abonnement=" + abonnement +
                 ", user=" + user +
                 '}';

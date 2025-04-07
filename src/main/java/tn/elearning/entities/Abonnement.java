@@ -29,8 +29,8 @@ public class Abonnement {
     @Column(length = 1000)
     private String description;
 
-    @Positive
-    private Integer duree;
+
+    private String duree;
 
     @OneToMany(mappedBy = "abonnement", cascade = CascadeType.ALL)
     private List<Paiement> paiements = new ArrayList<>();
@@ -38,7 +38,7 @@ public class Abonnement {
     public Abonnement() {
         this.paiements = new ArrayList<>();
     }
-    public Abonnement(String type, Double prix, String description, Integer duree) {
+    public Abonnement(String type, Double prix, String description, String duree) {
         this.type = type;
         this.prix = prix;
         this.description = description;
@@ -79,11 +79,11 @@ public class Abonnement {
         this.description = description;
     }
 
-    public Integer getDuree() {
+    public String getDuree() {
         return duree;
     }
 
-    public void setDuree(Integer duree) {
+    public void setDuree(String duree) {
         this.duree = duree;
     }
 
