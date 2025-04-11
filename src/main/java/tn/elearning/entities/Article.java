@@ -1,69 +1,65 @@
 package tn.elearning.entities;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "articles")
 public class Article {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NotBlank
-    @Column(nullable = false)
-    private String titre;
-
-    @NotBlank
-    @Column(columnDefinition = "TEXT")
-    private String contenu;
-
-    @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP) // ou DATE si vous voulez seulement la date
+    private int id;
+    private String title;
+    private String content;
+    private String category;
     private LocalDateTime createdAt;
-
+    private int userId; // Changement : utilisation de l'ID au lieu de l'objet User
     private String image;
-
-    @Column(name = "user_id")
-    private Integer userId;
-
-    @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedAt;
+    private List<Comment> comments;
 
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();
+    // Constructeurs
+    public Article() {}
 
-    public Article() {
-        this.createdAt = LocalDateTime.now();
-        this.comments = new ArrayList<>();
+    public Article(int id, String title, String content, String category,
+                   LocalDateTime createdAt, int userId, String image, LocalDateTime updatedAt) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.category = category;
+        this.createdAt = createdAt;
+        this.userId = userId;
+        this.image = image;
+        this.updatedAt = updatedAt;
     }
 
-    public Integer getId() {
+    // Getters et Setters
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getTitre() {
-        return titre;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getContenu() {
-        return contenu;
+    public String getContent() {
+        return content;
     }
 
-    public void setContenu(String contenu) {
-        this.contenu = contenu;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -74,20 +70,20 @@ public class Article {
         this.createdAt = createdAt;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 
     public LocalDateTime getUpdatedAt() {
@@ -106,25 +102,16 @@ public class Article {
         this.comments = comments;
     }
 
-    public void addComment(Comment comment) {
-        comments.add(comment);
-        comment.setArticle(this);
-    }
-
-    public void removeComment(Comment comment) {
-        comments.remove(comment);
-        comment.setArticle(null);
-    }
-
     @Override
     public String toString() {
         return "Article{" +
                 "id=" + id +
-                ", titre='" + titre + '\'' +
-                ", contenu='" + contenu + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", category='" + category + '\'' +
                 ", createdAt=" + createdAt +
-                ", image='" + image + '\'' +
                 ", userId=" + userId +
+                ", image='" + image + '\'' +
                 ", updatedAt=" + updatedAt +
                 '}';
     }
