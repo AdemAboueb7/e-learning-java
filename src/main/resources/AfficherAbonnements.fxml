@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.AfficherAbonnementsController">
+   <children>
+      <TableView fx:id="abonnementtable" layoutX="108.0" layoutY="70.0" prefHeight="226.0" prefWidth="418.0">
+        <columns>
+          <TableColumn id="idtable" fx:id="idtable" prefWidth="75.0" text="Id " />
+          <TableColumn id="typetable" fx:id="typetable" prefWidth="75.0" text="Type " />
+            <TableColumn id="prixtable" fx:id="prixtable" prefWidth="75.0" text="Prix" />
+            <TableColumn id="dureetable" fx:id="dureetable" prefWidth="86.39996337890625" text="Durée" />
+            <TableColumn id="descriptiontable" fx:id="desctable" prefWidth="106.4000244140625" text="Description" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
