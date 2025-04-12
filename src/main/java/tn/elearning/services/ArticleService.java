@@ -17,8 +17,6 @@ public class ArticleService implements IServices<Article> {
 
     @Override
     public void ajouter(Article article) throws SQLException {
-<<<<<<< HEAD
-=======
         if (cnx == null || cnx.isClosed()) {
             cnx = MyDataBase.getInstance().getCnx();
             if (cnx == null) {
@@ -26,19 +24,12 @@ public class ArticleService implements IServices<Article> {
             }
         }
         
->>>>>>> ba39580 (Ajout des dernières modifications)
         String sql = "INSERT INTO article (title, content, category, user_id, image, created_at) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = cnx.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, article.getTitle());
             ps.setString(2, article.getContent());
             ps.setString(3, article.getCategory());
             ps.setInt(4, article.getUserId());
-<<<<<<< HEAD
-            ps.setString(5, article.getImage());
-            ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));
-
-            ps.executeUpdate();
-=======
             ps.setString(5, article.getImage() != null ? article.getImage() : "default.jpg");
             ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));
 
@@ -48,16 +39,11 @@ public class ArticleService implements IServices<Article> {
             
             int rowsAffected = ps.executeUpdate();
             System.out.println("Rows affected: " + rowsAffected);
->>>>>>> ba39580 (Ajout des dernières modifications)
 
             // Récupérer l'ID généré
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 article.setId(rs.getInt(1));
-<<<<<<< HEAD
-            }
-            System.out.println("Article ajouté avec succès");
-=======
                 System.out.println("Generated ID: " + article.getId());
             }
             System.out.println("Article ajouté avec succès");
@@ -65,7 +51,6 @@ public class ArticleService implements IServices<Article> {
             System.err.println("SQL Error: " + e.getMessage());
             e.printStackTrace();
             throw e;
->>>>>>> ba39580 (Ajout des dernières modifications)
         }
     }
 
