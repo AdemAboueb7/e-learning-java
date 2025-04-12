@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Circle?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="root" stylesheets="@alpha-education.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.VoirArticlesController">
+   <children>
+      <VBox layoutX="10.0" layoutY="10.0" prefHeight="700.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <!-- Header with Alpha Education Logo -->
+            <HBox alignment="CENTER_LEFT" prefHeight="70.0" styleClass="header">
+               <children>
+                  <HBox styleClass="logo-container">
+                     <children>
+                        <Circle radius="15" styleClass="logo-circle-vert" />
+                        <Circle radius="15" styleClass="logo-circle-orange" />
+                        <Label styleClass="logo-text" text="Alpha Education">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label styleClass="header-label" text="Articles">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER_RIGHT" spacing="15.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <TextField fx:id="searchField" prefHeight="40.0" prefWidth="300.0" promptText="Rechercher des articles..." styleClass="search-field" />
+                        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="Filtrer par :" />
+                              <Button fx:id="allCategoryBtn" mnemonicParsing="false" onAction="#filterByAllCategories" styleClass="button-secondary" text="Tout" />
+                              <Button fx:id="latestBtn" mnemonicParsing="false" onAction="#filterByLatest" styleClass="button-secondary" text="Récents" />
+                           </children>
+                        </HBox>
+                        <Button mnemonicParsing="false" onAction="#refreshArticles" styleClass="button-secondary" text="Actualiser">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#navigateToAddArticle" text="+ Nouvel Article" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </HBox>
+            
+            <!-- Decorative star element -->
+            <HBox>
+               <children>
+                  <javafx.scene.shape.SVGPath content="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" 
+                     styleClass="star-decoration" scaleX="0.7" scaleY="0.7">
+                     <HBox.margin>
+                        <Insets left="40.0" top="-15.0" />
+                     </HBox.margin>
+                  </javafx.scene.shape.SVGPath>
+               </children>
+            </HBox>
+            
+            <!-- Category pills -->
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
+               <children>
+                  <Label styleClass="section-title" text="Catégories populaires :">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" prefHeight="40.0" vbarPolicy="NEVER" HBox.hgrow="ALWAYS">
+                     <content>
+                        <HBox fx:id="categoryPillsContainer" alignment="CENTER_LEFT" prefHeight="40.0" spacing="10.0" />
+                     </content>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ScrollPane>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            
+            <!-- Articles GridView -->
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="580.0" VBox.vgrow="ALWAYS">
+               <content>
+                  <FlowPane fx:id="articlesContainer" hgap="20.0" prefWidth="960.0" vgap="20.0">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                  </FlowPane>
+               </content>
+            </ScrollPane>
+            
+            <!-- Footer -->
+            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" styleClass="header">
+               <children>
+                  <Label text="© 2023 Alpha Education" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane> 
