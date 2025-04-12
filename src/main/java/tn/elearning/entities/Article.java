@@ -29,6 +29,15 @@ public class Article {
         this.updatedAt = updatedAt;
     }
 
+<<<<<<< HEAD
+=======
+    public Article(String category, String content, String title) {
+        this.category = category;
+        this.content = content;
+        this.title = title;
+    }
+
+>>>>>>> ba39580 (Ajout des dernières modifications)
     // Getters et Setters
     public int getId() {
         return id;
