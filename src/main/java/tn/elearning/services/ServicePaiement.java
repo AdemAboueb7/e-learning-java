@@ -39,8 +39,8 @@ public class ServicePaiement implements IServices<Paiement> {
 
 
     @Override
-    public void modifier(int id) throws SQLException {
-        String sql = "update paiement set montant=120.5 where id =" + id;
+    public void modifier(Paiement p) throws SQLException {
+        String sql = "update paiement set montant=120.5 where id =" + p.getId();
         Statement st = this.cnx.createStatement();
         st.executeUpdate(sql);
         System.out.println("Paiement modifié");
