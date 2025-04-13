@@ -6,7 +6,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import tn.elearning.entities.Abonnement;
 import tn.elearning.services.ServiceAbonnement;
 
@@ -17,6 +20,20 @@ import java.util.ResourceBundle;
 
 public class AfficherAbonnementsController implements Initializable {
     ServiceAbonnement sa=new ServiceAbonnement();
+    @FXML
+    private TextArea descab;
+
+    @FXML
+    private TextField dureeab;
+
+    @FXML
+    private TextField idab;
+
+    @FXML
+    private TextField prixab;
+
+    @FXML
+    private TextField typeab;
 
     @FXML
     private TableView<Abonnement> abonnementtable;
@@ -55,5 +72,57 @@ public class AfficherAbonnementsController implements Initializable {
             System.out.println(e.getMessage());
         }
         }
+    @FXML
+    void abonnementSelect(MouseEvent event) {
+        Abonnement selected = abonnementtable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            idab.setText(String.valueOf(selected.getId()));
+            typeab.setText(selected.getType());
+            prixab.setText(String.valueOf(selected.getPrix()));
+            descab.setText(selected.getDescription());
+            dureeab.setText(selected.getDuree());
+        }
 
-}
+    }
+    @FXML
+    void modifier(MouseEvent event) {
+        Abonnement selected = abonnementtable.getSelectionModel().getSelectedItem();
+
+        if (selected != null) {
+            try {
+                selected.setType(typeab.getText());
+                selected.setPrix(Double.parseDouble(prixab.getText()));
+                selected.setDescription(descab.getText());
+                selected.setDuree(dureeab.getText());
+                sa.modifier(selected);
+                abonnementtable.refresh();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+            @FXML
+            void supprimer (MouseEvent event){
+                Abonnement selected = abonnementtable.getSelectionModel().getSelectedItem();
+                if (selected != null) {
+                    try {
+                        sa.supprimer(selected);
+                        abonnementtable.getItems().remove(selected);
+                        idab.clear();
+                        typeab.clear();
+                        prixab.clear();
+                        descab.clear();
+                        dureeab.clear();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                        ;
+                    }
+                } else {
+                    System.out.println("Aucun abonnement sélectionné.");
+                }
+
+            }
+
+        }

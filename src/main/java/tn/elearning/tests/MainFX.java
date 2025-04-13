@@ -22,14 +22,7 @@ public class MainFX extends Application {
     primaryStage.setScene(scene);
     primaryStage.setTitle("AjouterAbonnement");
     primaryStage.show();
-        Stage secondStage = new Stage();
-        FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("/AfficherAbonnements.fxml"));
-        Parent root2 = fxmlLoader2.load();
-        Scene scene2 = new Scene(root2);
 
-        secondStage.setScene(scene2);
-        secondStage.setTitle("AfficherAbonnements");
-        secondStage.show();
 
     }
 }

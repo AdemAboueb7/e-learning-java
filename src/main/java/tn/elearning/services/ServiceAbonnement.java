@@ -32,11 +32,17 @@ public class ServiceAbonnement implements IServices<Abonnement> {
     }
 
     @Override
-    public void modifier(int id) throws SQLException {
-        String sql = "update personne set prix=100.0 where id =" + id;
-        Statement st = this.cnx.createStatement();
-        st.executeUpdate(sql);
-        System.out.println("abonnement modifié");
+    public void modifier(Abonnement a) throws SQLException {
+        String sql = "UPDATE abonnement SET type = ?, prix = ?, description = ?, duree = ? WHERE id = ?";
+        PreparedStatement ps = this.cnx.prepareStatement(sql);
+        ps.setString(1, a.getType());
+        ps.setDouble(2, a.getPrix());
+        ps.setString(3, a.getDescription());
+        ps.setString(4, a.getDuree());
+        ps.setInt(5, a.getId());
+
+        ps.executeUpdate();
+        System.out.println("Abonnement modifié avec succès");
 
     }
 
