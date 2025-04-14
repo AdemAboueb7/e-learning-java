@@ -68,7 +68,7 @@ public class ServiceAbonnement implements IServices<Abonnement> {
 
     @Override
     public Abonnement recupererParId(int id) throws SQLException {
-        String sql = "SELECT * FROM abonnements WHERE id = ?";
+        String sql = "SELECT * FROM abonnement WHERE id = ?";
         PreparedStatement ps = cnx.prepareStatement(sql);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
