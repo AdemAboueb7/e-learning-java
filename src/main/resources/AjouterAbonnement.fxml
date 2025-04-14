@@ -8,38 +8,37 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.AjouterAbonnementController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@alpha-education.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.AjouterAbonnementController">
    <children>
-      <Text layoutX="199.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter un abonnement" textAlignment="CENTER">
+      <Text fill="#e76b29" layoutX="207.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter un abonnement" textAlignment="CENTER">
          <font>
-            <Font size="21.0" />
+            <Font name="Microsoft Sans Serif" size="24.0" />
          </font>
       </Text>
-      <TextField fx:id="typeabonnement" layoutX="247.0" layoutY="74.0" prefHeight="26.0" prefWidth="200.0" />
+      <TextField fx:id="typeabonnement" layoutX="247.0" layoutY="61.0" prefHeight="26.0" prefWidth="200.0" />
       <TextField fx:id="prixabonnement" layoutX="247.0" layoutY="111.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="dureeabonnement" layoutX="247.0" layoutY="145.0" prefHeight="26.0" prefWidth="200.0" />
-      <Label layoutX="169.0" layoutY="77.0" text="Type">
+      <TextField fx:id="dureeabonnement" layoutX="247.0" layoutY="157.0" prefHeight="26.0" prefWidth="200.0" />
+      <Label layoutX="165.0" layoutY="68.0" text="Type">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="169.0" layoutY="114.0" text="Prix">
+      <Label layoutX="168.0" layoutY="118.0" text="Prix">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="170.0" layoutY="148.0" text="Durée">
+      <Label layoutX="161.0" layoutY="157.0" text="Durée">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="169.0" layoutY="183.0" text="Description">
+      <Label layoutX="164.0" layoutY="209.0" text="Description">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextArea fx:id="descabonnement" layoutX="247.0" layoutY="183.0" prefHeight="90.0" prefWidth="200.0" />
-      <Button fx:id="ajout" layoutX="274.0" layoutY="295.0" mnemonicParsing="false" onAction="#ajouter" text="Ajouter" />
+      <TextArea fx:id="descabonnement" layoutX="247.0" layoutY="201.0" prefHeight="90.0" prefWidth="200.0" />
+      <Button fx:id="ajout" layoutX="274.0" layoutY="325.0" mnemonicParsing="false" onAction="#ajouter" text="Ajouter" />
    </children>
 </AnchorPane>

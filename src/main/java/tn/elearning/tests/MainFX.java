@@ -16,12 +16,17 @@ public class MainFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/AjouterAbonnement.fxml"));
-    Parent root = fxmlLoader.load();
-    Scene scene = new Scene(root);
-    primaryStage.setScene(scene);
-    primaryStage.setTitle("AjouterAbonnement");
-    primaryStage.show();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cardAbonnements.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("AjouterAbonnement");
+            primaryStage.show();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
 
 
     }
