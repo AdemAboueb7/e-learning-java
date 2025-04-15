@@ -49,8 +49,7 @@ public class User {
     @JoinColumn(name = "id_matiere")
     private Module idMatiere;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Article> articles = new ArrayList<>();
@@ -62,6 +61,22 @@ public class User {
     private List<Paiement> paiements = new ArrayList<>();
 
     public User() {
+    }
+
+    public User(Integer id,String nom,String email,String phoneNumber,String password,String matiere,int experience,String reason,String work,String address,String pref,List<String> roles) {
+        this.id = id;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.matiere = matiere;
+        this.experience = experience;
+        this.reason = reason;
+        this.work = work;
+        this.address = address;
+        this.pref = pref;
+        this.roles=roles;
+        this.nom=nom;
+
     }
 
     public Integer getId() {
@@ -79,6 +94,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
 
     public String getNom() {
         return nom;
@@ -176,13 +192,7 @@ public class User {
         this.idMatiere = idMatiere;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
 
     public List<Article> getArticles() {
         return articles;
@@ -225,7 +235,7 @@ public class User {
                 ", pref='" + pref + '\'' +
                 ", isActive=" + isActive +
                 ", idMatiere=" + idMatiere +
-                ", comments=" + comments +
+
                 ", articles=" + articles +
                 ", participations=" + participations +
                 ", paiements=" + paiements +
