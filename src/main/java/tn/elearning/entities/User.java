@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,9 +50,6 @@ public class User {
     private Module idMatiere;
 
 
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Article> articles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Participation> participations = new ArrayList<>();
@@ -194,13 +191,7 @@ public class User {
 
 
 
-    public List<Article> getArticles() {
-        return articles;
-    }
 
-    public void setArticles(List<Article> articles) {
-        this.articles = articles;
-    }
 
     public List<Participation> getParticipations() {
         return participations;
@@ -235,8 +226,6 @@ public class User {
                 ", pref='" + pref + '\'' +
                 ", isActive=" + isActive +
                 ", idMatiere=" + idMatiere +
-
-                ", articles=" + articles +
                 ", participations=" + participations +
                 ", paiements=" + paiements +
                 '}';

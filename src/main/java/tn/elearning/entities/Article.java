@@ -3,6 +3,7 @@ package tn.elearning.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 public class Article {
     private int id;
     private String title;
