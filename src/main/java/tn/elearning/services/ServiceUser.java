@@ -99,5 +99,24 @@ public class ServiceUser implements IServices<User> {
 
         return users;
     }
+    public User findByEmailAndPassword(String email, String password) throws SQLException {
+        String query = "SELECT * FROM user WHERE email = ? AND password = ?";
+        PreparedStatement ps = cnx.prepareStatement(query); // ⚠️ pas `connection`, mais `cnx` comme défini
+        ps.setString(1, email);
+        ps.setString(2, password);
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setNom(rs.getString("nom"));
+            user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
+            // Tu peux aussi set d'autres champs si tu veux
+            return user;
+        }
+        return null;
+    }
+
 }
 
