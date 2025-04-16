@@ -15,13 +15,12 @@ public class ServicePaiement implements IServices<Paiement> {
 
     @Override
     public void ajouter(Paiement paiement) throws SQLException {
-        String sql = "insert into paiement(id,montant,id_abonnement_id,date_paiement,userid_id) values(?,?,?,?,?)";
+        String sql = "insert into paiement(montant,id_abonnement_id,date_paiement,userid_id) values(?,?,?,?)";
         PreparedStatement ps = this.cnx.prepareStatement(sql);
-        ps.setInt(1, paiement.getId());
-        ps.setDouble(2, paiement.getMontant());
-        ps.setInt(3, paiement.getAbonnement().getId());
-        ps.setTimestamp(4, Timestamp.valueOf(paiement.getDate()));
-        ps.setInt(5, paiement.getUser().getId());
+        ps.setDouble(1, paiement.getMontant());
+        ps.setInt(2, paiement.getAbonnement().getId());
+        ps.setTimestamp(3, Timestamp.valueOf(paiement.getDate()));
+        ps.setInt(4, paiement.getUser().getId());
 
         ps.executeUpdate();
         System.out.println("paiement ajouté");

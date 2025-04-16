@@ -1,9 +1,5 @@
 package tn.elearning.entities;
 
-
-
-
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -34,8 +30,7 @@ public class Paiement {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Paiement(int id,Double montant,Abonnement abonnement, LocalDateTime date_paiement,User user) {
-        this.id = id;
+    public Paiement(Double montant,Abonnement abonnement, LocalDateTime date_paiement,User user) {
         this.montant = montant;
         this.abonnement = abonnement;
         this.date_paiement = date_paiement;
