@@ -17,26 +17,16 @@ public class MainFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        // Configurer la fenêtre principale
-        primaryStage.setWidth(1000);
-        primaryStage.setHeight(700);
-        primaryStage.setTitle("E-Learning Platform");
-        primaryStage.setMinWidth(800);
-        primaryStage.setMinHeight(600);
-        
-        // Définir le stage dans NavigationUtil pour que toutes les vues utilisent la même fenêtre
-        NavigationUtil.setMainStage(primaryStage);
-        
-        // Charger la vue initiale (vous pouvez choisir quelle vue afficher au démarrage)
-        // Pour charger la vue "Voir Articles" au démarrage:
-        NavigationUtil.navigateToViewArticles();
-        // Ou pour charger la vue "Ajouter Article" au démarrage:
-        // NavigationUtil.navigateToAddArticle();
-        
-        // Afficher la fenêtre
-        primaryStage.show();
-        
-        // Pour déboguer - afficher un message de confirmation
-        System.out.println("Application démarrée avec succès. Navigation configurée dans une seule fenêtre.");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Signin.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("AjouterAbonnement");
+            primaryStage.setResizable(true);
+            primaryStage.show();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
