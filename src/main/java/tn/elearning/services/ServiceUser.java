@@ -48,7 +48,7 @@ public class ServiceUser implements IServices<User> {
 
     @Override
     public void supprimer(User user) throws SQLException {
-        String sql = "DELETE FROM users WHERE id = ?";
+        String sql = "DELETE FROM user WHERE id = ?";
         PreparedStatement ps = cnx.prepareStatement(sql);
         ps.setInt(1, user.getId());
         ps.executeUpdate();
@@ -56,11 +56,6 @@ public class ServiceUser implements IServices<User> {
     }
 
     @Override
-    public void modifier(User user) throws SQLException {
-
-    }
-
-
     public void modifier(int id, String nom) throws SQLException {
         String sql = "UPDATE users SET nom = ? WHERE id = ?";
         PreparedStatement ps = cnx.prepareStatement(sql);
@@ -73,7 +68,7 @@ public class ServiceUser implements IServices<User> {
     @Override
     public List<User> recuperer() throws SQLException {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM users";
+        String sql = "SELECT * FROM user";
         Statement st = cnx.createStatement();
         ResultSet rs = st.executeQuery(sql);
 
@@ -82,13 +77,13 @@ public class ServiceUser implements IServices<User> {
             user.setId(rs.getInt("id"));
             user.setEmail(rs.getString("email"));
             user.setNom(rs.getString("nom"));
-            user.setPhoneNumber(rs.getString("phone_number"));
+            user.setPhoneNumber(rs.getString("phonenumber"));
             user.setMatiere(rs.getString("matiere"));
             user.setExperience(rs.getObject("experience") != null ? rs.getInt("experience") : null);
             user.setReason(rs.getString("reason"));
             user.setPassword(rs.getString("password"));
             user.setWork(rs.getString("work"));
-            user.setAddress(rs.getString("address"));
+            user.setAddress(rs.getString("adress"));
             user.setPref(rs.getString("pref"));
             user.setActive(rs.getBoolean("is_active"));
 
@@ -104,10 +99,42 @@ public class ServiceUser implements IServices<User> {
 
         return users;
     }
+    public List<User> getAllUsers() throws SQLException {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT email, nom, phoneNumber,roles FROM user";  // Seulement les champs nécessaires
+        Statement st = cnx.createStatement();
+        ResultSet rs = st.executeQuery(sql);
 
-    @Override
-    public User recupererParId(int id) throws SQLException {
+        while (rs.next()) {
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setEmail(rs.getString("email"));
+            user.setNom(rs.getString("nom"));
+            user.setPhoneNumber(rs.getString("phonenumber"));  // Si vous avez besoin du téléphone
+
+            users.add(user);
+        }
+
+        return users;
+    }
+    public User findByEmailAndPassword(String email, String password) throws SQLException {
+        String query = "SELECT * FROM user WHERE email = ? AND password = ?";
+        PreparedStatement ps = cnx.prepareStatement(query); // ⚠️ pas `connection`, mais `cnx` comme défini
+        ps.setString(1, email);
+        ps.setString(2, password);
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setNom(rs.getString("nom"));
+            user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
+            // Tu peux aussi set d'autres champs si tu veux
+            return user;
+        }
         return null;
     }
+
 }
 

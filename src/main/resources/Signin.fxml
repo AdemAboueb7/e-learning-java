@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.elearning.controller.SigninController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <children>
+        <Label layoutX="230" layoutY="50" text="Connexion"/>
+
+        <TextField fx:id="emailclient"
+                   layoutX="200" layoutY="100"
+                   prefWidth="200"
+                   promptText="Email"/>
+
+        <PasswordField fx:id="mdpclient"
+                       layoutX="200" layoutY="150"
+                       prefWidth="200"
+                       promptText="Mot de passe"/>
+
+        <Button text="Se connecter"
+                layoutX="250" layoutY="200"
+                onAction="#signinonclick"/>
+
+        <Label fx:id="errorLabel"
+               layoutX="200" layoutY="250"
+               textFill="red"/>
+    </children>
+</AnchorPane>
