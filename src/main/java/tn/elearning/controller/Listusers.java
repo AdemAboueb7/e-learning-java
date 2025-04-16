@@ -43,7 +43,7 @@ public class Listusers implements Initializable {
 
         // Charger les utilisateurs
         try {
-            ObservableList<User> users = FXCollections.observableArrayList(serviceUser.recuperer());
+            ObservableList<User> users = FXCollections.observableArrayList(serviceUser.getAllUsers());
             tableid.setItems(users);
         } catch (SQLException e) {
             e.printStackTrace();
