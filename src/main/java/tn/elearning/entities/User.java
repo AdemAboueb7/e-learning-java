@@ -59,21 +59,7 @@ public class User {
 
     public User() {
     }
-    public User(Integer id,String nom,String email,String phoneNumber,String password,String matiere,int experience,String reason,String work,String address,String pref,List<String> roles) {
-        this.id = id;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.matiere = matiere;
-        this.experience = experience;
-        this.reason = reason;
-        this.work = work;
-        this.address = address;
-        this.pref = pref;
-        this.roles=roles;
-        this.nom=nom;
 
-    }
 
 
     public User(Integer id,String nom,String email,String phoneNumber,String password,String matiere,int experience,String reason,String work,String address,String pref,List<String> roles) {
