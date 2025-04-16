@@ -34,7 +34,7 @@ public class AjouterAbonnementController {
     @FXML
     void ajouter(ActionEvent event) {
         if (!isValid()) {
-            return; // Stoppe si les champs sont invalides
+            return;
         }
         try {
             if (sa.existeAbonnement(typeabonnement.getText(), Double.parseDouble(prixabonnement.getText()), descabonnement.getText(), dureeabonnement.getText())) {
