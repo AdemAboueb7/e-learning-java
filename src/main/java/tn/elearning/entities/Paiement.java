@@ -90,6 +90,17 @@ public class Paiement {
         this.stripe_session_id = stripe_session_id;
     }
 
+    public Integer getIdAbonnement() {
+        return abonnement.getId();
+    }
+    public String getTypeAbonnement() {
+        if (abonnement != null) {
+            return abonnement.getType(); // Assurez-vous que getType() existe dans la classe Abonnement
+        }
+        return "Type non défini";  // Si l'abonnement est null
+    }
+
+
     @Override
     public String toString() {
         return "Paiement{" +

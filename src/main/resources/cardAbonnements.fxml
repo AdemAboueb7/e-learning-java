@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.cardsAbonnementController">
-   <children>
-      <!-- Conteneur ScrollPane pour permettre le défilement des cartes -->
-      <ScrollPane fx:id="scrollContainer" layoutX="20.0" layoutY="20.0" prefWidth="560.0" prefHeight="360.0" fitToWidth="true" fitToHeight="true">
-         <content>
-            <!-- Conteneur pour toutes les cartes -->
-            <VBox fx:id="cardsContainer" spacing="10.0" prefWidth="560.0">
-               <!-- Les cartes seront ajoutées dynamiquement ici -->
-            </VBox>
-         </content>
-      </ScrollPane>
-   </children>
-</AnchorPane>
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.cardsAbonnementController">
+
+
+   <left>
+      <fx:include source="Menutest.fxml" />
+   </left>
+
+
+   <center>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <ScrollPane fx:id="scrollContainer" fitToHeight="true" fitToWidth="true" layoutX="20.0" layoutY="20.0" prefHeight="360.0" prefWidth="560.0">
+               <content>
+                  <VBox fx:id="cardsContainer" prefWidth="560.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="paiements" mnemonicParsing="false" onAction="#ToPaiements" prefHeight="27.0" prefWidth="142.0" text="Mes paiements" />
+                     </children></VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </center>
+
+</BorderPane>

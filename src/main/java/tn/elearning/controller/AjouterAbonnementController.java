@@ -19,6 +19,8 @@ public class AjouterAbonnementController {
     @FXML
     private Button ajout;
 
+
+
     @FXML
     private TextArea descabonnement;
 
@@ -94,6 +96,19 @@ public class AjouterAbonnementController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    @FXML
+    void AllerVersListe(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherAbonnements.fxml"));
+            Parent root = loader.load();
+            descabonnement.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+
     }
 
 

@@ -56,6 +56,11 @@ public class ServiceUser implements IServices<User> {
     }
 
     @Override
+    public void modifier(User user) throws SQLException {
+
+    }
+
+
     public void modifier(int id, String nom) throws SQLException {
         String sql = "UPDATE users SET nom = ? WHERE id = ?";
         PreparedStatement ps = cnx.prepareStatement(sql);
@@ -99,6 +104,12 @@ public class ServiceUser implements IServices<User> {
 
         return users;
     }
+
+    @Override
+    public User recupererParId(int id) throws SQLException {
+        return null;
+    }
+
     public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
         String sql = "SELECT email, nom, phoneNumber,roles FROM user";  // Seulement les champs nécessaires

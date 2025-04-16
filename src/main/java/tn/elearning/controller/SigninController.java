@@ -3,6 +3,7 @@ package tn.elearning.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -52,10 +53,9 @@ public class SigninController {
                 showAlert("Succès", "Connexion réussie!", AlertType.INFORMATION);
 
                 // Rediriger vers une nouvelle interface (par exemple Dashboard)
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/path/to/your/Dashboard.fxml"));
-                Stage stage = (Stage) emailclient.getScene().getWindow();
-                stage.setScene(new Scene(loader.load()));
-                stage.show();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/cardAbonnements.fxml"));
+                Parent root = loader.load();
+                emailclient.getScene().setRoot(root);
 
             } else {
                 // Connexion échouée

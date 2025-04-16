@@ -2,17 +2,18 @@ package tn.elearning.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import tn.elearning.entities.Abonnement;
 import tn.elearning.services.ServiceAbonnement;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -20,6 +21,12 @@ import java.util.ResourceBundle;
 
 public class AfficherAbonnementsController implements Initializable {
     ServiceAbonnement sa=new ServiceAbonnement();
+
+
+
+    @FXML
+    private Button ajouterabo;
+
     @FXML
     private TextArea descab;
 
@@ -100,6 +107,19 @@ public class AfficherAbonnementsController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    void AllerVersAjout(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterAbonnement.fxml"));
+            Parent root = loader.load();
+            descab.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
 

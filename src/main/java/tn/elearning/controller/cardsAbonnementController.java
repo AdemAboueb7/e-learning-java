@@ -1,7 +1,10 @@
 package tn.elearning.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,7 +14,9 @@ import tn.elearning.entities.Paiement;
 import tn.elearning.entities.User;
 import tn.elearning.services.ServiceAbonnement;
 import tn.elearning.services.ServicePaiement;
+import tn.elearning.utils.UserSession;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,6 +26,8 @@ import java.util.List;
 public class cardsAbonnementController {
 
     ServiceAbonnement serviceAbonnement = new ServiceAbonnement();
+    @FXML
+    private Button paiements;
 
     @FXML
     private VBox cardsContainer;
@@ -55,10 +62,7 @@ public class cardsAbonnementController {
         double montant = ab.getPrix();
         Abonnement id_abonnement = ab;
         LocalDateTime datePaiement = LocalDateTime.now();
-        List<String> roles = Arrays.asList("USER", "ADMIN");
-        User user=new User(1,"ines","mail","1234","psswd","matiere",1,"reason","work","address","pref",roles);// Date système
-
-        // Créer l'objet Paiement
+        User user = UserSession.getInstance().getUser();
         Paiement paiement = new Paiement(montant, id_abonnement, datePaiement,user);
         ServicePaiement sp=new ServicePaiement();
         try {
@@ -71,6 +75,18 @@ public class cardsAbonnementController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    @FXML
+    void ToPaiements(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherPaiements.fxml"));
+            Parent root = loader.load();
+            paiements.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
 }
