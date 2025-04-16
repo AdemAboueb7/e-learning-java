@@ -85,4 +85,16 @@ public class ServiceAbonnement implements IServices<Abonnement> {
 
         return null;
     }
+    public boolean existeAbonnement(String type, double prix, String description, String duree) throws SQLException {
+        String query = "SELECT COUNT(*) FROM abonnement WHERE type = ? AND prix = ? AND description = ? AND duree = ?";
+        PreparedStatement pst = cnx.prepareStatement(query);
+        pst.setString(1, type);
+        pst.setDouble(2, prix);
+        pst.setString(3, description);
+        pst.setString(4, duree);
+        ResultSet rs = pst.executeQuery();
+        rs.next();
+        return rs.getInt(1) > 0;
+    }
+
 }

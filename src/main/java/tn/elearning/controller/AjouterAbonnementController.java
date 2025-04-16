@@ -37,6 +37,18 @@ public class AjouterAbonnementController {
             return; // Stoppe si les champs sont invalides
         }
         try {
+            if (sa.existeAbonnement(typeabonnement.getText(), Double.parseDouble(prixabonnement.getText()), descabonnement.getText(), dureeabonnement.getText())) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Duplication");
+                alert.setHeaderText(null);
+                alert.setContentText("Cet abonnement existe déjà !");
+                alert.showAndWait();
+                return;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
             sa.ajouter(new Abonnement(typeabonnement.getText(),Double.parseDouble(prixabonnement.getText()),descabonnement.getText(),dureeabonnement.getText()));
             System.out.println("avec succes");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherAbonnements.fxml"));
