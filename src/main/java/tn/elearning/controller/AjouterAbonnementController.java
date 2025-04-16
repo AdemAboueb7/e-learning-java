@@ -33,6 +33,9 @@ public class AjouterAbonnementController {
 
     @FXML
     void ajouter(ActionEvent event) {
+        if (!isValid()) {
+            return; // Stoppe si les champs sont invalides
+        }
         try {
             sa.ajouter(new Abonnement(typeabonnement.getText(),Double.parseDouble(prixabonnement.getText()),descabonnement.getText(),dureeabonnement.getText()));
             System.out.println("avec succes");
@@ -49,5 +52,39 @@ public class AjouterAbonnementController {
         }
 
     }
+    private boolean isValid() {
+        if (typeabonnement.getText().trim().isEmpty()
+                || prixabonnement.getText().trim().isEmpty()
+                || descabonnement.getText().trim().isEmpty()
+                || dureeabonnement.getText().trim().isEmpty()) {
+
+            showAlert("Champ manquant", "Veuillez remplir tous les champs.");
+            return false;
+        }
+
+
+        try {
+            double prix=Double.parseDouble(prixabonnement.getText());
+            if (prix < 0) {
+                showAlert("Prix invalide", "Le prix ne peut pas être négatif.");
+                return false;
+
+        }} catch (NumberFormatException e) {
+            showAlert("Prix invalide", "Le prix doit être un nombre valide.");
+            return false;
+        }
+
+        return true;
+    }
+    private void showAlert(String titre, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(titre);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
+
 
 }
