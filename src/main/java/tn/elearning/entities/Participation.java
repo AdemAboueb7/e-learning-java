@@ -1,72 +1,55 @@
-package tn.elearning.entities;
+package entities;
 
+import java.util.Date;
 
+public class participation {
 
+    private int id,event_id,user_id;
+    private Date created_at;
 
-
-import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
-
-
-@Entity
-@Table(name = "participations")
-public class Participation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "event_id", nullable = false)
-    private Event event;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    private LocalDateTime created_at;
-
-    public Participation() {
+    public participation(int id, int event_id, int user_id, Date created_at) {
+        this.id = id;
+        this.event_id = event_id;
+        this.user_id = user_id;
+        this.created_at = created_at;
     }
 
-    public Integer getId() {
+    public participation(int event_id, int user_id, Date created_at) {
+        this.event_id = event_id;
+        this.user_id = user_id;
+        this.created_at = created_at;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Event getEvent() {
-        return event;
+    public int getEvent_id() {
+        return event_id;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setEvent_id(int event_id) {
+        this.event_id = event_id;
     }
 
-    public User getUser() {
-        return user;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
-   public LocalDateTime getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
-   }
-   public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
-   }
-
-    @Override
-    public String toString() {
-        return "Participation{" +
-                "id=" + id +
-                ", event=" + event +
-                ", user=" + user +
-                ", created_at=" + created_at +
-                '}';
     }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
 }

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="611.0" prefWidth="823.0" style="-fx-background-color: white; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #ddd; -fx-border-width: 1; -fx-padding: 60; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0.3, 0, 4);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EventCrud">
+   <children>
+      <Label layoutX="60.0" layoutY="74.0" prefHeight="18.0" prefWidth="171.0" style="-fx-text-fill: black;" text="Event management">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+         <textFill>
+            <RadialGradient centerX="1.0" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color opacity="0.8297871351242065" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </textFill>
+      </Label>
+      <Label layoutX="78.0" layoutY="122.0" prefHeight="32.0" prefWidth="95.0" style="-fx-text-fill: #af7258;" text="Titre">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill></Label>
+      <Label layoutX="88.0" layoutY="303.0" style="-fx-text-fill: #af7258;" text="description">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill></Label>
+      <Label layoutX="93.0" layoutY="458.0" style="-fx-text-fill: #af7258;" text="price">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill></Label>
+      <Label accessibleRole="COMBO_BOX" layoutX="143.0" layoutY="208.0" prefHeight="32.0" prefWidth="59.0" style="-fx-text-fill: #af7258;" text="Type">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill></Label>
+      <Label fx:id="imgadd" layoutX="411.0" layoutY="352.0" style="-fx-text-fill: #af7258;" text="image path">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill></Label>
+      <TextField fx:id="eventtitletf" layoutX="75.0" layoutY="164.0" prefHeight="30.0" prefWidth="622.0" style="-fx-background-color: #ffffff; -fx-border-color: #d0d7de; -fx-border-radius: 10px; -fx-padding: 8px 12px;" />
+      <TextField fx:id="eventdescriptiontf" layoutX="84.0" layoutY="326.0" prefHeight="84.0" prefWidth="302.0" style="-fx-background-color: #ffffff; -fx-border-color: #d0d7de; -fx-border-radius: 10px; -fx-padding: 8px 12px;" />
+      <TextField fx:id="eventpricetf" layoutX="131.0" layoutY="449.0" style="-fx-background-color: #ffffff; -fx-border-color: #d0d7de; -fx-border-radius: 10px; -fx-padding: 8px 12px;" />
+      <Button layoutX="466.0" layoutY="503.0" mnemonicParsing="false" onAction="#addevent" style="-fx-background-color: #245c52; -fx-text-fill: white;" text="Crée" />
+      <Button layoutX="519.0" layoutY="503.0" mnemonicParsing="false" onAction="#vieweventlist" style="-fx-background-color: #245c52; -fx-text-fill: white;" text="retour à la liste" />
+      <Button layoutX="412.0" layoutY="376.0" mnemonicParsing="false" onAction="#chooseImageservice" prefHeight="26.0" prefWidth="148.0" text="Select Image" />
+      <Label layoutX="327.0" layoutY="203.0" prefHeight="32.0" prefWidth="95.0" style="-fx-text-fill: #af7258;" text="Start Date">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill></Label>
+      <DatePicker fx:id="datepicker1" layoutX="282.0" layoutY="237.0" prefHeight="38.0" prefWidth="159.0" style="-fx-border-color: #d0d7de; -fx-border-radius: 5px; -fx-padding: 8px 12px;" />
+      <Label layoutX="543.0" layoutY="203.0" prefHeight="32.0" prefWidth="102.0" style="-fx-text-fill: #af7258;" text="End Date">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill></Label>
+      <DatePicker fx:id="datepicker2" layoutX="493.0" layoutY="237.0" prefHeight="38.0" prefWidth="159.0" style="-fx-border-color: #af7258; -fx-border-radius: 5px; -fx-padding: 8px 12px;" />
+      <ComboBox fx:id="combo" layoutX="88.0" layoutY="246.0" prefWidth="150.0" promptText="choisir un type" />
+   </children>
+   <cursor>
+      <Cursor fx:constant="DISAPPEAR" />
+   </cursor>
+   <effect>
+      <Glow />
+   </effect>
+</AnchorPane>

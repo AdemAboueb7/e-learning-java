@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Label?>
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.EventParticipationController"
+            >
+
+    <center>
+        <VBox>
+            <Label text="Liste des Événements Disponibles"
+                   style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+            <!-- Your ListView -->
+            <ListView fx:id="eventListView" prefWidth="800" prefHeight="600"/>
+        </VBox>
+    </center>
+</BorderPane>
+

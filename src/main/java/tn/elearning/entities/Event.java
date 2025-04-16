@@ -1,69 +1,61 @@
-package tn.elearning.entities;
+package entities;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+public class event {
+    private int id,prix;
+    private String titre,description,type,image;
+    private Date date_debut,date_fin;
 
-@Entity
-@Table(name = "events")
-public class Event {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NotBlank
-    @Column(nullable = false)
-    private String titre;
-
-    @NotBlank
-    @Column(nullable = false)
-    private String description;
-
-    @NotBlank
-    @Column(nullable = false)
-    private String image;
-
-    @NotNull
-    @Column(name = "date_debut", nullable = false)
-    private LocalDateTime dateDebut;
-
-    @NotNull
-    @Column(name = "date_fin", nullable = false)
-    private LocalDateTime dateFin;
-
-    @NotBlank
-    @Column(nullable = false)
-    private String type;
-
-    @Column(nullable = true)
-    private String localisation;
-
-    @NotNull
-    @Positive
-    @Column(nullable = false)
-    private Double prix;
-
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private List<Participation> participations = new ArrayList<>();
-
-    // Constructeurs
-    public Event() {
-        this.participations = new ArrayList<>();
+    public event() {
     }
 
-    // Getters et Setters
-    public Integer getId() {
+    public event(int id, int prix, String titre, String description, String type, Date date_debut, Date date_fin, String image) {
+        this.id = id;
+        this.prix = prix;
+        this.titre = titre;
+        this.description = description;
+        this.type = type;
+        this.date_debut = date_debut;
+        this.date_fin = date_fin;
+        this.image = image;
+    }
+
+    public event(int prix, String titre, String description, String type, Date date_debut, Date date_fin, String image) {
+        this.prix = prix;
+        this.titre = titre;
+        this.description = description;
+        this.type = type;
+        this.date_debut = date_debut;
+        this.date_fin = date_fin;
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public int getPrix() {
+        return prix;
+    }
+
+    public void setPrix(int prix) {
+        this.prix = prix;
     }
 
     public String getTitre() {
@@ -82,30 +74,6 @@ public class Event {
         this.description = description;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public LocalDateTime getDateDebut() {
-        return dateDebut;
-    }
-
-    public void setDateDebut(LocalDateTime dateDebut) {
-        this.dateDebut = dateDebut;
-    }
-
-    public LocalDateTime getDateFin() {
-        return dateFin;
-    }
-
-    public void setDateFin(LocalDateTime dateFin) {
-        this.dateFin = dateFin;
-    }
-
     public String getType() {
         return type;
     }
@@ -114,38 +82,55 @@ public class Event {
         this.type = type;
     }
 
-    public String getLocalisation() {
-        return localisation;
+    public String getDate_debut() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.of(
+                date_debut.getYear() + 1900,
+                date_debut.getMonth() + 1,
+                date_debut.getDate()
+        );
+        return localDate.format(formatter);
     }
 
-    public void setLocalisation(String localisation) {
-        this.localisation = localisation;
+    public Date getDate_debut1() {
+        return date_debut;
     }
 
-    public Double getPrix() {
-        return prix;
+    public void setDate_debut(Date date_debut) {
+        this.date_debut = date_debut;
     }
 
-    public void setPrix(Double prix) {
-        this.prix = prix;
+
+    public String getDate_fin() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.of(
+                date_fin.getYear() + 1900,
+                date_fin.getMonth() + 1,
+                date_fin.getDate()
+        );
+        return localDate.format(formatter);
     }
 
-    public List<Participation> getParticipations() {
-        return participations;
+    public Date getDate_fin1() {
+        return date_fin;
+    }
+    public void setDate_fin(Date date_fin) {
+        this.date_fin = date_fin;
     }
 
-    public void setParticipations(List<Participation> participations) {
-        this.participations = participations;
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", titre='" + titre + '\'' +
+                ", description='" + description + '\'' +
+                ", type='" + type + '\'' +
+                ", prix=" + prix +
+                ", date_debut=" + date_debut +
+                ", date_fin=" + date_fin +
+                ", image='" + image + '\'' +
+                '}';
     }
 
-    public void addParticipation(Participation participation) {
-        participations.add(participation);
-        participation.setEvent(this);
-    }
 
-    public void removeParticipation(Participation participation) {
-        participations.remove(participation);
-        participation.setEvent(null);
-    }
 }
-
