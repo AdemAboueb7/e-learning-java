@@ -11,7 +11,7 @@
 
    <!-- Le menu à gauche -->
    <left>
-      <fx:include source="Menutest.fxml"/>
+      <fx:include source="sidebar.fxml"/>
    </left>
 
    <!-- Le formulaire au centre -->

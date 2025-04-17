@@ -10,7 +10,7 @@
 
 
    <left>
-      <fx:include source="Menutest.fxml" />
+      <fx:include source="sidebar.fxml" />
    </left>
 
 
@@ -19,12 +19,10 @@
          <children>
             <ScrollPane fx:id="scrollContainer" fitToHeight="true" fitToWidth="true" layoutX="20.0" layoutY="20.0" prefHeight="360.0" prefWidth="560.0">
                <content>
-                  <VBox fx:id="cardsContainer" prefWidth="560.0" spacing="10.0">
-                     <children>
-                        <Button fx:id="paiements" mnemonicParsing="false" onAction="#ToPaiements" prefHeight="27.0" prefWidth="142.0" text="Mes paiements" />
-                     </children></VBox>
+                  <VBox fx:id="cardsContainer" prefWidth="560.0" spacing="10.0" stylesheets="@stylecards.css" />
                </content>
             </ScrollPane>
+            <Button fx:id="paiements" layoutX="58.0" layoutY="383.0" mnemonicParsing="false" onAction="#ToPaiements" prefHeight="27.0" prefWidth="142.0" text="Mes paiements" />
          </children>
       </AnchorPane>
    </center>
