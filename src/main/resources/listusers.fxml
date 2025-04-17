@@ -4,15 +4,16 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.Listusers" stylesheets="@listusers.css">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@listusers.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.Listusers">
    <children>
-       <TableView fx:id="tableid" layoutX="90.0" layoutY="87.0" prefHeight="200.0" prefWidth="458.0">
+       <TableView fx:id="tableid" layoutX="11.0" layoutY="87.0" prefHeight="200.0" prefWidth="537.0">
            <columns>
-               <TableColumn fx:id="nomColumn" prefWidth="100.0" text="Nom" />
-               <TableColumn fx:id="emailColumn" prefWidth="120.0" text="Email" />
-               <TableColumn fx:id="telColumn" prefWidth="100.0" text="Téléphone" />
-               <TableColumn fx:id="roleColumn" prefWidth="100.0" text="Role" />
+               <TableColumn fx:id="nomColumn" prefWidth="76.79998779296875" text="Nom" />
+               <TableColumn fx:id="emailColumn" prefWidth="108.7999267578125" text="Email" />
+               <TableColumn fx:id="telColumn" prefWidth="82.40008544921875" text="Téléphone" />
+               <TableColumn fx:id="roleColumn" prefWidth="95.99993896484375" text="Role" />
+               <TableColumn fx:id="activeColumn" prefWidth="168.00006103515625" text="Statut" />
+
            </columns>
        </TableView>
 

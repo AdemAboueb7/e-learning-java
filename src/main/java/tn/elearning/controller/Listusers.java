@@ -30,18 +30,61 @@ public class Listusers implements Initializable {
 
     @FXML
     private TableColumn<User, String> roleColumn;
+    @FXML
+    private TableColumn<User, Boolean> activeColumn;
+
 
     private final ServiceUser serviceUser = new ServiceUser();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Configurer les colonnes
+        activeColumn.setCellFactory(col -> {
+            return new javafx.scene.control.TableCell<User, Boolean>() {
+                private final javafx.scene.control.ToggleButton toggleButton = new javafx.scene.control.ToggleButton();
+
+                {
+                    toggleButton.setOnAction(event -> {
+                        User user = getTableView().getItems().get(getIndex());
+                        boolean newStatus = !user.isActive();
+                        user.setActive(newStatus);
+                        toggleButton.setText(newStatus ? "Activé" : "Désactivé");
+
+                        // 🔥 Mettre à jour dans la base de données
+                        try {
+                            serviceUser.updateUserStatus(user.getId(), newStatus);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+
+                @Override
+                protected void updateItem(Boolean active, boolean empty) {
+                    super.updateItem(active, empty);
+
+                    if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                        setGraphic(null);
+                    } else {
+                        User user = (User) getTableRow().getItem();
+                        if (user != null) {
+                            toggleButton.setText(user.isActive() ? "Activé" : "Désactivé");
+                            toggleButton.setSelected(user.isActive());
+                            setGraphic(toggleButton);
+                        }
+                    }
+                }
+            };
+        });
+
+// Configurer la colonne active
+        activeColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
+
         nomColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        telColumn.setCellValueFactory(new PropertyValueFactory<>("telephone"));
-        roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
+        telColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        roleColumn.setCellValueFactory(new PropertyValueFactory<>("roles"));
 
-        // Charger les utilisateurs
+
         try {
             ObservableList<User> users = FXCollections.observableArrayList(serviceUser.getAllUsers());
             tableid.setItems(users);
