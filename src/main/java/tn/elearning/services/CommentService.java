@@ -51,6 +51,11 @@ public class CommentService implements IServices<Comment> {
     }
 
     @Override
+    public void modifier(Comment comment) throws SQLException {
+
+    }
+
+    @Override
     public void modifier(int id, String nom) throws SQLException {
         String sql = "UPDATE comment SET content = ? WHERE id = ?";
         try (PreparedStatement ps = cnx.prepareStatement(sql)) {
@@ -94,6 +99,11 @@ public class CommentService implements IServices<Comment> {
         }
 
         return comments;
+    }
+
+    @Override
+    public Comment recupererParId(int id) throws SQLException {
+        return null;
     }
 
     // Méthode utilitaire pour récupérer un commentaire par son ID

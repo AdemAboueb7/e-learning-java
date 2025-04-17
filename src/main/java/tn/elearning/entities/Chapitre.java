@@ -31,6 +31,9 @@ public class Chapitre {
         this.cours = new ArrayList<>();
     }
 
+    public Chapitre(Integer id, String nom, String description) {
+    }
+
     public Integer getId() {
         return id;
     }

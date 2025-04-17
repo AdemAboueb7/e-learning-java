@@ -69,6 +69,11 @@ public class ArticleService implements IServices<Article> {
     }
 
     @Override
+    public void modifier(Article article) throws SQLException {
+
+    }
+
+    @Override
     public void modifier(int id, String nom) throws SQLException {
         String sql = "UPDATE article SET title = ? WHERE id = ?";
         try (PreparedStatement ps = cnx.prepareStatement(sql)) {
@@ -110,7 +115,12 @@ public class ArticleService implements IServices<Article> {
         
         return articles;
     }
-    
+
+    @Override
+    public Article recupererParId(int id) throws SQLException {
+        return null;
+    }
+
     // Méthode utilitaire pour récupérer un article par son ID
     public Article getById(int id) throws SQLException {
         String sql = "SELECT * FROM article WHERE id = ?";
