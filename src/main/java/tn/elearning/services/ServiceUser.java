@@ -6,6 +6,7 @@ import tn.elearning.tools.MyDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ServiceUser implements IServices<User> {
@@ -69,6 +70,15 @@ public class ServiceUser implements IServices<User> {
         ps.executeUpdate();
         System.out.println("User modifié !");
     }
+    public void updateUserStatus(int userId, boolean isActive) throws SQLException {
+        String sql = "UPDATE user SET is_active = ? WHERE id = ?";
+
+             PreparedStatement stmt = cnx.prepareStatement(sql);
+            stmt.setBoolean(1, isActive);
+            stmt.setInt(2, userId);
+            stmt.executeUpdate();
+        }
+
 
     @Override
     public List<User> recuperer() throws SQLException {
@@ -112,16 +122,18 @@ public class ServiceUser implements IServices<User> {
 
     public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT email, nom, phoneNumber,roles FROM user";  // Seulement les champs nécessaires
+        String sql = "SELECT email, nom, phoneNumber,roles FROM user";
         Statement st = cnx.createStatement();
         ResultSet rs = st.executeQuery(sql);
 
         while (rs.next()) {
             User user = new User();
-            user.setId(rs.getInt("id"));
             user.setEmail(rs.getString("email"));
             user.setNom(rs.getString("nom"));
-            user.setPhoneNumber(rs.getString("phonenumber"));  // Si vous avez besoin du téléphone
+            user.setPhoneNumber(rs.getString("phonenumber"));
+            String rolesStr = rs.getString("roles");
+            List<String> roles = Arrays.asList(rolesStr.replaceAll("[\\[\\]\"]", "").split(","));
+            user.setRoles(roles);
 
             users.add(user);
         }
@@ -130,7 +142,7 @@ public class ServiceUser implements IServices<User> {
     }
     public User findByEmailAndPassword(String email, String password) throws SQLException {
         String query = "SELECT * FROM user WHERE email = ? AND password = ?";
-        PreparedStatement ps = cnx.prepareStatement(query); // ⚠️ pas `connection`, mais `cnx` comme défini
+        PreparedStatement ps = cnx.prepareStatement(query);
         ps.setString(1, email);
         ps.setString(2, password);
 
