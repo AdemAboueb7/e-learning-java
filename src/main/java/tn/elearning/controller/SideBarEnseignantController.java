@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-public class SideBarAdminController {
+public class SideBarEnseignantController {
 
     @FXML
     private Button articles;
@@ -14,19 +14,13 @@ public class SideBarAdminController {
     private Button evenements;
 
     @FXML
-    private Button paiements;
-
-    @FXML
     private Button profil;
 
     @FXML
     private VBox sidebar;
 
     @FXML
-    private Button suivi;
-
-    @FXML
-    private Button users;
+    private Button cours;
 
     @FXML
     void handleArticlesAction(ActionEvent event) {
@@ -44,17 +38,7 @@ public class SideBarAdminController {
     }
 
     @FXML
-    void handlePaiementsAction(ActionEvent event) {
-
-    }
-
-    @FXML
     void handleProfilAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void handleSuiviAction(ActionEvent event) {
 
     }
 
