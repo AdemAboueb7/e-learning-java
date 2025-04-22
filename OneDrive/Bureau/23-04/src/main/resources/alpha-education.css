@@ -1,0 +1,262 @@
+/* Alpha Education - Charte Graphique CSS */
+
+/* Couleurs principales selon la charte graphique */
+.root {
+    -fx-background-color: white;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif; /* Moderne, sans-serif */
+}
+
+/* Couleurs selon la charte */
+.color-vert {
+    -fx-background-color: #8bc34a; /* Vert - Symbolise la croissance et l'énergie positive */
+}
+
+.color-orange {
+    -fx-background-color: #ff8a65; /* Orange - Stimule l'action et attire l'attention */
+}
+
+.color-jaune {
+    -fx-background-color: #ffd54f; /* Jaune - Évoque créativité et optimisme */
+}
+
+.color-bleu {
+    -fx-background-color: #4fc3f7; /* Bleu - Inspire confiance et dynamisme */
+}
+
+.color-blanc {
+    -fx-background-color: #ffffff; /* Blanc - Apporte clarté et simplicité */
+}
+
+.color-noir {
+    -fx-background-color: #212121; /* Noir - Garantit lisibilité et impact visuel */
+}
+
+/* Header styles */
+.header {
+    -fx-background-color: #4fc3f7; /* Bleu - Inspire confiance */
+    -fx-padding: 15px;
+    -fx-alignment: center-left;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.header-label {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+/* Table styles */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #8bc34a; /* Vert - Croissance */
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-padding: 5px;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+    -fx-border-width: 0 0 0 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+}
+
+/* Card styles */
+.article-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #e0e0e0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 8, 0, 0, 1);
+    -fx-padding: 15px;
+}
+
+.article-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 2);
+    -fx-border-color: #4fc3f7; /* Bleu - Inspire confiance */
+}
+
+.card-title {
+    -fx-text-fill: #212121; /* Noir - Impact visuel */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.card-category {
+    -fx-text-fill: #ff8a65; /* Orange - Attire l'attention */
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.card-content {
+    -fx-text-fill: #757575; /* Gris foncé */
+    -fx-font-size: 14px;
+}
+
+.card-date {
+    -fx-text-fill: #9e9e9e; /* Gris */
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
+}
+
+/* Comment card specifics */
+.comment-card {
+    -fx-background-color: #f5f5f5; /* Gris très clair */
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #e0e0e0;
+    -fx-padding: 10px;
+}
+
+.comment-username {
+    -fx-text-fill: #4fc3f7; /* Bleu - Confiance */
+    -fx-font-weight: bold;
+}
+
+/* Label styles */
+.label {
+    -fx-text-fill: #424242; /* Gris très foncé */
+    -fx-font-size: 14px;
+}
+
+.section-title {
+    -fx-text-fill: #212121; /* Noir */
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* Button styles */
+.button {
+    -fx-background-color: #8bc34a; /* Vert - Croissance */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-cursor: hand;
+    -fx-padding: 10px 15px;
+}
+
+.button:hover {
+    -fx-background-color: #7cb342; /* Vert plus foncé */
+}
+
+.button:pressed {
+    -fx-background-color: #689f38; /* Vert encore plus foncé */
+}
+
+.button-danger {
+    -fx-background-color: #ff5722; /* Orange/rouge */
+}
+
+.button-danger:hover {
+    -fx-background-color: #f4511e; /* Plus foncé */
+}
+
+.button-secondary {
+    -fx-background-color: #4fc3f7; /* Bleu */
+    -fx-text-fill: white;
+}
+
+.button-secondary:hover {
+    -fx-background-color: #29b6f6; /* Bleu plus foncé */
+}
+
+/* Search field */
+.search-field {
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-padding: 8px 15px;
+    -fx-prompt-text-fill: #9e9e9e;
+}
+
+.search-field:focused {
+    -fx-background-color: white;
+    -fx-border-color: #8bc34a; /* Vert */
+    -fx-border-width: 1px;
+}
+
+/* Category pills */
+.category-pill {
+    -fx-background-color: #ffd54f; /* Jaune - Créativité */
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-text-fill: #212121;
+    -fx-padding: 5px 10px;
+    -fx-cursor: hand;
+}
+
+.category-pill:hover {
+    -fx-background-color: #ffca28; /* Jaune plus foncé */
+}
+
+/* Scroll pane styling */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Separator */
+.separator {
+    -fx-background-color: #e0e0e0;
+}
+
+/* Logo styling */
+.logo-container {
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+}
+
+.logo-circle-vert {
+    -fx-fill: #8bc34a; /* Vert */
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
+
+.logo-circle-orange {
+    -fx-fill: #ff8a65; /* Orange */
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
+
+.logo-text {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #212121; /* Noir */
+}
+
+/* Text fields and text areas */
+.text-field, .text-area {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #424242;
+    -fx-prompt-text-fill: #9e9e9e;
+    -fx-padding: 8px;
+}
+
+.text-field:focused, .text-area:focused {
+    -fx-border-color: #4fc3f7; /* Bleu */
+    -fx-border-width: 1.5px;
+}
+
+/* Decorative elements */
+.star-decoration {
+    -fx-fill: #ffd54f; /* Jaune */
+    -fx-stroke: transparent;
+} 

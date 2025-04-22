@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<!-- Ensure alpha-education.css is used -->
+<AnchorPane prefHeight="700.0" prefWidth="900.0" styleClass="root" stylesheets="@alpha-education.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.ArticleDetailController">
+    <children>
+        <VBox prefHeight="700.0" prefWidth="900.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <!-- Header -->
+                <HBox alignment="CENTER_LEFT" prefHeight="60.0" styleClass="header" spacing="15.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#goBack" styleClass="button-secondary" text="← Retour" />
+                        <Label styleClass="header-label" text="Détails de l'Article" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="editButton" mnemonicParsing="false" onAction="#openEditForm" styleClass="button" text="Modifier" />
+                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteArticle" styleClass="button-danger" text="Supprimer" />
+                    </children>
+                    <padding>
+                        <Insets left="20.0" right="20.0" />
+                    </padding>
+                </HBox>
+
+                <!-- Main Content Area -->
+                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                    <content>
+                        <VBox spacing="30.0">
+                            <children>
+                                <!-- Article Info -->
+                                <VBox spacing="15.0" styleClass="article-detail-section">
+                                    <children>
+                                        <Label fx:id="titleLabel" styleClass="article-title" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="24.0" />
+                                            </font>
+                                        </Label>
+                                        <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="metadata-hbox">
+                                            <Label fx:id="categoryLabel" styleClass="card-category" />
+                                            <Label fx:id="dateLabel" styleClass="card-date" />
+                                        </HBox>
+                                        <VBox styleClass="content-frame">
+                                            <children>
+                                                <Label fx:id="contentLabel" styleClass="article-content" wrapText="true" />
+                                            </children>
+                                            <padding>
+                                                <Insets top="15.0" right="15.0" bottom="15.0" left="15.0" />
+                                            </padding>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+
+                                <!-- Comments Section -->
+                                <VBox styleClass="article-detail-section">
+                                    <children>
+                                        <Label styleClass="section-title" text="Commentaires" />
+                                        <VBox fx:id="commentsContainer" spacing="15.0" />
+                                    </children>
+                                </VBox>
+
+                                <!-- Add Comment Section -->
+                                <VBox styleClass="article-detail-section">
+                                    <children>
+                                        <Label styleClass="section-title" text="Ajouter votre commentaire :" />
+                                        <TextArea fx:id="newCommentArea" promptText="Écrivez votre commentaire ici..." wrapText="true" prefHeight="100" />
+                                        <Button fx:id="submitCommentButton" mnemonicParsing="false" onAction="#addComment" styleClass="button" text="Soumettre le commentaire">
+                                            <VBox.margin>
+                                                <Insets top="10.0" />
+                                            </VBox.margin>
+                                        </Button>
+                                    </children>
+                                </VBox>
+
+                                <!-- Related Articles Section -->
+                                <VBox styleClass="article-detail-section">
+                                    <children>
+                                        <Label styleClass="section-title" text="Articles similaires" />
+                                        <FlowPane fx:id="relatedArticlesContainer" hgap="20.0" vgap="20.0" />
+                                        <Label fx:id="noRelatedLabel" managed="false" text="Aucun article similaire trouvé." visible="false" />
+                                    </children>
+                                </VBox>
+                            </children>
+                            <padding>
+                                <Insets bottom="30.0" left="30.0" right="30.0" top="20.0" />
+                            </padding>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane> 

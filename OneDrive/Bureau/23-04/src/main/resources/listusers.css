@@ -1,0 +1,33 @@
+.root {
+    -fx-background-color: #f0fff4;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #9ae6b4;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);
+}
+
+.table-column {
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-size: 13px;
+    -fx-text-fill: #2f855a;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.table-row-cell:filled:selected {
+    -fx-background-color: #c6f6d5;
+    -fx-text-fill: black;
+}
+
+.table-cell {
+    -fx-padding: 8 12 8 12;
+}

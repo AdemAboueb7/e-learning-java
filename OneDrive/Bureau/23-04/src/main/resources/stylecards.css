@@ -1,0 +1,81 @@
+/* Style global pour toute l'application */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Mise en forme du BorderPane */
+BorderPane {
+    -fx-background-color: #f4f4f4;
+    -fx-padding: 20px;
+}
+
+/* Style de la partie gauche (sidebar) */
+.left {
+    -fx-background-color: #84BA47;  /* Vert donné */
+    -fx-padding: 20px;
+    -fx-pref-width: 250px;
+}
+
+/* Style des boutons */
+Button {
+    -fx-background-color: #84BA47;  /* Vert donné */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px 20px;
+    -fx-transition: background-color 0.3s ease;
+}
+
+Button:hover {
+    -fx-background-color: #6a9c3a; /* Couleur un peu plus foncée au survol */
+}
+
+/* Style du ScrollPane */
+ScrollPane {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+/* Style du VBox contenant les cartes */
+VBox {
+    -fx-spacing: 15px;
+    -fx-padding: 20px;
+}
+
+/* Style des éléments dans le VBox */
+VBox > * {
+    -fx-alignment: center;
+}
+
+/* Amélioration du design du Button pour les paiements */
+#paiements {
+    -fx-background-color: #84BA47;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 12px 25px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+#paiements:hover {
+    -fx-background-color: #6a9c3a;
+}
+
+/* Style des labels et titres */
+.label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+}
+
+/* Style de la partie centrale pour plus de propreté */
+.center {
+    -fx-padding: 10px;
+}
