@@ -48,7 +48,7 @@ public class SigninController {
                 showAlert("Succès", "Connexion réussie!", AlertType.INFORMATION);
 
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/listusers.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherPaiements.fxml"));
                 Stage stage = (Stage) emailclient.getScene().getWindow();
                 stage.setScene(new Scene(loader.load()));
                 stage.show();

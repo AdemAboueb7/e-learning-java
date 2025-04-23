@@ -3,7 +3,6 @@ package tn.elearning.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 public class Article {
     private int id;
     private String title;
@@ -14,12 +13,13 @@ public class Article {
     private String image;
     private LocalDateTime updatedAt;
     private List<Comment> comments;
+    private boolean published = false;
 
     // Constructeurs
     public Article() {}
 
     public Article(int id, String title, String content, String category,
-                   LocalDateTime createdAt, int userId, String image, LocalDateTime updatedAt) {
+                   LocalDateTime createdAt, int userId, String image, LocalDateTime updatedAt, boolean published) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -28,6 +28,7 @@ public class Article {
         this.userId = userId;
         this.image = image;
         this.updatedAt = updatedAt;
+        this.published = published;
     }
 
 
@@ -111,6 +112,14 @@ public class Article {
         this.comments = comments;
     }
 
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
+
     @Override
     public String toString() {
         return "Article{" +
@@ -122,6 +131,7 @@ public class Article {
                 ", userId=" + userId +
                 ", image='" + image + '\'' +
                 ", updatedAt=" + updatedAt +
+                ", published=" + published +
                 '}';
     }
 }
