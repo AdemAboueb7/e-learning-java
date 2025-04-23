@@ -31,38 +31,60 @@ public class SigninController {
         String password = mdpclient.getText();
 
         try {
-
             User user = serviceUser.findByEmailAndPassword(email, password);
             if (user != null) {
-
-                System.out.println("Connexion réussie : " + user.getNom());
-
+                // Connexion réussie
                 UserSession.getInstance().setUser(user);
-                User sessionUser = UserSession.getInstance().getUser();
-                if (sessionUser != null) {
-                    System.out.println("Utilisateur connecté : " + sessionUser.getNom());
-                } else {
-                    System.out.println("Aucun utilisateur n'est connecté !");
-                }
+                System.out.println("Utilisateur connecté : " + user.getNom());
 
                 showAlert("Succès", "Connexion réussie!", AlertType.INFORMATION);
 
+                // Récupérer le rôle depuis l'objet user et le nettoyer
+                String roleRaw = user.getRoles().toString();
+                System.out.println("Role brut détecté : " + roleRaw);
+                
+                // Nettoyer le format JSON pour extraire juste le rôle
+                String role = roleRaw.replace("[", "").replace("]", "").replace("\"", "");
+                System.out.println("Role nettoyé : " + role);
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherPaiements.fxml"));
-                Stage stage = (Stage) emailclient.getScene().getWindow();
-                stage.setScene(new Scene(loader.load()));
-                stage.show();
+                // Choisir la page à charger selon le rôle
+                String fxmlToLoad;
+                if (role.equals("ROLE_ADMIN")) {
+                    fxmlToLoad = "/VoirArticles.fxml";
+                    System.out.println("Tentative de chargement de la vue admin : " + fxmlToLoad);
+                } else if (role.equals("ROLE_TEACHER")) {
+                    fxmlToLoad = "/VoirArticlesTeacher.fxml";
+                    System.out.println("Tentative de chargement de la vue enseignant : " + fxmlToLoad);
+                } else if (role.equals("ROLE_Parent")) {
+                    fxmlToLoad = "/VoirArticlesParent.fxml";
+                    System.out.println("Tentative de chargement de la vue parent : " + fxmlToLoad);
+                } else {
+                    // Par défaut, rediriger vers la vue parent
+                    fxmlToLoad = "/VoirArticlesParent.fxml";
+                    System.out.println("Rôle non reconnu, chargement de la vue par défaut : " + fxmlToLoad);
+                }
 
+                try {
+                    // Charger la page
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlToLoad));
+                    if (loader.getLocation() == null) {
+                        throw new IOException("Impossible de trouver le fichier FXML: " + fxmlToLoad);
+                    }
+                    Scene scene = new Scene(loader.load());
+                    Stage stage = (Stage) emailclient.getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    showAlert("Erreur", "Erreur lors du chargement de la page: " + e.getMessage(), AlertType.ERROR);
+                }
             } else {
-
-                System.out.println("Email ou mot de passe incorrect.");
+                // Email ou mot de passe incorrect
                 showAlert("Erreur", "Email ou mot de passe incorrect", AlertType.ERROR);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Erreur", "Une erreur s'est produite lors de la connexion", AlertType.ERROR);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -73,6 +95,5 @@ public class SigninController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }
-
-

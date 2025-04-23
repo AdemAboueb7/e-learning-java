@@ -2,8 +2,12 @@ package tn.elearning.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+
+import java.io.IOException;
 
 public class SideBarEnseignantController {
 
@@ -24,6 +28,14 @@ public class SideBarEnseignantController {
 
     @FXML
     void handleArticlesAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VoirArticlesTeacher.fxml"));
+            Parent root = loader.load();
+            cours.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 

@@ -10,66 +10,9 @@
 <?import javafx.scene.image.ImageView?>
 
 <BorderPane prefHeight="700.0" prefWidth="1000.0" styleClass="root" stylesheets="@alpha-education.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.VoirArticlesController">
-   
+
    <left>
-      <VBox fx:id="sidebar" alignment="TOP_CENTER" prefWidth="220.0" spacing="10.0" styleClass="sidebar">
-         <children>
-            <HBox alignment="CENTER" prefHeight="70.0" styleClass="sidebar-header">
-               <children>
-                  <ImageView fitHeight="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@/logoo.png" />
-                     </image>
-                  </ImageView>
-               </children>
-               <padding>
-                  <Insets top="15.0" bottom="15.0" />
-               </padding>
-            </HBox>
-            
-            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleProfilAction" styleClass="sidebar-item" text="Profil">
-               <graphic>
-                  <SVGPath content="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" styleClass="sidebar-icon"/>
-               </graphic>
-            </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handlePaiementsAction" styleClass="sidebar-item" text="Paiements">
-                <graphic>
-                   <SVGPath content="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z" styleClass="sidebar-icon"/>
-               </graphic>
-            </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleCoursAction" styleClass="sidebar-item" text="Cours">
-                <graphic>
-                   <SVGPath content="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z" styleClass="sidebar-icon"/>
-               </graphic>
-            </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleSuiviAction" styleClass="sidebar-item" text="Suivre mon enfant">
-                 <graphic>
-                    <SVGPath content="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z" styleClass="sidebar-icon"/>
-               </graphic>
-             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleEvenementsAction" styleClass="sidebar-item" text="Évènements">
-                 <graphic>
-                    <SVGPath content="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z" styleClass="sidebar-icon"/>
-               </graphic>
-            </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleArticlesAction" styleClass="sidebar-item-active" text="Articles">
-                 <graphic>
-                    <SVGPath content="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" styleClass="sidebar-icon"/>
-               </graphic>
-            </Button>
-            
-            <Region VBox.vgrow="ALWAYS" />
-            
-            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleDeconnexionAction" styleClass="sidebar-logout-button" text="Déconnexion">
-                 <graphic>
-                    <SVGPath content="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" styleClass="sidebar-icon"/>
-               </graphic>
-            </Button>
-         </children>
-         <padding>
-            <Insets bottom="10.0" top="0" />
-         </padding>
-      </VBox>
+      <fx:include source="SideBarAdmin.fxml" />
    </left>
    
    <center>
