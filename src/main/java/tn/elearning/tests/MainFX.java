@@ -20,7 +20,7 @@ public class MainFX extends Application {
             // ✅ Set the main stage so NavigationUtil can use it later
             tn.elearning.utils.NavigationUtil.setMainStage(primaryStage);
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/signIN.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/signin.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
