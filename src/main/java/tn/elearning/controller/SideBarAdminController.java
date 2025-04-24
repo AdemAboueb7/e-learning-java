@@ -70,6 +70,15 @@ public class SideBarAdminController {
 
     @FXML
     void handleProfilAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/updateadmin.fxml"));
+            Parent root = loader.load();
+            paiements.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

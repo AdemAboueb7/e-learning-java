@@ -57,6 +57,25 @@ public class ServiceUser implements IServices<User> {
     }
 
     @Override
+    public void modifier(User user) throws SQLException {
+
+    }
+
+    public void modifierprofil(User user) throws SQLException {
+        String sql = "UPDATE user SET email = ?, nom = ?, phonenumber = ? WHERE id = ?";
+
+        PreparedStatement ps = cnx.prepareStatement(sql);
+        ps.setString(1, user.getEmail());
+        ps.setString(2, user.getNom());
+        ps.setString(3, user.getPhoneNumber());
+        ps.setInt(4, user.getId());
+
+        ps.executeUpdate();
+        System.out.println("User updated successfully!");
+    }
+
+
+
     public void modifier(int id, String nom) throws SQLException {
         String sql = "UPDATE users SET nom = ? WHERE id = ?";
         PreparedStatement ps = cnx.prepareStatement(sql);
@@ -100,6 +119,33 @@ public class ServiceUser implements IServices<User> {
 
         return users;
     }
+
+    public User recupererParId(int id) throws SQLException {
+        String sql = "SELECT * FROM user WHERE id = ?";
+        PreparedStatement ps = cnx.prepareStatement(sql);
+        ps.setInt(1, id);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setEmail(rs.getString("email"));
+            user.setNom(rs.getString("nom"));
+            user.setPhoneNumber(rs.getString("phonenumber"));
+            user.setMatiere(rs.getString("matiere"));
+            user.setExperience(rs.getObject("experience") != null ? rs.getInt("experience") : null);
+            user.setReason(rs.getString("reason"));
+            user.setPassword(rs.getString("password"));
+            user.setWork(rs.getString("work"));
+            user.setAddress(rs.getString("adress"));
+            user.setPref(rs.getString("pref"));
+            user.setActive(rs.getBoolean("is_active"));
+            return user;
+        }
+        return null;
+        }
+
     public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
         String sql = "SELECT id, email, nom, phoneNumber, roles, is_active FROM user";

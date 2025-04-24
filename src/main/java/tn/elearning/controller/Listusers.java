@@ -110,7 +110,6 @@ public class Listusers implements Initializable {
     }
 
     private void setupRoleFilter() {
-        // Seulement les rôles spécifiques que nous voulons
         List<String> allowedRoles = Arrays.asList(
                 "Tous les rôles",
                 "ROLE_ADMIN",
@@ -120,8 +119,6 @@ public class Listusers implements Initializable {
 
         roleFilterComboBox.setItems(FXCollections.observableArrayList(allowedRoles));
         roleFilterComboBox.getSelectionModel().selectFirst();
-
-        // Filtrage combiné recherche texte + rôle
         searchField.textProperty().addListener((obs, oldVal, newVal) -> applyCombinedFilters());
         roleFilterComboBox.valueProperty().addListener((obs, oldVal, newVal) -> applyCombinedFilters());
     }
@@ -131,12 +128,9 @@ public class Listusers implements Initializable {
         String selectedRole = roleFilterComboBox.getValue();
 
         filteredData.setPredicate(user -> {
-            // Filtre par rôle
             boolean roleMatches = selectedRole == null ||
                     "Tous les rôles".equals(selectedRole) ||
                     (user.getRoles() != null && user.getRoles().contains(selectedRole));
-
-            // Filtre par texte
             boolean textMatches = searchText.isEmpty() ||
                     (user.getNom() != null && user.getNom().toLowerCase().contains(searchText)) ||
                     (user.getEmail() != null && user.getEmail().toLowerCase().contains(searchText));

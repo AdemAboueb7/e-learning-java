@@ -3,8 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.Listusers" stylesheets="@listusers.css">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.Listusers">
+<left>
+    <fx:include source="SideBarAdmin.fxml" />
+</left>
+<center>
+<AnchorPane prefHeight="400.0" prefWidth="700.0"  stylesheets="@listusers.css">
     <children>
         <HBox layoutX="90.0" layoutY="30.0" spacing="10.0">
             <children>
@@ -25,3 +29,5 @@
         </TableView>
     </children>
 </AnchorPane>
+</center>
+</BorderPane>

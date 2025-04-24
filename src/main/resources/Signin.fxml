@@ -31,7 +31,7 @@
         <Hyperlink fx:id="forgotPasswordLink"
                    layoutX="240" layoutY="240"
                    text="Mot de passe oublié ?"
-                   onAction="#handleForgotPassword"/>
+                   />
 
         <Label fx:id="errorLabel"
                layoutX="200" layoutY="280"

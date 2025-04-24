@@ -32,7 +32,6 @@ public class SignupController {
 
     @FXML
     void signup(ActionEvent event) {
-        // ✅ Contrôle de saisie
         String email = emailclient.getText().trim();
         String nom = nomclient.getText().trim();
         String mdp = mdpclient.getText().trim();
