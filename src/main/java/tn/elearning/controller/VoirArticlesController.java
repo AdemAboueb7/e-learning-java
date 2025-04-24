@@ -205,5 +205,47 @@ public class VoirArticlesController implements Initializable {
         alert.showAndWait();
     }
 
+    // --- Sidebar Action Handlers (Placeholders) ---
 
+    @FXML
+    private void handleProfilAction(ActionEvent event) {
+        System.out.println("Profil button clicked");
+        // TODO: Implement navigation to Profil view
+    }
+
+    @FXML
+    private void handlePaiementsAction(ActionEvent event) {
+        System.out.println("Paiements button clicked");
+        // TODO: Implement navigation to Paiements view
+    }
+
+    @FXML
+    private void handleCoursAction(ActionEvent event) {
+        System.out.println("Cours button clicked");
+        // TODO: Implement navigation to Cours view
+    }
+
+    @FXML
+    private void handleSuiviAction(ActionEvent event) {
+        System.out.println("Suivre mon enfant button clicked");
+        // TODO: Implement navigation to Suivi view
+    }
+
+    @FXML
+    private void handleEvenementsAction(ActionEvent event) {
+        System.out.println("Évènements button clicked");
+        // TODO: Implement navigation to Evenements view
+    }
+
+    @FXML
+    private void handleArticlesAction(ActionEvent event) {
+        System.out.println("Articles button clicked - already here");
+        // No action needed, maybe just ensure style is active?
+    }
+
+    @FXML
+    private void handleDeconnexionAction(ActionEvent event) {
+        System.out.println("Déconnexion button clicked");
+        // TODO: Implement logout logic and navigate to login/main screen
+    }
 }

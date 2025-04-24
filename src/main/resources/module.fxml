@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="tn.elearning.controller.ModuleController" stylesheets="@CMCStyle.css">
+    <left>
+        <fx:include source="sidebar.fxml" />
+    </left>
+    <center>
+
+        <AnchorPane prefWidth="600.0" prefHeight="400.0">
+            <children>
+
+                <TextField fx:id="moduleNameField" layoutX="14.0" layoutY="14.0" prefWidth="300.0" promptText="Nom du module"/>
+                <TextArea fx:id="moduleDescriptionField" layoutX="14.0" layoutY="48.0" prefWidth="300.0" prefHeight="100.0" promptText="Description du module"/>
+
+                <TableView fx:id="moduleTable" layoutX="14.0" layoutY="160.0" prefWidth="500.0" prefHeight="200.0">
+                    <columns>
+                        <TableColumn fx:id="colNom" text="Nom" prefWidth="250.0"/>
+                        <TableColumn fx:id="colDescription" text="Description" prefWidth="250.0"/>
+                    </columns>
+                </TableView>
+
+                <Button layoutX="14.0" layoutY="380.0" text="Ajouter" onAction="#addModule"/>
+                <Button layoutX="94.0" layoutY="380.0" text="Mettre à jour" onAction="#updateModule"/>
+                <Button layoutX="174.0" layoutY="380.0" text="Supprimer" onAction="#deleteModule"/>
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>

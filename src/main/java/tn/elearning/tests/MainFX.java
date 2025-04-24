@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tn.elearning.utils.NavigationUtil;
 
 import java.io.IOException;
 
@@ -18,15 +17,18 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/signupteacher.fxml"));
+            // ✅ Set the main stage so NavigationUtil can use it later
+            tn.elearning.utils.NavigationUtil.setMainStage(primaryStage);
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/signin.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("AjouterAbonnement");
-            primaryStage.setResizable(true);
+            primaryStage.setTitle("Se Connecter");
+
             primaryStage.show();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace(); // Better than just printing the message
         }
     }
 }
