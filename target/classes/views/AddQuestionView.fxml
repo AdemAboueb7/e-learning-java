@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="365.0" prefWidth="275.0" spacing="10" style="-fx-background-color: #63cc8f;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controllers.AddQuestionController">
+
+    <Label style="-fx-background-color: #63cc8f;" text="Ajouter une Question" textFill="#efefef">
+      <font>
+         <Font size="19.0" />
+      </font></Label>
+
+    <ComboBox fx:id="quizzComboBox" promptText="Sélectionner un Quizz" />
+    <TextField fx:id="questionField" promptText="Énoncé de la question" />
+
+    <!-- Suggestions -->
+    <VBox spacing="5">
+        <TextField fx:id="sugg1" promptText="Suggestion 1" />
+        <TextField fx:id="sugg2" promptText="Suggestion 2" />
+        <TextField fx:id="sugg3" promptText="Suggestion 3" />
+        <TextField fx:id="sugg4" promptText="Suggestion 4" />
+    </VBox>
+
+    <Label text="Choisissez la bonne réponse (1 à 4) :" textFill="#ece1e1">
+      <font>
+         <Font size="11.0" />
+      </font></Label>
+    <TextField fx:id="indexBonneReponse" promptText="Numéro (1 à 4)" />
+
+    <Label fx:id="errorLabel" textFill="red" />
+
+    <HBox spacing="10">
+        <Button onAction="#handleAjouter" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: #a12c2c;" text="Ajouter" textFill="#fafafa" />
+        <Button onAction="#handleVoirQuestions" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #a1048a;" text="Voir toutes les questions" textFill="#f7eff6" />
+    </HBox>
+</VBox>

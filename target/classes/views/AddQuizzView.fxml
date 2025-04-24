@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="450.0" spacing="10.0" style="-fx-background-color: #95dfab;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controllers.AddQuizzController">
+
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
+
+    <Label styleClass="label" text="Ajouter un Quizz" textFill="#20813b">
+        <font>
+            <Font size="23.0" />
+        </font>
+    </Label>
+
+    <TextField fx:id="matiereField" promptText="Matière" styleClass="text-field" />
+    <TextField fx:id="chapitreField" promptText="Chapitre (ex: 1)" styleClass="text-field" />
+    <TextField fx:id="difficulteField" promptText="Difficulté (1 à 5)" styleClass="text-field" />
+    <TextField fx:id="bestgField" promptText="BestG" styleClass="text-field" />
+    <TextField fx:id="etatField" promptText="État (ex: actif, inactif)" styleClass="text-field" />
+    <TextField fx:id="gainField" promptText="Gain (ex: 100 points)" styleClass="text-field" />
+
+    <Label fx:id="errorLabel" styleClass="label error" />
+
+    <HBox spacing="10">
+        <Button onAction="#handleAjouter" prefHeight="26.0" prefWidth="192.0" style="-fx-background-color: #840877;" styleClass="button" text="Ajouter" textFill="#f4f1f4" />
+        <Button onAction="#handleVoirListe" prefHeight="26.0" prefWidth="194.0" style="-fx-background-color: #d71414;" styleClass="button" text="Voir la liste" textFill="#fffcfc" />
+    </HBox>
+
+    <!-- 🆕 Ajout des boutons vers gestion des questions -->
+    <HBox spacing="10">
+        <Button onAction="#handleAjouterQuestion" prefHeight="26.0" prefWidth="192.0" style="-fx-background-color: #0066cc;" styleClass="button" text="➕ Ajouter Question" textFill="white" />
+        <Button onAction="#handleVoirQuestions" prefHeight="26.0" prefWidth="194.0" style="-fx-background-color: #ef6604;" styleClass="button" text="📄 Voir Questions" textFill="#f7f6f5" />
+    </HBox>
+
+</VBox>

@@ -1,0 +1,62 @@
+/* sidebar.css */
+
+.sidebar-button {
+    -fx-pref-width: 160px;
+    -fx-pref-height: 40px;
+    -fx-background-color: #388e3c;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #43a047;
+}
+
+.sidebar-button:pressed {
+    -fx-background-color: #2e7d32;
+}
+
+.sidebar-button:focused {
+    -fx-effect: dropshadow(gaussian, #ffffff22, 4, 0.2, 0, 1);
+}
+
+.sidebar-button.active {
+    -fx-background-color: #1b5e20;
+    -fx-font-weight: bold;
+    -fx-border-width: 0 0 0 4;
+    -fx-border-color: white;
+}
+.sidebar-button {
+    -fx-pref-width: 150px;
+    -fx-pref-height: 38px;
+    -fx-background-color: #eeeeee;
+    -fx-background-radius: 8;
+    -fx-text-fill: #1b1b1b;
+    -fx-font-size: 13px;
+    -fx-font-weight: normal;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0.1, 0, 1);
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 10;
+    -fx-border-color: transparent;
+    -fx-border-width: 2;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #dcedc8;
+}
+
+.sidebar-button:focused {
+    -fx-background-color: #dcedc8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0.2, 0, 1);
+}
+
+.sidebar-button.active {
+    -fx-background-color: #a5d6a7;
+    -fx-border-color: #ffffff;
+    -fx-font-weight: bold;
+    -fx-border-width: 0 0 0 5;
+    -fx-text-fill: #1b5e20;
+}

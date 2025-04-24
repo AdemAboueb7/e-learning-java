@@ -1,0 +1,43 @@
+/* accueil.css - playful green education theme */
+
+.accueil-root {
+    -fx-background-color: #d4f4d7; /* soft minty green */
+    -fx-padding: 30px;
+}
+
+.accueil-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2e7d32; /* deep green */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0.3, 0, 2);
+}
+
+.admin-button, .user-button {
+    -fx-pref-width: 220px;
+    -fx-pref-height: 45px;
+    -fx-background-radius: 12;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 2, 0.2, 0, 2);
+}
+
+/* Admin button - blue style */
+.admin-button {
+    -fx-background-color: #64b5f6;
+    -fx-text-fill: white;
+}
+
+/* User button - kid-friendly green */
+.user-button {
+    -fx-background-color: #81c784;
+    -fx-text-fill: white;
+}
+
+.admin-button:hover {
+    -fx-background-color: #42a5f5;
+}
+
+.user-button:hover {
+    -fx-background-color: #66bb6a;
+}

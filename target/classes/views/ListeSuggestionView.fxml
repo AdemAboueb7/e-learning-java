@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="10" style="-fx-background-color: #85f4a8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controllers.ListeSuggestionController">
+
+    <Label style="-fx-background-color: #85f4a8;" text="Suggestions de la Question">
+      <font>
+         <Font size="16.0" />
+      </font></Label>
+    <TableView fx:id="tableView">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" />
+            <TableColumn fx:id="colContenu" text="Contenu" />
+            <TableColumn fx:id="colCorrecte" text="Bonne Réponse ?" />
+            <TableColumn fx:id="colActions" text="Actions" />
+        </columns>
+    </TableView>
+</VBox>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="tn.elearning.controllers.QuizzExecutionController">
+    <Label fx:id="questionLabel" style="-fx-font-size: 16px;" wrapText="true" />
+    <ToggleGroup fx:id="suggestionGroup" />
+    <VBox fx:id="suggestionBox" spacing="5" />
+    <Button fx:id="nextButton" text="Suivant" onAction="#handleSuivant" />
+</VBox>
