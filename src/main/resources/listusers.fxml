@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@listusers.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.Listusers">
-   <children>
-       <TableView fx:id="tableid" layoutX="11.0" layoutY="87.0" prefHeight="200.0" prefWidth="537.0">
-           <columns>
-               <TableColumn fx:id="nomColumn" prefWidth="76.79998779296875" text="Nom" />
-               <TableColumn fx:id="emailColumn" prefWidth="108.7999267578125" text="Email" />
-               <TableColumn fx:id="telColumn" prefWidth="82.40008544921875" text="Téléphone" />
-               <TableColumn fx:id="roleColumn" prefWidth="95.99993896484375" text="Role" />
-               <TableColumn fx:id="activeColumn" prefWidth="168.00006103515625" text="Statut" />
-
-           </columns>
-       </TableView>
-
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.Listusers" stylesheets="@listusers.css">
+    <children>
+        <HBox layoutX="90.0" layoutY="30.0" spacing="10.0">
+            <children>
+                <Label text="Recherche:" />
+                <TextField fx:id="searchField" promptText="Nom ou email..." prefWidth="200.0" />
+                <Label text="Rôle:" />
+                <ComboBox fx:id="roleFilterComboBox" prefWidth="150.0" />
+            </children>
+        </HBox>
+        <TableView fx:id="tableid" layoutX="90.0" layoutY="87.0" prefHeight="200.0" prefWidth="620.0">
+            <columns>
+                <TableColumn fx:id="nomColumn" prefWidth="100.0" text="Nom" />
+                <TableColumn fx:id="emailColumn" prefWidth="150.0" text="Email" />
+                <TableColumn fx:id="telColumn" prefWidth="100.0" text="Téléphone" />
+                <TableColumn fx:id="roleColumn" prefWidth="120.0" text="Role" />
+                <TableColumn fx:id="statusColumn" prefWidth="150.0" text="Statut" />
+            </columns>
+        </TableView>
+    </children>
 </AnchorPane>

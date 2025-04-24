@@ -57,11 +57,6 @@ public class ServiceUser implements IServices<User> {
     }
 
     @Override
-    public void modifier(User user) throws SQLException {
-
-    }
-
-
     public void modifier(int id, String nom) throws SQLException {
         String sql = "UPDATE users SET nom = ? WHERE id = ?";
         PreparedStatement ps = cnx.prepareStatement(sql);
@@ -70,15 +65,6 @@ public class ServiceUser implements IServices<User> {
         ps.executeUpdate();
         System.out.println("User modifié !");
     }
-    public void updateUserStatus(int userId, boolean isActive) throws SQLException {
-        String sql = "UPDATE user SET is_active = ? WHERE id = ?";
-
-             PreparedStatement stmt = cnx.prepareStatement(sql);
-            stmt.setBoolean(1, isActive);
-            stmt.setInt(2, userId);
-            stmt.executeUpdate();
-        }
-
 
     @Override
     public List<User> recuperer() throws SQLException {
@@ -114,35 +100,36 @@ public class ServiceUser implements IServices<User> {
 
         return users;
     }
-
-    @Override
-    public User recupererParId(int id) throws SQLException {
-        return null;
-    }
-
     public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT email, nom, phoneNumber,roles FROM user";
-        Statement st = cnx.createStatement();
-        ResultSet rs = st.executeQuery(sql);
+        String sql = "SELECT id, email, nom, phoneNumber, roles, is_active FROM user";
+        try (Statement st = cnx.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
 
-        while (rs.next()) {
-            User user = new User();
-            user.setEmail(rs.getString("email"));
-            user.setNom(rs.getString("nom"));
-            user.setPhoneNumber(rs.getString("phonenumber"));
-            String rolesStr = rs.getString("roles");
-            List<String> roles = Arrays.asList(rolesStr.replaceAll("[\\[\\]\"]", "").split(","));
-            user.setRoles(roles);
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setEmail(rs.getString("email"));
+                user.setNom(rs.getString("nom"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));
+                user.setActive(rs.getBoolean("is_active"));
 
-            users.add(user);
+                // Traitement des rôles
+                String rolesJson = rs.getString("roles");
+                if (rolesJson != null && !rolesJson.isEmpty()) {
+                    rolesJson = rolesJson.replace("[", "").replace("]", "").replace("\"", "");
+                    List<String> roles = Arrays.asList(rolesJson.split(","));
+                    user.setRoles(roles);
+                }
+
+                users.add(user);
+            }
         }
-
         return users;
     }
     public User findByEmailAndPassword(String email, String password) throws SQLException {
         String query = "SELECT * FROM user WHERE email = ? AND password = ?";
-        PreparedStatement ps = cnx.prepareStatement(query);
+        PreparedStatement ps = cnx.prepareStatement(query); // ⚠️ pas `connection`, mais `cnx` comme défini
         ps.setString(1, email);
         ps.setString(2, password);
 
@@ -153,17 +140,18 @@ public class ServiceUser implements IServices<User> {
             user.setNom(rs.getString("nom"));
             user.setEmail(rs.getString("email"));
             user.setPassword(rs.getString("password"));
-            
-            // Charger les rôles
-            String rolesStr = rs.getString("roles");
-            if (rolesStr != null && !rolesStr.isEmpty()) {
-                List<String> roles = Arrays.asList(rolesStr.replaceAll("[\\[\\]\"]", "").split(","));
-                user.setRoles(roles);
-            }
-            
+            // Tu peux aussi set d'autres champs si tu veux
             return user;
         }
         return null;
+    }
+    public void updateUserStatus(int userId, boolean isActive) throws SQLException {
+        String sql = "UPDATE user SET is_active = ? WHERE id = ?";
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setBoolean(1, isActive);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        }
     }
 
 }
