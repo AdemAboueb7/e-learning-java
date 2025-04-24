@@ -18,7 +18,7 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/listusers.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/signupteacher.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

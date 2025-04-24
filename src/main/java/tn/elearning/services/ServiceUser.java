@@ -6,6 +6,7 @@ import tn.elearning.tools.MyDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ServiceUser implements IServices<User> {
@@ -101,20 +102,29 @@ public class ServiceUser implements IServices<User> {
     }
     public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT email, nom, phoneNumber,roles FROM user";  // Seulement les champs nécessaires
-        Statement st = cnx.createStatement();
-        ResultSet rs = st.executeQuery(sql);
+        String sql = "SELECT id, email, nom, phoneNumber, roles, is_active FROM user";
+        try (Statement st = cnx.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
 
-        while (rs.next()) {
-            User user = new User();
-            user.setId(rs.getInt("id"));
-            user.setEmail(rs.getString("email"));
-            user.setNom(rs.getString("nom"));
-            user.setPhoneNumber(rs.getString("phonenumber"));  // Si vous avez besoin du téléphone
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setEmail(rs.getString("email"));
+                user.setNom(rs.getString("nom"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));
+                user.setActive(rs.getBoolean("is_active"));
 
-            users.add(user);
+                // Traitement des rôles
+                String rolesJson = rs.getString("roles");
+                if (rolesJson != null && !rolesJson.isEmpty()) {
+                    rolesJson = rolesJson.replace("[", "").replace("]", "").replace("\"", "");
+                    List<String> roles = Arrays.asList(rolesJson.split(","));
+                    user.setRoles(roles);
+                }
+
+                users.add(user);
+            }
         }
-
         return users;
     }
     public User findByEmailAndPassword(String email, String password) throws SQLException {
@@ -134,6 +144,14 @@ public class ServiceUser implements IServices<User> {
             return user;
         }
         return null;
+    }
+    public void updateUserStatus(int userId, boolean isActive) throws SQLException {
+        String sql = "UPDATE user SET is_active = ? WHERE id = ?";
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setBoolean(1, isActive);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        }
     }
 
 }

@@ -10,7 +10,7 @@ import tn.elearning.services.ServiceUser;
 import java.sql.SQLException;
 import java.util.Collections;
 
-public class SignupController {
+public class signupteacher {
 
     @FXML
     private TextField adresseclient;
@@ -28,19 +28,15 @@ public class SignupController {
     private TextField numclient;
 
     @FXML
-    private TextField professionclient;
-
-    @FXML
     void signup(ActionEvent event) {
-        // ✅ Contrôle de saisie
+        // ✅ Contrôle de saisie uniquement sur les champs disponibles
         String email = emailclient.getText().trim();
         String nom = nomclient.getText().trim();
         String mdp = mdpclient.getText().trim();
         String phone = numclient.getText().trim();
         String adresse = adresseclient.getText().trim();
-        String profession = professionclient.getText().trim();
 
-        if (nom.isEmpty() || email.isEmpty() || mdp.isEmpty() || phone.isEmpty() || adresse.isEmpty() || profession.isEmpty()) {
+        if (nom.isEmpty() || email.isEmpty() || mdp.isEmpty() || phone.isEmpty() || adresse.isEmpty()) {
             showAlert("Erreur", "Tous les champs sont obligatoires !");
             return;
         }
@@ -67,14 +63,13 @@ public class SignupController {
         user.setPhoneNumber(phone);
         user.setPassword(mdp);
         user.setAddress(adresse);
-        user.setWork(profession);
         user.setActive(true);
-        user.setRoles(Collections.singletonList("ROLE_PARENT"));
+        user.setRoles(Collections.singletonList("ROLE_TEACHER"));
 
         ServiceUser service = new ServiceUser();
         try {
             service.ajouter(user);
-            showAlert("Succès", "Utilisateur ajouté avec succès avec le rôle PARENT !");
+            showAlert("Succès", "Utilisateur ajouté avec succès avec le rôle TEACHER !");
         } catch (SQLException e) {
             showAlert("Erreur SQL", e.getMessage());
         }
