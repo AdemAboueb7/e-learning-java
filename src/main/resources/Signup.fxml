@@ -7,11 +7,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
+<?import javafx.scene.control.PasswordField?>
 <AnchorPane prefHeight="575.0" prefWidth="706.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.SignupController" stylesheets="@signup.css">
    <children>
       <TextField fx:id="nomclient" layoutX="153.0" layoutY="77.0" prefHeight="26.0" prefWidth="350.0" />
       <TextField fx:id="emailclient" layoutX="153.0" layoutY="147.0" prefHeight="26.0" prefWidth="350.0" />
-      <TextField fx:id="mdpclient" layoutX="153.0" layoutY="211.0" prefHeight="26.0" prefWidth="350.0" />
+      <PasswordField fx:id="mdpclient" layoutX="153.0" layoutY="211.0" prefHeight="26.0" prefWidth="350.0" />
+
       <Button layoutX="195.0" layoutY="478.0" mnemonicParsing="false" onAction="#signup" prefHeight="26.0" prefWidth="256.0" text="Créer compte" textFill="#2797c2" />
       <TextField fx:id="numclient" layoutX="153.0" layoutY="281.0" prefHeight="26.0" prefWidth="350.0" />
       <TextField fx:id="adresseclient" layoutX="153.0" layoutY="349.0" prefHeight="26.0" prefWidth="350.0" />

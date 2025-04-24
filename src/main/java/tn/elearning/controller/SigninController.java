@@ -31,16 +31,13 @@ public class SigninController {
         String password = mdpclient.getText();
 
         try {
-            // Récupérer l'utilisateur depuis la base de données
+
             User user = serviceUser.findByEmailAndPassword(email, password);
             if (user != null) {
-                // Connexion réussie
+
                 System.out.println("Connexion réussie : " + user.getNom());
 
-                // Stocker l'utilisateur dans la session
                 UserSession.getInstance().setUser(user);
-
-                // Vérifier si l'utilisateur est correctement stocké dans UserSession
                 User sessionUser = UserSession.getInstance().getUser();
                 if (sessionUser != null) {
                     System.out.println("Utilisateur connecté : " + sessionUser.getNom());
@@ -48,17 +45,16 @@ public class SigninController {
                     System.out.println("Aucun utilisateur n'est connecté !");
                 }
 
-                // Afficher une alerte de succès
                 showAlert("Succès", "Connexion réussie!", AlertType.INFORMATION);
 
-                // Rediriger vers une nouvelle interface (par exemple Dashboard)
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/path/to/your/Dashboard.fxml"));
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/listusers.fxml"));
                 Stage stage = (Stage) emailclient.getScene().getWindow();
                 stage.setScene(new Scene(loader.load()));
                 stage.show();
 
             } else {
-                // Connexion échouée
+
                 System.out.println("Email ou mot de passe incorrect.");
                 showAlert("Erreur", "Email ou mot de passe incorrect", AlertType.ERROR);
             }
@@ -70,7 +66,6 @@ public class SigninController {
         }
     }
 
-    // Méthode pour afficher des alertes
     private void showAlert(String title, String message, AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
