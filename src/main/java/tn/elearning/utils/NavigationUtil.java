@@ -76,4 +76,23 @@ public class NavigationUtil {
         navigateTo("/VoirArticles.fxml");
         mainStage.setTitle("Articles");
     }
+    public static void navigateToCours() throws IOException {
+        navigateTo("/Cours.fxml");
+        mainStage.setTitle("Cours");
+    }
+
+    public static void navigateToModule() throws IOException {
+        navigateTo("/Module.fxml");
+        mainStage.setTitle("Modules");
+    }
+
+    public static void navigateToChapitre() throws IOException {
+        navigateTo("/Chapitre.fxml");
+        mainStage.setTitle("Chapitres");
+    }
+    public static void navigateToListeCours() throws IOException {
+        // Load the ListeDesCours FXML file
+        navigateTo("/ListCours.fxml");
+        mainStage.setTitle("Liste des cours");
+    }
 }

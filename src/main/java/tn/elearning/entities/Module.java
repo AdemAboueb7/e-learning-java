@@ -1,93 +1,54 @@
 package tn.elearning.entities;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
-@Table(name = "modules")
 public class Module {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private final IntegerProperty id = new SimpleIntegerProperty();
+    private final StringProperty nom = new SimpleStringProperty();
+    private final StringProperty description = new SimpleStringProperty();
 
-    @NotBlank
-    @Column(nullable = false)
-    private String nom;
-    private String description;
-
-    @OneToMany(mappedBy = "module", cascade = CascadeType.ALL)
-    private List<Chapitre> chapitres = new ArrayList<>();
-
-    @OneToMany(mappedBy = "idMatiere")
-    private List<User> users = new ArrayList<>();
-
-    public Module() {
-        this.chapitres = new ArrayList<>();
-        this.users = new ArrayList<>();
+    // Getters and Setters for properties
+    public int getId() {
+        return id.get();
     }
 
-    public Integer getId() {
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    public IntegerProperty idProperty() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getNom() {
-        return nom;
+        return nom.get();
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.nom.set(nom);
     }
 
-    public List<Chapitre> getChapitres() {
-        return chapitres;
-    }
-
-    public void setChapitres(List<Chapitre> chapitres) {
-        this.chapitres = chapitres;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public StringProperty nomProperty() {
+        return nom;
     }
 
     public String getDescription() {
-        return description;
+        return description.get();
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description.set(description);
     }
 
-    public void addChapitre(Chapitre chapitre) {
-        chapitres.add(chapitre);
-        chapitre.setModule(this);
-    }
-
-    public void removeChapitre(Chapitre chapitre) {
-        chapitres.remove(chapitre);
-        chapitre.setModule(null);
+    public StringProperty descriptionProperty() {
+        return description;
     }
 
     @Override
     public String toString() {
-        return "Module{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", description='" + description + '\'' +
-                ", chapitres=" + chapitres +
-                ", users=" + users +
-                '}';
+        return nom.get(); // Return the name of the module
     }
 }

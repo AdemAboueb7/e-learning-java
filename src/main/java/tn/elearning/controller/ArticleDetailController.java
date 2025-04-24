@@ -19,20 +19,17 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import tn.elearning.entities.Article;
 import tn.elearning.entities.Comment;
-import tn.elearning.entities.User;
 import tn.elearning.services.ArticleService;
 import tn.elearning.services.CommentService;
 import javafx.scene.Node;
 import javafx.geometry.Pos;
 import javafx.application.Platform;
 import tn.elearning.utils.NavigationUtil;
-import tn.elearning.utils.UserSession;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -83,43 +80,7 @@ public class ArticleDetailController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            // Initialiser les articles
-            List<Article> articles = articleService.recuperer();
-            
-            // Configuration des boutons d'action
-            if (editButton != null) {
-                editButton.setOnAction(this::openEditForm);
-            }
-            
-            if (deleteButton != null) {
-                deleteButton.setOnAction(this::deleteArticle);
-            }
-            
-            if (submitCommentButton != null) {
-                submitCommentButton.setOnAction(this::addComment);
-            }
-            
-            // Configuration de la zone de commentaire
-            if (newCommentArea != null) {
-                newCommentArea.setWrapText(true);
-                newCommentArea.setPromptText("Écrivez votre commentaire ici...");
-            }
-            
-            // Initialiser les conteneurs
-            if (commentsContainer != null) {
-                commentsContainer.setSpacing(10);
-            }
-            
-            if (relatedArticlesContainer != null) {
-                relatedArticlesContainer.setHgap(10);
-                relatedArticlesContainer.setVgap(10);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert(AlertType.ERROR, "Erreur d'Initialisation", "Impossible de charger les articles : " + e.getMessage());
-        }
+        // Initialization will happen when setArticle is called
     }
 
     public void setArticle(Article article) {

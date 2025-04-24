@@ -153,14 +153,7 @@ public class ServiceUser implements IServices<User> {
             user.setNom(rs.getString("nom"));
             user.setEmail(rs.getString("email"));
             user.setPassword(rs.getString("password"));
-            
-            // Charger les rôles
-            String rolesStr = rs.getString("roles");
-            if (rolesStr != null && !rolesStr.isEmpty()) {
-                List<String> roles = Arrays.asList(rolesStr.replaceAll("[\\[\\]\"]", "").split(","));
-                user.setRoles(roles);
-            }
-            
+            // Tu peux aussi set d'autres champs si tu veux
             return user;
         }
         return null;

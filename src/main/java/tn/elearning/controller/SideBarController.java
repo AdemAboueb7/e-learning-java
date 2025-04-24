@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import tn.elearning.utils.NavigationUtil;
 
 import java.io.IOException;
 
@@ -34,21 +35,10 @@ public class SideBarController {
 
     @FXML
     void handleArticlesAction(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VoirArticlesParent.fxml"));
-            Parent root = loader.load();
-            cours.getScene().setRoot(root);
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
 
     }
 
-    @FXML
-    void handleCoursAction(ActionEvent event) {
 
-    }
 
     @FXML
     void handleDeconnexionAction(ActionEvent event) {
@@ -58,6 +48,15 @@ public class SideBarController {
     @FXML
     void handleEvenementsAction(ActionEvent event) {
 
+    }
+    @FXML
+    private void handleListeCoursAction(ActionEvent event) {
+        try {
+            // Navigate to the ListeDesCours screen
+            NavigationUtil.navigateToListeCours(); // Assuming you have this method defined in the NavigationUtil
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -81,6 +80,32 @@ public class SideBarController {
     @FXML
     void handleSuiviAction(ActionEvent event) {
 
+    }
+    @FXML
+    private void handleCoursAction(ActionEvent event) {
+        try {
+            NavigationUtil.navigateToCours();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleModuleAction(ActionEvent event) {
+        try {
+            NavigationUtil.navigateToModule();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleChapitreAction(ActionEvent event) {
+        try {
+            NavigationUtil.navigateToChapitre();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
