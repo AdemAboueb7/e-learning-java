@@ -87,12 +87,21 @@ public class ArticleDetailController implements Initializable {
             // Initialiser les articles
             List<Article> articles = articleService.recuperer();
             
-            // Configuration des boutons d'action
+            // Configuration des boutons d'action selon le rôle
+            User currentUser = UserSession.getInstance().getUser();
+            boolean isAdmin = currentUser != null && currentUser.getRoles() != null && 
+                            currentUser.getRoles().stream().anyMatch(role -> role.equals("ROLE_ADMIN"));
+            
+            // Afficher les boutons Modifier et Supprimer pour l'admin
             if (editButton != null) {
+                editButton.setVisible(isAdmin);
+                editButton.setManaged(isAdmin);
                 editButton.setOnAction(this::openEditForm);
             }
             
             if (deleteButton != null) {
+                deleteButton.setVisible(isAdmin);
+                deleteButton.setManaged(isAdmin);
                 deleteButton.setOnAction(this::deleteArticle);
             }
             
@@ -205,6 +214,10 @@ public class ArticleDetailController implements Initializable {
             return;
         }
         
+        User currentUser = UserSession.getInstance().getUser();
+        boolean isAdmin = currentUser != null && currentUser.getRoles() != null && 
+                         currentUser.getRoles().stream().anyMatch(role -> role.equals("ROLE_ADMIN"));
+        
         for (Comment comment : comments) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/CommentCard.fxml"));
@@ -228,10 +241,20 @@ public class ArticleDetailController implements Initializable {
                 
                 if (contentLabel != null) contentLabel.setText(comment.getContenu());
 
+                // Vérifier si l'utilisateur est admin ou l'auteur du commentaire
+                boolean isCommentOwner = currentUser != null && currentUser.getId() == comment.getUserId();
+                boolean canManageComment = isAdmin || isCommentOwner;
+
+                // Afficher/masquer les boutons d'édition et de suppression
                 if (editButton != null) {
+                    editButton.setVisible(canManageComment);
+                    editButton.setManaged(canManageComment);
                     editButton.setOnAction(event -> showCommentEditState(comment, commentCard));
                 }
+
                 if (deleteButton != null) {
+                    deleteButton.setVisible(canManageComment);
+                    deleteButton.setManaged(canManageComment);
                     deleteButton.setOnAction(event -> deleteComment(comment));
                 }
                 
@@ -292,6 +315,12 @@ public class ArticleDetailController implements Initializable {
     private void addComment(ActionEvent event) {
         if (currentArticle == null) return;
         
+        // Vérifier si l'utilisateur est connecté
+        if (UserSession.getInstance().getUser() == null) {
+            showAlert(AlertType.WARNING, "Non connecté", "Vous devez être connecté pour ajouter un commentaire.");
+            return;
+        }
+        
         String commentContent = newCommentArea.getText().trim();
         
         // Validation du commentaire
@@ -306,13 +335,11 @@ public class ArticleDetailController implements Initializable {
             if (commentContent.length() > 1000) {
                 errors.append("Le commentaire ne doit pas dépasser 1000 caractères.\n");
             }
-            // Vérifier si le commentaire contient du texte réel et pas juste des espaces
             if (commentContent.replaceAll("\\s+", "").isEmpty()) {
                 errors.append("Le commentaire doit contenir du texte.\n");
             }
         }
         
-        // S'il y a des erreurs, les afficher
         if (errors.length() > 0) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Erreur de Validation");
@@ -326,17 +353,13 @@ public class ArticleDetailController implements Initializable {
             Comment comment = new Comment();
             comment.setContenu(commentContent);
             comment.setArticle(currentArticle);
-            comment.setUserId(1); // À remplacer par l'ID de l'utilisateur connecté
+            comment.setUserId(UserSession.getInstance().getUser().getId());
             
             commentService.ajouter(comment);
             
-            // Vider le champ de commentaire
             newCommentArea.clear();
-            
-            // Recharger les commentaires
             loadComments();
             
-            // Message de succès
             showAlert(AlertType.INFORMATION, "Succès", "Votre commentaire a été ajouté avec succès !");
             
         } catch (SQLException e) {
@@ -515,6 +538,17 @@ public class ArticleDetailController implements Initializable {
     }
 
     private void deleteComment(Comment comment) {
+        User currentUser = UserSession.getInstance().getUser();
+        boolean isAdmin = currentUser != null && currentUser.getRoles() != null && 
+                         currentUser.getRoles().stream().anyMatch(role -> role.equals("ROLE_ADMIN"));
+        boolean isCommentOwner = currentUser != null && currentUser.getId() == comment.getUserId();
+
+        // Vérifier si l'utilisateur est autorisé à supprimer le commentaire
+        if (!isAdmin && !isCommentOwner) {
+            showAlert(AlertType.ERROR, "Non autorisé", "Vous ne pouvez supprimer que vos propres commentaires.");
+            return;
+        }
+
         Alert confirmation = new Alert(AlertType.CONFIRMATION);
         confirmation.setTitle("Confirmer la Suppression");
         confirmation.setHeaderText("Supprimer le Commentaire");

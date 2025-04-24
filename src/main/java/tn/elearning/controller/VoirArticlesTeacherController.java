@@ -143,21 +143,36 @@ public class VoirArticlesTeacherController implements Initializable {
 
     private void openArticleDetail(Article article) {
         try {
+            ensureStageIsSet();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ArticleDetail.fxml"));
             Parent root = loader.load();
 
             ArticleDetailController controller = loader.getController();
-            controller.setArticle(article);
+            if (controller != null) {
+                controller.setArticle(article);
 
-            Stage stage = NavigationUtil.getMainStage();
-            if (stage != null) {
-                stage.setScene(new Scene(root));
+                Stage mainStage = NavigationUtil.getMainStage();
+                if (mainStage != null) {
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+                    mainStage.setScene(scene);
+                    mainStage.setTitle(article.getTitle());
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'afficher les détails de l'article.");
+                }
             } else {
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'afficher les détails de l'article.");
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger le contrôleur de l'article.");
             }
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'ouvrir les détails de l'article : " + e.getMessage());
+        }
+    }
+
+    private void ensureStageIsSet() {
+        if (NavigationUtil.getMainStage() == null && searchField != null && searchField.getScene() != null) {
+            Stage currentStage = (Stage) searchField.getScene().getWindow();
+            NavigationUtil.setMainStage(currentStage);
         }
     }
 
