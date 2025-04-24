@@ -2,14 +2,11 @@ package tn.elearning.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import tn.elearning.entities.User;
 import tn.elearning.services.ServiceUser;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collections;
 
@@ -35,7 +32,6 @@ public class SignupController {
 
     @FXML
     void signup(ActionEvent event) {
-
         String email = emailclient.getText().trim();
         String nom = nomclient.getText().trim();
         String mdp = mdpclient.getText().trim();
@@ -63,6 +59,7 @@ public class SignupController {
             return;
         }
 
+        // ✅ Création de l'utilisateur
         User user = new User();
         user.setEmail(email);
         user.setNom(nom);
@@ -77,19 +74,10 @@ public class SignupController {
         try {
             service.ajouter(user);
             showAlert("Succès", "Utilisateur ajouté avec succès avec le rôle PARENT !");
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Signin.fxml"));
-                Parent root = loader.load();
-                nomclient.getScene().setRoot(root);
-
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
         } catch (SQLException e) {
             showAlert("Erreur SQL", e.getMessage());
         }
     }
-
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -99,3 +87,4 @@ public class SignupController {
         alert.showAndWait();
     }
 }
+

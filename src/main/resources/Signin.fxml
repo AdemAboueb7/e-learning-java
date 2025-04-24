@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -10,7 +11,7 @@
             stylesheets="@signin.css">
 
     <children>
-        <Label layoutX="230" layoutY="50" text="Connexion"/>
+        <Label layoutX="230" layoutY="50" text="Connexion" styleClass="title"/>
 
         <TextField fx:id="emailclient"
                    layoutX="200" layoutY="100"
@@ -24,10 +25,16 @@
 
         <Button text="Se connecter"
                 layoutX="250" layoutY="200"
-                onAction="#signinonclick"/>
+                onAction="#signinonclick"
+                styleClass="btn-primary"/>
+
+        <Hyperlink fx:id="forgotPasswordLink"
+                   layoutX="240" layoutY="240"
+                   text="Mot de passe oublié ?"
+                   />
 
         <Label fx:id="errorLabel"
-               layoutX="200" layoutY="250"
+               layoutX="200" layoutY="280"
                textFill="red"/>
     </children>
 </AnchorPane>

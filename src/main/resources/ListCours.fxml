@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.elearning.controller.ListeDesCoursController"
+            stylesheets="@ListCours.css">
+
+    <!-- Sidebar -->
+    <left>
+        <fx:include source="sidebar.fxml"/>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <VBox styleClass="list-container" spacing="20" prefWidth="750" prefHeight="550">
+            <!-- Title with decorative underline -->
+            <StackPane styleClass="title-container">
+                <VBox alignment="CENTER" spacing="5">
+                    <Text styleClass="title" text="Liste des Cours" />
+                    <Line styleClass="title-underline" startX="0" endX="150" />
+                </VBox>
+            </StackPane>
+
+            <!-- ListView Container -->
+            <AnchorPane>
+                <ListView fx:id="chapitreListView" styleClass="chapter-list"
+                          prefHeight="450" prefWidth="700" />
+            </AnchorPane>
+        </VBox>
+    </center>
+</BorderPane>

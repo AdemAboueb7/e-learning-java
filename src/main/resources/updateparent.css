@@ -1,0 +1,60 @@
+/* Fond général */
+.anchor-pane {
+    -fx-background-color: #f0fdf4; /* fond clair pour la page */
+    -fx-padding: 20px;
+}
+
+/* Titre */
+.label {
+    -fx-font-size: 22px;
+    -fx-text-fill: #2c3e50; /* couleur du texte du titre */
+    -fx-font-weight: bold;
+}
+
+/* Style de l'image de profil */
+.circle {
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 4, 0.5, 0, 2);
+    -fx-stroke: #2ecc71; /* Bordure verte */
+    -fx-stroke-width: 2;
+}
+
+.circle:hover {
+    -fx-stroke: #27ae60; /* Changement de couleur au survol */
+}
+
+/* Champ de texte (nom, email, téléphone) */
+.text-field {
+    -fx-pref-height: 35px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 10px;
+    -fx-background-color: white;
+    -fx-text-fill: #2c3e50; /* Texte sombre */
+    -fx-font-size: 14px;
+}
+
+/* Boutons */
+.button {
+    -fx-background-color: #2ecc71; /* Vert éducatif */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-pref-width: 150px;
+    -fx-border-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #27ae60; /* Change à un vert plus foncé au survol */
+}
+
+/* Lien mot de passe oublié */
+.hyperlink {
+    -fx-text-fill: #27ae60;
+    -fx-font-size: 13px;
+    -fx-underline: true;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #1abc9c; /* Change en vert clair au survol */
+}
