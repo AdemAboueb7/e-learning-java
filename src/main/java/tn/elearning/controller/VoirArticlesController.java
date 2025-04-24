@@ -168,16 +168,22 @@ public class VoirArticlesController implements Initializable {
             Parent root = loader.load();
 
             ArticleDetailController controller = loader.getController();
-            controller.setArticle(article);
+            if (controller != null) {
+                controller.setArticle(article);
 
-            Stage mainStage = NavigationUtil.getMainStage();
-            if (mainStage != null) {
-                mainStage.setScene(new Scene(root));
+                Stage mainStage = NavigationUtil.getMainStage();
+                if (mainStage != null) {
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+                    mainStage.setScene(scene);
+                    mainStage.setTitle(article.getTitle());
+                } else {
+                    System.err.println("Main stage not found in NavigationUtil for ArticleDetail navigation.");
+                    showAlert(Alert.AlertType.ERROR, "Erreur Interne", "Impossible d'afficher les détails de l'article.");
+                }
             } else {
-                System.err.println("Main stage not found in NavigationUtil for ArticleDetail navigation.");
-                showAlert(Alert.AlertType.ERROR, "Erreur Interne", "Impossible d'afficher les détails de l'article.");
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger le contrôleur de l'article.");
             }
-
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Erreur de Chargement", "Impossible d'ouvrir les détails de l'article : " + e.getMessage());

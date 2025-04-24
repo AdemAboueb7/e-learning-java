@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
-import tn.elearning.util.NavigationUtil;
+import tn.elearning.utils.NavigationUtil;
 
 public class SideBarAdminController {
 
