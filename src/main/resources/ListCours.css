@@ -1,0 +1,105 @@
+/* ListCours.css - Main stylesheet for the Cours List application */
+
+/* Root and general styles */
+.root {
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-base: #3498db;
+    -fx-background: #f5f5f5;
+}
+
+/* Title styling */
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 15px 0 20px 0;
+}
+
+/* Main container styling */
+.main-container {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 5, 0, 0);
+    -fx-padding: 20px;
+}
+
+/* Chapter list styling */
+#chapitreListView {
+    -fx-background-color: transparent;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-padding: 5px;
+}
+
+#chapitreListView .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 15px 10px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1px 0;
+}
+
+#chapitreListView .list-cell:filled:hover {
+    -fx-background-color: #f8f8f8;
+}
+
+/* Chapter name styling */
+.chapter-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 0 0 5px 0;
+}
+
+/* Course item styling */
+.course-box {
+    -fx-background-color: #f9f9f9;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+    -fx-padding: 8px;
+    -fx-margin: 5px 0;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+}
+
+.course-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+    -fx-wrap-text: true;
+    -fx-max-width: 450px;
+}
+
+/* Download button styling */
+.download-button {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+    -fx-cursor: hand;
+}
+
+.download-button:hover {
+    -fx-background-color: #2ecc71;
+}
+
+.download-button:pressed {
+    -fx-background-color: #219653;
+}
+
+/* Section separator */
+.section-separator {
+    -fx-padding: 10px 0;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px 0 0 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 800px) {
+    .course-label {
+        -fx-max-width: 300px;
+    }
+}

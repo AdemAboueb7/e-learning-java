@@ -1,94 +1,80 @@
 package tn.elearning.entities;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 
-
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
-@Table(name = "chapitres")
 public class Chapitre {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private final IntegerProperty id = new SimpleIntegerProperty();
+    private final StringProperty nom = new SimpleStringProperty();
+    private final IntegerProperty moduleId = new SimpleIntegerProperty();
+    private final StringProperty moduleNom = new SimpleStringProperty();
+    private final StringProperty description = new SimpleStringProperty();
 
-    @NotBlank
-    @Column(nullable = false)
-    private String nom;
-
-    @ManyToOne
-    @JoinColumn(name = "module_id", nullable = false)
-    private Module module;
-    private String description;
-
-    @OneToMany(mappedBy = "chapitre", cascade = CascadeType.ALL)
-    private List<Cours> cours = new ArrayList<>();
-
-    public Chapitre() {
-        this.cours = new ArrayList<>();
+    // Getters and Setters for the properties
+    public int getId() {
+        return id.get();
     }
 
-    public Integer getId() {
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    public IntegerProperty idProperty() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getNom() {
-        return nom;
+        return nom.get();
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.nom.set(nom);
     }
 
-    public Module getModule() {
-        return module;
+    public StringProperty nomProperty() {
+        return nom;
     }
 
-    public void setModule(Module module) {
-        this.module = module;
+    public int getModuleId() {
+        return moduleId.get();
     }
 
-    public List<Cours> getCours() {
-        return cours;
+    public void setModuleId(int moduleId) {
+        this.moduleId.set(moduleId);
     }
 
-    public void setCours(List<Cours> cours) {
-        this.cours = cours;
+    public IntegerProperty moduleIdProperty() {
+        return moduleId;
     }
 
-    public void addCours(Cours cours) {
-        this.cours.add(cours);
-        cours.setChapitre(this);
+    public String getModuleNom() {
+        return moduleNom.get();
     }
 
-    public void removeCours(Cours cours) {
-        this.cours.remove(cours);
-        cours.setChapitre(null);
+    public void setModuleNom(String moduleNom) {
+        this.moduleNom.set(moduleNom);
+    }
+
+    public StringProperty moduleNomProperty() {
+        return moduleNom;
     }
 
     public String getDescription() {
-        return description;
+        return description.get();
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description.set(description);
     }
 
+    public StringProperty descriptionProperty() {
+        return description;
+    }
     @Override
     public String toString() {
-        return "Chapitre{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", module=" + module +
-                ", description='" + description + '\'' +
-                ", cours=" + cours +
-                '}';
+        return getNom();  // This ensures the ComboBox shows the chapter name.
     }
+
 }

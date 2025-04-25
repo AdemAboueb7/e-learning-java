@@ -1,39 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="root" stylesheets="@alpha-education.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.VoirArticlesController">
-   <children>
-      <VBox layoutX="10.0" layoutY="10.0" prefHeight="700.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<BorderPane prefHeight="700.0" prefWidth="1000.0" styleClass="root" stylesheets="@alpha-education.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.VoirArticlesController">
+   
+   <left>
+      <VBox fx:id="sidebar" alignment="TOP_CENTER" prefWidth="220.0" spacing="10.0" styleClass="sidebar">
          <children>
-            <!-- Header with Alpha Education Logo -->
+            <HBox alignment="CENTER" prefHeight="70.0" styleClass="sidebar-header">
+               <children>
+                  <ImageView fitHeight="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/logoo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <padding>
+                  <Insets top="15.0" bottom="15.0" />
+               </padding>
+            </HBox>
+            
+            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleProfilAction" styleClass="sidebar-item" text="Profil">
+               <graphic>
+                  <SVGPath content="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" styleClass="sidebar-icon"/>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handlePaiementsAction" styleClass="sidebar-item" text="Paiements">
+                <graphic>
+                   <SVGPath content="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z" styleClass="sidebar-icon"/>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleCoursAction" styleClass="sidebar-item" text="Cours">
+                <graphic>
+                   <SVGPath content="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z" styleClass="sidebar-icon"/>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleSuiviAction" styleClass="sidebar-item" text="Suivre mon enfant">
+                 <graphic>
+                    <SVGPath content="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z" styleClass="sidebar-icon"/>
+               </graphic>
+             </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleEvenementsAction" styleClass="sidebar-item" text="Évènements">
+                 <graphic>
+                    <SVGPath content="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z" styleClass="sidebar-icon"/>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleArticlesAction" styleClass="sidebar-item-active" text="Articles">
+                 <graphic>
+                    <SVGPath content="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" styleClass="sidebar-icon"/>
+               </graphic>
+            </Button>
+            
+            <Region VBox.vgrow="ALWAYS" />
+            
+            <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleDeconnexionAction" styleClass="sidebar-logout-button" text="Déconnexion">
+                 <graphic>
+                    <SVGPath content="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" styleClass="sidebar-icon"/>
+               </graphic>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="10.0" top="0" />
+         </padding>
+      </VBox>
+   </left>
+   
+   <center>
+      <VBox prefHeight="700.0" prefWidth="980.0">
+         <children>
             <HBox alignment="CENTER_LEFT" prefHeight="70.0" styleClass="header">
                <children>
-                  <HBox styleClass="logo-container">
-                     <children>
-                        <Circle radius="15" styleClass="logo-circle-vert" />
-                        <Circle radius="15" styleClass="logo-circle-orange" />
-                        <Label styleClass="logo-text" text="Alpha Education">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                  </HBox>
                   <Label styleClass="header-label" text="Articles">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -41,18 +85,6 @@
                   <HBox alignment="CENTER_RIGHT" spacing="15.0" HBox.hgrow="ALWAYS">
                      <children>
                         <TextField fx:id="searchField" prefHeight="40.0" prefWidth="300.0" promptText="Rechercher des articles..." styleClass="search-field" />
-                        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
-                           <children>
-                              <Label text="Filtrer par :" />
-                              <Button fx:id="allCategoryBtn" mnemonicParsing="false" onAction="#filterByAllCategories" styleClass="button-secondary" text="Tout" />
-                              <Button fx:id="latestBtn" mnemonicParsing="false" onAction="#filterByLatest" styleClass="button-secondary" text="Récents" />
-                           </children>
-                        </HBox>
-                        <Button mnemonicParsing="false" onAction="#refreshArticles" styleClass="button-secondary" text="Actualiser">
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </Button>
                         <Button mnemonicParsing="false" onAction="#navigateToAddArticle" text="+ Nouvel Article" />
                      </children>
                   </HBox>
@@ -62,44 +94,9 @@
                </padding>
             </HBox>
             
-            <!-- Decorative star element -->
-            <HBox>
-               <children>
-                  <javafx.scene.shape.SVGPath content="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" 
-                     styleClass="star-decoration" scaleX="0.7" scaleY="0.7">
-                     <HBox.margin>
-                        <Insets left="40.0" top="-15.0" />
-                     </HBox.margin>
-                  </javafx.scene.shape.SVGPath>
-               </children>
-            </HBox>
-            
-            <!-- Category pills -->
-            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
-               <children>
-                  <Label styleClass="section-title" text="Catégories populaires :">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </Label>
-                  <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" prefHeight="40.0" vbarPolicy="NEVER" HBox.hgrow="ALWAYS">
-                     <content>
-                        <HBox fx:id="categoryPillsContainer" alignment="CENTER_LEFT" prefHeight="40.0" spacing="10.0" />
-                     </content>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </ScrollPane>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-               </VBox.margin>
-            </HBox>
-            
-            <!-- Articles GridView -->
-            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="580.0" VBox.vgrow="ALWAYS">
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                <content>
-                  <FlowPane fx:id="articlesContainer" hgap="20.0" prefWidth="960.0" vgap="20.0">
+                  <FlowPane fx:id="articlesContainer" alignment="CENTER" hgap="20.0" vgap="20.0">
                      <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
@@ -107,10 +104,9 @@
                </content>
             </ScrollPane>
             
-            <!-- Footer -->
-            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" styleClass="header">
+            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" styleClass="footer">
                <children>
-                  <Label text="© 2023 Alpha Education" textFill="WHITE">
+                  <Label text="© 2024 Alpha Education" styleClass="footer-text">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
@@ -119,5 +115,5 @@
             </HBox>
          </children>
       </VBox>
-   </children>
-</AnchorPane> 
+   </center>
+</BorderPane> 

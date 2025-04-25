@@ -1,95 +1,86 @@
 package tn.elearning.entities;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 
-
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "cours")
 public class Cours {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private final IntegerProperty id = new SimpleIntegerProperty();
+    private final IntegerProperty chapitreId = new SimpleIntegerProperty();
+    private final StringProperty titre = new SimpleStringProperty();
+    private byte[] contenuFichier;
+    private final StringProperty updatedAt = new SimpleStringProperty();
+    private final StringProperty description = new SimpleStringProperty();
 
-    @NotBlank
-    @Column(nullable = false)
-    private String titre;
-
-    @Column(name = "contenu_fichier")
-    private String contenuFichier;
-
-    @ManyToOne
-    @JoinColumn(name = "chapitre_id", nullable = false)
-    private Chapitre chapitre;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-    private String description;
-
-    public Cours() {
-        this.updatedAt = LocalDateTime.now();
+    // Getters and Setters for properties
+    public int getId() {
+        return id.get();
     }
 
-    public Integer getId() {
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    public IntegerProperty idProperty() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public int getChapitreId() {
+        return chapitreId.get();
+    }
+
+    public void setChapitreId(int chapitreId) {
+        this.chapitreId.set(chapitreId);
+    }
+
+    public IntegerProperty chapitreIdProperty() {
+        return chapitreId;
     }
 
     public String getTitre() {
-        return titre;
+        return titre.get();
     }
 
     public void setTitre(String titre) {
-        this.titre = titre;
+        this.titre.set(titre);
     }
 
-    public String getContenuFichier() {
+    public StringProperty titreProperty() {
+        return titre;
+    }
+
+    public byte[] getContenuFichier() {
         return contenuFichier;
     }
 
-    public void setContenuFichier(String contenuFichier) {
+    public void setContenuFichier(byte[] contenuFichier) {
         this.contenuFichier = contenuFichier;
     }
 
-    public Chapitre getChapitre() {
-        return chapitre;
+
+
+    public String getUpdatedAt() {
+        return updatedAt.get();
     }
 
-    public void setChapitre(Chapitre chapitre) {
-        this.chapitre = chapitre;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt.set(updatedAt);
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public StringProperty updatedAtProperty() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public String getDescription() {
-        return description;
+        return description.get();
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description.set(description);
     }
 
-    @Override
-    public String toString() {
-        return "Cours{" +
-                "id=" + id +
-                ", titre='" + titre + '\'' +
-                ", contenuFichier='" + contenuFichier + '\'' +
-                ", chapitre=" + chapitre +
-                ", updatedAt=" + updatedAt +
-                ", description='" + description + '\'' +
-                '}';
+    public StringProperty descriptionProperty() {
+        return description;
     }
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="tn.elearning.controller.CoursController" stylesheets="@CMCStyle.css">
+    <left>
+        <fx:include source="sidebar.fxml"/>
+    </left>
+    <center>
+        <AnchorPane prefWidth="700.0" prefHeight="500.0">
+            <children>
+                <VBox layoutX="10.0" layoutY="10.0" spacing="10" style="-fx-padding: 10px;">
+                    <TextField fx:id="coursNameField" promptText="Nom du Cours"/>
+                    <TextArea fx:id="coursDescriptionField" promptText="Description du Cours"/>
+                    <Label text="Chapitre"/>
+                    <ComboBox fx:id="chapitreComboBox" promptText="Sélectionnez un Chapitre"/>
+
+                    <HBox spacing="10">
+                        <Button text="Téléverser un Fichier" onAction="#uploadFile"/>
+                        <Label fx:id="uploadedFileNameLabel" text="Aucun fichier sélectionné"/>
+                    </HBox>
+
+                    <HBox spacing="10">
+                        <Button text="Ajouter" onAction="#addCours"/>
+                        <Button text="Mettre à Jour" onAction="#updateCours"/>
+                        <Button text="Supprimer" onAction="#deleteCours"/>
+                    </HBox>
+
+                    <TableView fx:id="coursTable" prefHeight="300" prefWidth="600">
+                        <columns>
+                            <TableColumn fx:id="colNom" text="Nom"/>
+                            <TableColumn fx:id="colDescription" text="Description"/>
+                            <TableColumn fx:id="colChapitreNom" text="Nom du Chapitre"/>
+                            <TableColumn fx:id="colDownload" text="Télécharger"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>

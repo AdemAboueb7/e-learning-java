@@ -3,17 +3,11 @@ package tn.elearning.controller;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import tn.elearning.entities.Article;
 import tn.elearning.services.ArticleService;
 import tn.elearning.utils.NavigationUtil;
@@ -217,16 +211,16 @@ public class ArticleManagerController implements Initializable {
         }
 
         try {
-            // Update only title for now since the interface doesn't support full edit
-            articleService.modifier(selectedArticle.getId(), titleField.getText());
-            
-            // Update the selected article object with new values for display
+            // Update the selected article object with new values from the fields
             selectedArticle.setTitle(titleField.getText());
             selectedArticle.setCategory(categoryField.getText());
             selectedArticle.setContent(contentArea.getText());
-            
+
+            // Call the modifier method with the updated Article object
+            articleService.modifier(selectedArticle);
+
             showAlert(Alert.AlertType.INFORMATION, "Success", "Article updated successfully!");
-            loadArticles();
+            loadArticles(); // Refresh the table view
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Update Error", "Could not update article: " + e.getMessage());
         }

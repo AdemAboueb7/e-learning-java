@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<VBox fx:id="articleCard" maxWidth="300.0" minHeight="200.0" prefHeight="250.0" prefWidth="300.0" styleClass="article-card" stylesheets="@alpha-education.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="articleCardRoot" maxWidth="300.0" minHeight="200.0" prefHeight="250.0" prefWidth="300.0" styleClass="article-card" stylesheets="@alpha-education.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="titleLabel" styleClass="card-title" text="Titre de l'article" wrapText="true">
          <VBox.margin>
@@ -32,10 +32,9 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </Label>
-      <HBox alignment="CENTER_LEFT">
+      <HBox alignment="CENTER_LEFT" styleClass="card-footer">
          <children>
             <Label fx:id="dateLabel" styleClass="card-date" text="25 Mai 2023" HBox.hgrow="ALWAYS" />
-            <Button fx:id="readMoreButton" mnemonicParsing="false" styleClass="button-secondary" text="Lire plus" />
          </children>
       </HBox>
    </children>
