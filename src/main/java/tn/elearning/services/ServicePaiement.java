@@ -95,6 +95,36 @@ public class ServicePaiement implements IServices<Paiement> {
         paiement.setUser(u);
         return paiement;
     }
+    public Double getTotalPaiements() throws SQLException {
+        Double total = 0.0;
+        String sql = "select sum(montant) from paiement ";
+        Statement st = cnx.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while (rs.next()) {
+            total = rs.getDouble(1);
+        }
+        return total;
+    }
+    public int getTotalAbonnements() throws SQLException{
+        int total = 0;
+        String sql = "select count(*) from abonnement ";
+        Statement st = cnx.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while (rs.next()) {
+            total = rs.getInt(1);
+        }
+        return total;
+    }
+    public int getNombrePaiementsParAbonnement(int abonnementId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM paiement WHERE id_abonnement_id = " + abonnementId;
+        Statement st = cnx.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
+    }
+
 
 
 

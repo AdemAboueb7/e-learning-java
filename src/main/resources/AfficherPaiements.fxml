@@ -26,6 +26,7 @@
           <TableColumn fx:id="montantp" prefWidth="124.800048828125" text="Montant" />
             <TableColumn fx:id="datep" prefWidth="175.199951171875" text="Date paiement" />
             <TableColumn fx:id="abonnementp" prefWidth="190.4000244140625" text="Abonnement" />
+            <TableColumn fx:id="expirationp" prefWidth="180.0" text="Date expiration" />
         </columns>
       </TableView>
       <Button fx:id="ajouterp" layoutX="456.0" layoutY="314.0" mnemonicParsing="false" onAction="#ajouterp" text="Ajouter paiement" />
