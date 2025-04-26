@@ -48,7 +48,7 @@ public class ServicePaiement implements IServices<Paiement> {
 
     @Override
     public List<Paiement> recuperer() throws SQLException {
-        String sql = "select * from paiement";
+        String sql = "select * from paiement p JOIN abonnement a ON p.id_abonnement_id = a.id";
         Statement st = this.cnx.createStatement();
         ResultSet rs = st.executeQuery(sql);
         List<Paiement> paiements = new ArrayList();
@@ -61,6 +61,7 @@ public class ServicePaiement implements IServices<Paiement> {
             p.setDate(timestamp.toLocalDateTime());
             Abonnement a = new Abonnement();
             a.setId(rs.getInt("id_abonnement_id"));
+            a.setDuree(rs.getString("duree"));
             p.setAbonnement(a);
             User u = new User();
             u.setId(rs.getInt("userid_id"));

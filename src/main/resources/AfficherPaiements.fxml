@@ -12,8 +12,8 @@
     <left>
         <fx:include source="sidebar.fxml" />
     </left>
-    <center>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@alpha-education.css">
+   <right>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@alpha-education.css" BorderPane.alignment="CENTER">
    <children>
       <Text layoutX="196.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des paiements" textAlignment="CENTER">
          <font>
@@ -23,14 +23,14 @@
       <TableView fx:id="tablep" layoutX="13.0" layoutY="100.0" prefHeight="200.0" prefWidth="565.0">
         <columns>
           <TableColumn fx:id="idp" prefWidth="75.0" text="Id" />
-          <TableColumn fx:id="montantp" prefWidth="124.800048828125" text="Montant" />
-            <TableColumn fx:id="datep" prefWidth="175.199951171875" text="Date paiement" />
-            <TableColumn fx:id="abonnementp" prefWidth="190.4000244140625" text="Abonnement" />
-            <TableColumn fx:id="expirationp" prefWidth="180.0" text="Date expiration" />
+          <TableColumn fx:id="montantp" prefWidth="83.99993133544922" text="Montant" />
+            <TableColumn fx:id="datep" prefWidth="114.39996337890625" text="Date paiement" />
+            <TableColumn fx:id="abonnementp" prefWidth="126.4000244140625" text="Abonnement" />
+            <TableColumn fx:id="expirationp" prefWidth="245.60000610351562" text="Date expiration" />
         </columns>
       </TableView>
       <Button fx:id="ajouterp" layoutX="456.0" layoutY="314.0" mnemonicParsing="false" onAction="#ajouterp" text="Ajouter paiement" />
    </children>
 </AnchorPane>
-    </center>
+   </right>
 </BorderPane>
