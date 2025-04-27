@@ -48,7 +48,7 @@ public class ServicePaiement implements IServices<Paiement> {
 
     @Override
     public List<Paiement> recuperer() throws SQLException {
-        String sql = "select * from paiement";
+        String sql = "select * from paiement p JOIN abonnement a ON p.id_abonnement_id = a.id";
         Statement st = this.cnx.createStatement();
         ResultSet rs = st.executeQuery(sql);
         List<Paiement> paiements = new ArrayList();
@@ -61,6 +61,8 @@ public class ServicePaiement implements IServices<Paiement> {
             p.setDate(timestamp.toLocalDateTime());
             Abonnement a = new Abonnement();
             a.setId(rs.getInt("id_abonnement_id"));
+            a.setDuree(rs.getString("duree"));
+            a.setType(rs.getString("type"));
             p.setAbonnement(a);
             User u = new User();
             u.setId(rs.getInt("userid_id"));
@@ -95,6 +97,36 @@ public class ServicePaiement implements IServices<Paiement> {
         paiement.setUser(u);
         return paiement;
     }
+    public Double getTotalPaiements() throws SQLException {
+        Double total = 0.0;
+        String sql = "select sum(montant) from paiement ";
+        Statement st = cnx.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while (rs.next()) {
+            total = rs.getDouble(1);
+        }
+        return total;
+    }
+    public int getTotalAbonnements() throws SQLException{
+        int total = 0;
+        String sql = "select count(*) from abonnement ";
+        Statement st = cnx.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while (rs.next()) {
+            total = rs.getInt(1);
+        }
+        return total;
+    }
+    public int getNombrePaiementsParAbonnement(int abonnementId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM paiement WHERE id_abonnement_id = " + abonnementId;
+        Statement st = cnx.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
+    }
+
 
 
 

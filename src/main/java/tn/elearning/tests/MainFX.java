@@ -17,10 +17,10 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
-            // ✅ Set the main stage so NavigationUtil can use it later
+
             tn.elearning.utils.NavigationUtil.setMainStage(primaryStage);
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/signin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Signin.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

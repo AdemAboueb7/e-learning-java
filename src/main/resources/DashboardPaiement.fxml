@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.elearning.controller.DashboardPaiementController"
+            prefHeight="600.0" prefWidth="900.0">
+
+    <VBox spacing="20" layoutX="20" layoutY="20" prefWidth="860">
+        <!-- Titre -->
+        <Label text="Dashboard Paiements"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+        <!-- Statistiques Résumées -->
+        <HBox spacing="30" alignment="CENTER">
+            <VBox alignment="CENTER" style="-fx-background-color: #e3f2fd; -fx-padding: 20; -fx-border-radius: 10; -fx-background-radius: 10;">
+                <Label text="Total Abonnements" style="-fx-font-weight: bold;" />
+                <Label fx:id="labelTotalAbonnements" style="-fx-font-size: 20px;" />
+            </VBox>
+
+            <VBox alignment="CENTER" style="-fx-background-color: #fce4ec; -fx-padding: 20; -fx-border-radius: 10; -fx-background-radius: 10;">
+                <Label text="Total Paiements" style="-fx-font-weight: bold;" />
+                <Label fx:id="labelTotalPaiements" style="-fx-font-size: 20px;" />
+            </VBox>
+
+            <VBox alignment="CENTER" style="-fx-background-color: #fff3e0; -fx-padding: 20; -fx-border-radius: 10; -fx-background-radius: 10;">
+                <Label text="Vue Globale" style="-fx-font-weight: bold;" />
+                <PieChart fx:id="pieChartGlobal" prefHeight="200" prefWidth="200"/>
+            </VBox>
+        </HBox>
+
+        <!-- Graphique en Barres -->
+        <Label text="Nombre de paiements par abonnement"
+               style="-fx-font-size: 16px; -fx-padding: 10px;" />
+        <BarChart fx:id="barChartPaiements" prefHeight="300" prefWidth="860">
+            <xAxis>
+                <CategoryAxis label="Abonnement"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="Nombre de paiements"/>
+            </yAxis>
+        </BarChart>
+    </VBox>
+</AnchorPane>

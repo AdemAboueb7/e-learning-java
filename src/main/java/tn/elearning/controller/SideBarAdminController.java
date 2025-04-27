@@ -59,7 +59,7 @@ public class SideBarAdminController {
     @FXML
     void handlePaiementsAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VoirArticles.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherPaiements.fxml"));
             Parent root = loader.load();
             paiements.getScene().setRoot(root);
 
