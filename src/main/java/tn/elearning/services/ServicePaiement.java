@@ -62,6 +62,7 @@ public class ServicePaiement implements IServices<Paiement> {
             Abonnement a = new Abonnement();
             a.setId(rs.getInt("id_abonnement_id"));
             a.setDuree(rs.getString("duree"));
+            a.setType(rs.getString("type"));
             p.setAbonnement(a);
             User u = new User();
             u.setId(rs.getInt("userid_id"));

@@ -8,15 +8,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import tn.elearning.entities.Abonnement;
 import tn.elearning.entities.Paiement;
 import tn.elearning.entities.User;
 import tn.elearning.services.ServicePaiement;
+import tn.elearning.utils.FactureGenerator;
 import tn.elearning.utils.UserSession;
 
 import java.io.IOException;
@@ -33,7 +31,7 @@ public class AfficherPaiementsController implements Initializable {
     private Button ajouterp;
 
     @FXML
-    private TableColumn<Paiement, Integer> abonnementp;
+    private TableColumn<Paiement, String> abonnementp;
 
     @FXML
     private TableColumn<Paiement, LocalDateTime> expirationp;
@@ -46,6 +44,10 @@ public class AfficherPaiementsController implements Initializable {
 
     @FXML
     private TableColumn<Paiement, Double> montantp;
+
+    @FXML
+    private TableColumn<Paiement, Void> factureCol;
+
 
     @FXML
     private TableView<Paiement> tablep;
@@ -63,17 +65,23 @@ public class AfficherPaiementsController implements Initializable {
 
             ObservableList<Paiement> paiements = FXCollections.observableArrayList(filteredPaiements);
 
-            idp.setCellValueFactory(new PropertyValueFactory<>("id"));
             datep.setCellValueFactory(new PropertyValueFactory<>("date"));
             montantp.setCellValueFactory(new PropertyValueFactory<>("montant"));
-            abonnementp.setCellValueFactory(new PropertyValueFactory<>("idAbonnement"));
+            abonnementp.setCellValueFactory(cellData -> {
+                Paiement paiement = cellData.getValue();
+                Abonnement abonnement = paiement.getAbonnement();
+                if (abonnement != null && abonnement.getType() != null) {
+                    return new SimpleObjectProperty<>(abonnement.getType());  // Si 'TypeAbonnement' a une méthode getNom()
+                } else {
+                    return new SimpleObjectProperty<>(null);
+                }
+            });
+
 
             expirationp.setCellValueFactory(cellData -> {
                 Paiement paiement = cellData.getValue();
                 Abonnement abonnement = paiement.getAbonnement();
                 if (abonnement != null && abonnement.getDuree() != null && paiement.getDate() != null) {
-                    System.out.println("DEBUG: paiement.getDate() = " + paiement.getDate());
-                    System.out.println("DEBUG: abonnement.getDuree() = " + abonnement.getDuree());
                     LocalDateTime dateDebut = paiement.getDate();
                     String duree = abonnement.getDuree();
                     LocalDateTime dateExpiration = calculerDateFin(dateDebut, duree);
@@ -84,8 +92,37 @@ public class AfficherPaiementsController implements Initializable {
                     return new SimpleObjectProperty<>(null);
                 }
             });
-
             tablep.setItems(paiements);
+            factureCol.setCellFactory(col -> new TableCell<>() {
+                private final Button button = new Button("Télécharger");
+
+                {
+                    button.setOnAction(event -> {
+                        Paiement paiement = getTableView().getItems().get(getIndex());
+                        if (paiement != null) {
+                            // Générer ou ouvrir la facture
+                            FactureGenerator generator = new FactureGenerator();
+                            generator.generateFacture(paiement);
+                            try {
+                                java.awt.Desktop.getDesktop().open(new java.io.File("Facture_Paiement_" + paiement.getId() + ".pdf"));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(button);
+                    }
+                }
+            });
+
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

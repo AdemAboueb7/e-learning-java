@@ -22,11 +22,12 @@
       </Text>
       <TableView fx:id="tablep" layoutX="13.0" layoutY="100.0" prefHeight="200.0" prefWidth="565.0">
         <columns>
-          <TableColumn fx:id="idp" prefWidth="75.0" text="Id" />
           <TableColumn fx:id="montantp" prefWidth="83.99993133544922" text="Montant" />
             <TableColumn fx:id="datep" prefWidth="114.39996337890625" text="Date paiement" />
             <TableColumn fx:id="abonnementp" prefWidth="126.4000244140625" text="Abonnement" />
             <TableColumn fx:id="expirationp" prefWidth="245.60000610351562" text="Date expiration" />
+            <TableColumn fx:id="factureCol" text="Facture"/>
+
         </columns>
       </TableView>
       <Button fx:id="ajouterp" layoutX="456.0" layoutY="314.0" mnemonicParsing="false" onAction="#ajouterp" text="Ajouter paiement" />
