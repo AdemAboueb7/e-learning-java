@@ -4,11 +4,20 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import tn.elearning.entities.User;
 import tn.elearning.services.ServiceUser;
 import tn.elearning.utils.UserSession;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 
+import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
 
 public class UpdateParentController {
@@ -81,8 +90,38 @@ public class UpdateParentController {
 
     @FXML
     private void handleChangeProfileImage() {
-        System.out.println("🖼️ Changer l'image de profil - fonctionnalité à implémenter");
-        // TODO : Ajouter un FileChooser pour sélectionner une nouvelle image
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choisir une image de profil");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+        File file = fileChooser.showOpenDialog(profileCircle.getScene().getWindow());
+
+        if (file != null) {
+            try {
+                // Lire le fichier image
+                byte[] imageBytes = Files.readAllBytes(file.toPath());
+
+                // Afficher l'image dans le cercle
+                Image image = new Image(new ByteArrayInputStream(imageBytes));
+                profileCircle.setFill(new ImagePattern(image));
+
+                // Mettre à jour dans l'objet currentUser
+                currentUser.setImageName(file.getName());
+                currentUser.setImageContent(imageBytes);
+
+                // Mise à jour dans la base de données
+                serviceUser.updateUserImage(currentUser.getId(), currentUser.getImageName(), currentUser.getImageContent());
+
+
+                System.out.println("✅ Image de profil mise à jour !");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
+
 

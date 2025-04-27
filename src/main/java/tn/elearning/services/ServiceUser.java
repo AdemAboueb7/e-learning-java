@@ -1,13 +1,16 @@
 package tn.elearning.services;
 
+
 import tn.elearning.entities.Module;
 import tn.elearning.entities.User;
 import tn.elearning.tools.MyDataBase;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class ServiceUser implements IServices<User> {
     private final Connection cnx;
@@ -175,7 +178,7 @@ public class ServiceUser implements IServices<User> {
     }
     public User findByEmailAndPassword(String email, String password) throws SQLException {
         String query = "SELECT * FROM user WHERE email = ? AND password = ?";
-        PreparedStatement ps = cnx.prepareStatement(query); // ⚠️ pas `connection`, mais `cnx` comme défini
+        PreparedStatement ps = cnx.prepareStatement(query);
         ps.setString(1, email);
         ps.setString(2, password);
 
@@ -186,7 +189,10 @@ public class ServiceUser implements IServices<User> {
             user.setNom(rs.getString("nom"));
             user.setEmail(rs.getString("email"));
             user.setPassword(rs.getString("password"));
-            // Tu peux aussi set d'autres champs si tu veux
+            String rolesStr = rs.getString("roles");
+            rolesStr = rolesStr.replace("[", "").replace("]", "").replace("\"", "");
+            List<String> roles = Arrays.asList(rolesStr.split(","));
+            user.setRoles(roles);
             return user;
         }
         return null;
@@ -198,7 +204,120 @@ public class ServiceUser implements IServices<User> {
             ps.setInt(2, userId);
             ps.executeUpdate();
         }
+
     }
+    public String generateResetToken(String email) {
+        String token = UUID.randomUUID().toString();
+        return token;
+    }
+    public void updateUserImage(int userId, String imageName, byte[] imageContent) throws SQLException {
+        String sql = "UPDATE user SET nomimage = ?, contenuimage = ? WHERE id = ?";
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setString(1, imageName);           // image_name -> nomimage
+            ps.setBytes(2, imageContent);         // image_content -> contenuimage
+            ps.setInt(3, userId);                 // id de l'utilisateur
+
+            ps.executeUpdate();
+            System.out.println("Image de l'utilisateur mise à jour !");
+        }
+    }
+    public void saveResetToken(String email, String token) throws SQLException {
+        String query = "UPDATE user SET reset_token = ?, token_expiration = ? WHERE email = ?";
+        try (PreparedStatement ps = cnx.prepareStatement(query)) {
+            // Token valable 24 heures
+            Timestamp expiration = new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
+
+            ps.setString(1, token);
+            ps.setTimestamp(2, expiration);
+            ps.setString(3, email);
+
+            int rowsUpdated = ps.executeUpdate();
+            if (rowsUpdated == 0) {
+                throw new SQLException("Aucun utilisateur trouvé avec cet email: " + email);
+            }
+        }
+    }
+
+    // Vérifie si un token est valide
+    public boolean isResetTokenValid(String email, String token) throws SQLException {
+        String query = "SELECT 1 FROM user WHERE email = ? AND reset_token = ? AND token_expiration > NOW()";
+        try (PreparedStatement ps = cnx.prepareStatement(query)) {
+            ps.setString(1, email);
+            ps.setString(2, token);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        }
+    }
+
+    // Réinitialise le mot de passe avec un token valide
+    public boolean resetPasswordWithToken(String token, String newPassword) throws SQLException {
+        // 1. Vérifier d'abord si le token est valide
+        String checkQuery = "SELECT email FROM user WHERE reset_token = ? AND token_expiration > NOW()";
+        try (PreparedStatement checkPs = cnx.prepareStatement(checkQuery)) {
+            checkPs.setString(1, token);
+            ResultSet rs = checkPs.executeQuery();
+
+            if (rs.next()) {
+                String email = rs.getString("email");
+
+                // 2. Mettre à jour le mot de passe
+                String updateQuery = "UPDATE user SET password = ?, reset_token = NULL, token_expiration = NULL WHERE email = ?";
+                try (PreparedStatement updatePs = cnx.prepareStatement(updateQuery)) {
+                    updatePs.setString(1, newPassword);
+                    updatePs.setString(2, email);
+                    return updatePs.executeUpdate() > 0;
+                }
+            }
+        }
+        return false;
+    }
+    public String generateAndSaveResetToken(String email) throws SQLException {
+        // 1. Génère un token unique
+        String token = UUID.randomUUID().toString();
+
+        // 2. Sauvegarde le token dans la base de données
+        saveResetToken(email, token);
+
+        // 3. Retourne le token généré (pour l'envoyer par email)
+        return token;
+    }
+    public void updatePassword(String email, String newPassword) throws SQLException {
+        // 1. Hasher le mot de passe avant de le sauvegarder
+        String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+
+        // 2. Mettre à jour le mot de passe dans la base de données
+        String sql = "UPDATE user SET password = ? WHERE email = ?";
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setString(1, hashedPassword);
+            ps.setString(2, email);
+            ps.executeUpdate();
+            System.out.println("Mot de passe mis à jour pour l'email: " + email);
+        }
+    }
+    public User findByEmail(String email) throws SQLException {
+        String query = "SELECT * FROM user WHERE email = ?";
+        PreparedStatement ps = cnx.prepareStatement(query);
+        ps.setString(1, email);
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setNom(rs.getString("nom"));
+            user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
+            String rolesStr = rs.getString("roles");
+            rolesStr = rolesStr.replace("[", "").replace("]", "").replace("\"", "");
+            List<String> roles = Arrays.asList(rolesStr.split(","));
+            user.setRoles(roles);
+            return user;
+        }
+        return null;  // Si l'utilisateur n'est pas trouvé
+    }
+
+
+
+
 
 }
 

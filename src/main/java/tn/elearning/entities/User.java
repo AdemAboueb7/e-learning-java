@@ -48,6 +48,13 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "id_matiere")
     private Module idMatiere;
+    @Column(name = "nomimage")
+    private String imageName;
+
+    @Lob
+    @Column(name = "contenuimage", columnDefinition = "LONGBLOB")
+    private byte[] imageContent;
+
 
 
 
@@ -191,6 +198,22 @@ public class User {
     public void setIdMatiere(Module idMatiere) {
         this.idMatiere = idMatiere;
     }
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public byte[] getImageContent() {
+        return imageContent;
+    }
+
+    public void setImageContent(byte[] imageContent) {
+        this.imageContent = imageContent;
+    }
+
 
 
 
