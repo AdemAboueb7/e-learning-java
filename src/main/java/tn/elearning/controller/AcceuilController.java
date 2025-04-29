@@ -3,6 +3,7 @@ package tn.elearning.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
@@ -22,34 +23,50 @@ public class AcceuilController {
     // Méthode pour le bouton "Créer un compte"
     @FXML
     private void handleSignup(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Signup.fxml"));
-            Stage stage = (Stage) signupButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        loadFXML("/Signup.fxml", event);
     }
 
-    // Méthode pour le bouton "Rejoignez-nous"
+    // Méthode pour le bouton "Devenir formateur"
     @FXML
     private void handleSignupTeacher(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Signupteacher.fxml"));
-            Stage stage = (Stage) signupTeacherButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        loadFXML("/Signupteacher.fxml", event);
     }
 
     // Méthode pour le bouton "Se connecter"
     @FXML
     private void handleSignin(ActionEvent event) {
+        loadFXML("/Signin.fxml", event);
+    }
+
+    // Méthode pour le menu "Quitter"
+    @FXML
+    private void handleQuit(ActionEvent event) {
+        Stage stage = (Stage) signinButton.getScene().getWindow();
+        stage.close();
+    }
+
+    // Méthode pour le menu "À propos"
+    @FXML
+    private void handleAbout(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Signin.fxml"));
-            Stage stage = (Stage) signinButton.getScene().getWindow();
+            // Chargez une nouvelle fenêtre ou une alerte avec les informations
+            Parent root = FXMLLoader.load(getClass().getResource("/About.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("À propos");
             stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Méthode utilitaire pour charger les FXML
+    private void loadFXML(String fxmlPath, ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+            Stage stage = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
