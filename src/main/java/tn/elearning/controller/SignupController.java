@@ -2,15 +2,23 @@ package tn.elearning.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import tn.elearning.entities.User;
 import tn.elearning.services.ServiceUser;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;
 import java.util.Collections;
 
 public class SignupController {
+    @FXML
+    private Hyperlink backLink;
 
     @FXML
     private TextField adresseclient;
@@ -59,23 +67,42 @@ public class SignupController {
             return;
         }
 
-        // ✅ Création de l'utilisateur
+        // ✅ Création de l'utilisateur avec un mot de passe haché
         User user = new User();
         user.setEmail(email);
         user.setNom(nom);
         user.setPhoneNumber(phone);
-        user.setPassword(mdp);
         user.setAddress(adresse);
         user.setWork(profession);
         user.setActive(true);
         user.setRoles(Collections.singletonList("ROLE_PARENT"));
 
+        // Hachage du mot de passe avec BCrypt avant de le sauvegarder
+        String hashedPassword = BCrypt.hashpw(mdp, BCrypt.gensalt(12)); // Le "12" est le coût de calcul, vous pouvez ajuster si nécessaire
+        user.setPassword(hashedPassword);
+
+        // Appel du service pour ajouter l'utilisateur dans la base de données
         ServiceUser service = new ServiceUser();
         try {
             service.ajouter(user);
             showAlert("Succès", "Utilisateur ajouté avec succès avec le rôle PARENT !");
         } catch (SQLException e) {
             showAlert("Erreur SQL", e.getMessage());
+        }
+    }
+    @FXML
+    private void handleBack(ActionEvent event) {
+        try {
+            // Charger le fichier FXML de la page d'accueil
+            Parent homePage = FXMLLoader.load(getClass().getResource("/Acceuil.fxml"));
+
+            // Obtenir la fenêtre (Stage) actuelle
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            // Définir la nouvelle scène avec la page d'accueil
+            stage.setScene(new Scene(homePage));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -87,4 +114,5 @@ public class SignupController {
         alert.showAndWait();
     }
 }
+
 

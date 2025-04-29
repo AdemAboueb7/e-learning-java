@@ -12,7 +12,7 @@ import tn.elearning.services.ServiceUser;
 import tn.elearning.utils.UserSession;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
-
+import javafx.scene.paint.Color;
 import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -59,9 +59,17 @@ public class UpdateParentController {
             fullNameField.setText(currentUser.getNom());
             emailField.setText(currentUser.getEmail());
             phoneField.setText(currentUser.getPhoneNumber());
-            // TODO : Charger l'image de profil si nécessaire
+            if (currentUser.getImageContent() != null && currentUser.getImageContent().length > 0) {
+                // Convertir l'image en Image et l'afficher dans le cercle
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(currentUser.getImageContent());
+                Image profileImage = new Image(byteArrayInputStream);
+                profileCircle.setFill(new ImagePattern(profileImage));
+            } else {
+                // Si aucune image, afficher une couleur ou une image par défaut
+                profileCircle.setFill(Color.LIGHTGRAY); // Ou une image par défaut
+            }
         }
-    }
+        }
 
     @FXML
     private void handleUpdateProfile() {
