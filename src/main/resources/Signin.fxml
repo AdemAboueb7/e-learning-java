@@ -11,6 +11,8 @@
             stylesheets="@signin.css">
 
     <children>
+        <Hyperlink layoutX="10" layoutY="10" text="← Retour"
+                   onAction="#handleBack" />
         <Label layoutX="230" layoutY="50" text="Connexion" styleClass="title"/>
 
         <TextField fx:id="emailclient"

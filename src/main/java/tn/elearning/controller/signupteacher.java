@@ -2,8 +2,12 @@ package tn.elearning.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import tn.elearning.entities.User;
 import tn.elearning.services.ServiceUser;
 import org.mindrot.jbcrypt.BCrypt;  // Importation de BCrypt
@@ -78,6 +82,21 @@ public class signupteacher {
             showAlert("Succès", "Utilisateur ajouté avec succès avec le rôle TEACHER !");
         } catch (SQLException e) {
             showAlert("Erreur SQL", e.getMessage());
+        }
+    }
+    @FXML
+    private void handleBack(ActionEvent event) {
+        try {
+            // Charger le fichier FXML de la page d'accueil
+            Parent homePage = FXMLLoader.load(getClass().getResource("/Acceuil.fxml"));
+
+            // Obtenir la fenêtre (Stage) actuelle
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            // Définir la nouvelle scène avec la page d'accueil
+            stage.setScene(new Scene(homePage));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

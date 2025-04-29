@@ -12,6 +12,8 @@
             prefHeight="400.0" prefWidth="600.0"
             stylesheets="@signup.css">
     <children>
+        <Hyperlink layoutX="10" layoutY="10" text="← Retour"
+                   onAction="#handleBack" />
         <TextField fx:id="nomclient" layoutX="153.0" layoutY="77.0" prefHeight="26.0" prefWidth="350.0" />
         <TextField fx:id="emailclient" layoutX="153.0" layoutY="147.0" prefHeight="26.0" prefWidth="350.0" />
         <TextField fx:id="mdpclient" layoutX="153.0" layoutY="211.0" prefHeight="26.0" prefWidth="350.0" />

@@ -70,7 +70,7 @@
                         <!-- Première caractéristique -->
                         <VBox styleClass="feature-box" GridPane.columnIndex="0" alignment="CENTER" spacing="10">
                             <ImageView styleClass="icon-image" fitHeight="80" fitWidth="80" preserveRatio="true">
-                                <Image url="@image/logoo.png"/>
+                                <Image url="@image/flex.png"/>
                             </ImageView>
                             <Text text="Apprentissage flexible" styleClass="feature-title"/>
                             <Text text="Apprenez quand vous voulez, où vous voulez" styleClass="feature-description"/>
@@ -79,7 +79,7 @@
                         <!-- Deuxième caractéristique -->
                         <VBox styleClass="feature-box" GridPane.columnIndex="1" alignment="CENTER" spacing="10">
                             <ImageView styleClass="icon-image" fitHeight="80" fitWidth="80" preserveRatio="true">
-                                <Image url="@image/logoo.png"/>
+                                <Image url="@image/experience.jpg"/>
                             </ImageView>
                             <Text text="Formateurs experts" styleClass="feature-title"/>
                             <Text text="Des professionnels expérimentés pour vous guider" styleClass="feature-description"/>
@@ -88,7 +88,7 @@
                         <!-- Troisième caractéristique -->
                         <VBox styleClass="feature-box" GridPane.columnIndex="2" alignment="CENTER" spacing="10">
                             <ImageView styleClass="icon-image" fitHeight="80" fitWidth="80" preserveRatio="true">
-                                <Image url="@image/logoo.png"/>
+                                <Image url="@image/communauté.png"/>
                             </ImageView>
                             <Text text="Communauté active" styleClass="feature-title"/>
                             <Text text="Échangez avec d'autres apprenants et formateurs" styleClass="feature-description"/>

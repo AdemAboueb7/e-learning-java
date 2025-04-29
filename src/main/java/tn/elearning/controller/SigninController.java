@@ -98,6 +98,21 @@ public class SigninController {
             showAlert("Erreur", "Impossible de charger la vue.", Alert.AlertType.ERROR);
         }
     }
+    @FXML
+    private void handleBack(ActionEvent event) {
+        try {
+            // Charger le fichier FXML de la page d'accueil
+            Parent homePage = FXMLLoader.load(getClass().getResource("/Acceuil.fxml"));
+
+            // Obtenir la fenêtre (Stage) actuelle
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            // Définir la nouvelle scène avec la page d'accueil
+            stage.setScene(new Scene(homePage));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void showAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);
