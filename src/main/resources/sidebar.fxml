@@ -79,7 +79,11 @@
                         <SVGPath content="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z" styleClass="sidebar-icon"/>
                     </graphic>
                 </Button>
-
+                <Button fx:id="dashboardBtn" alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleDashboardAction" styleClass="sidebar-item" text="Chapitres">
+                    <graphic>
+                        <SVGPath content="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z" styleClass="sidebar-icon"/>
+                    </graphic>
+                </Button>
 
                 <Region VBox.vgrow="ALWAYS" />
 

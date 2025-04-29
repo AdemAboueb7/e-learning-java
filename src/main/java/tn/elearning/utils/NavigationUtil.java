@@ -95,4 +95,9 @@ public class NavigationUtil {
         navigateTo("/ListCours.fxml");
         mainStage.setTitle("Liste des cours");
     }
+    public static void navigateToDashboard() throws IOException {
+        navigateTo("/dashboard.fxml");
+        mainStage.setTitle("Dashboard");
+    }
+
 }

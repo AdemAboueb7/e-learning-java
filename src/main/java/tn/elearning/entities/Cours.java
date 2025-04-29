@@ -41,6 +41,8 @@ public class Cours {
     public String getTitre() {
         return titre.get();
     }
+    private int ratingSum;
+    private int ratingCount;
 
     public void setTitre(String titre) {
         this.titre.set(titre);
@@ -82,5 +84,29 @@ public class Cours {
 
     public StringProperty descriptionProperty() {
         return description;
+    }
+    public int getRatingSum() {
+        return ratingSum;
+    }
+    public double getAverageRating() {
+        return ratingCount > 0 ? (double) ratingSum / ratingCount : 0;
+    }
+
+    // Add this method to update rating
+    public void addRating(int stars) {
+        this.ratingSum += stars;
+        this.ratingCount++;
+    }
+    public void setRatingSum(int ratingSum) {
+        this.ratingSum = ratingSum;
+    }
+
+    // Getter and Setter for ratingCount
+    public int getRatingCount() {
+        return ratingCount;
+    }
+
+    public void setRatingCount(int ratingCount) {
+        this.ratingCount = ratingCount;
     }
 }

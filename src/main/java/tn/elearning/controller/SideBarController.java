@@ -107,5 +107,13 @@ public class SideBarController {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void handleDashboardAction(ActionEvent event) {
+        try {
+            NavigationUtil.navigateToDashboard();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
