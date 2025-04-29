@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 import tn.elearning.utils.NavigationUtil;
+import tn.elearning.utils.UserSession;
 
 public class SideBarAdminController {
 
@@ -48,6 +49,17 @@ public class SideBarAdminController {
 
     @FXML
     void handleDeconnexionAction(ActionEvent event) {
+        UserSession.getInstance().clear();  // Cette méthode efface l'utilisateur et l'ID de session
+
+        // Rediriger vers la page de connexion (Signin.fxml)
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Signin.fxml"));
+            Parent root = loader.load();
+            // Mettre à jour la scène actuelle pour afficher la page de connexion
+            sidebar.getScene().setRoot(root);  // "sidebar" est utilisé ici pour obtenir la scène actuelle
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

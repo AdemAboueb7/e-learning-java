@@ -5,10 +5,37 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?> <!-- Importer Font -->
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="tn.elearning.controller.AcceuilController"
             prefHeight="400.0" prefWidth="600.0">
 
+
+    <!-- Titre de la page avec police correcte -->
+    <Label text="Bienvenue sur notre application d'éducation en ligne"
+           layoutX="150" layoutY="50"
+           /> <!-- Format corrigé pour font -->
+
+    <!-- Boutons stylisés -->
+    <Button text="Créer un compte"
+            layoutX="200" layoutY="120"
+            fx:id="signupButton"
+            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14; -fx-border-radius: 30; -fx-background-radius: 30;"
+            onAction="#handleSignup"/>
+
+    <Button text="Rejoignez-nous"
+            layoutX="200" layoutY="180"
+            fx:id="signupTeacherButton"
+            style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 14; -fx-border-radius: 30; -fx-background-radius: 30;"
+            onAction="#handleSignupTeacher"/>
+
+    <Button text="Se connecter"
+            layoutX="200" layoutY="240"
+            fx:id="signinButton"
+            style="-fx-background-color: #FF5722; -fx-text-fill: white; -fx-font-size: 14; -fx-border-radius: 30; -fx-background-radius: 30;"
+            onAction="#handleSignin"/>
+
 </AnchorPane>
+

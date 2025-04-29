@@ -21,7 +21,7 @@ public class ServiceUser implements IServices<User> {
 
     @Override
     public void ajouter(User user) throws SQLException {
-        String sql = "INSERT INTO user (email, nom, phonenumber, matiere, experience, reason, password, work, adress, pref, is_active,roles) " +
+        String sql = "INSERT INTO user (email, nom, phonenumber, matiere, experience, reason, password, work, adress, pref, is_active, roles) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement ps = cnx.prepareStatement(sql);
@@ -31,21 +31,24 @@ public class ServiceUser implements IServices<User> {
         ps.setString(4, user.getMatiere());
         ps.setString(12, String.join(",", user.getRoles()));
 
-
-        if (user.getExperience() != null)
+        // Si l'expérience est nulle, on insère une valeur NULL dans la base de données
+        if (user.getExperience() != null) {
             ps.setInt(5, user.getExperience());
-        else
+        } else {
             ps.setNull(5, Types.INTEGER);
+        }
 
         ps.setString(6, user.getReason());
-        ps.setString(7, user.getPassword());
+
+        // Utilisez le mot de passe haché (assurez-vous que vous avez haché avant de passer à cette méthode)
+        ps.setString(7, user.getPassword()); // Ici vous passez le mot de passe haché
+
         ps.setString(8, user.getWork());
         ps.setString(9, user.getAddress());
         ps.setString(10, user.getPref());
         ps.setBoolean(11, user.isActive());
 
-
-
+        // Exécution de l'insertion
         ps.executeUpdate();
         System.out.println("User ajouté !");
     }
@@ -144,10 +147,15 @@ public class ServiceUser implements IServices<User> {
             user.setAddress(rs.getString("adress"));
             user.setPref(rs.getString("pref"));
             user.setActive(rs.getBoolean("is_active"));
+
+            // Récupérer l'image de profil si elle existe (champ 'contenuimage')
+            byte[] imageContent = rs.getBytes("contenuimage");
+            user.setImageContent(imageContent);
+
             return user;
         }
-        return null;
-        }
+        return null;  // Retourner null si aucun utilisateur n'est trouvé
+    }
 
     public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();

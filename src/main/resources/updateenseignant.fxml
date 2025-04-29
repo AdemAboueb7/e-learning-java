@@ -8,12 +8,14 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.image.ImageView?>
+
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.UpdateParentController">
     <left>
         <fx:include source="SideBarEnseignant.fxml"/>
     </left>
     <center>
-        <AnchorPane prefHeight="500.0" prefWidth="600.0" stylesheets="@updateparent.css" >
+        <AnchorPane prefHeight="500.0" prefWidth="600.0" stylesheets="@updateparent.css">
             <children>
                 <!-- Titre de la page -->
                 <Label layoutX="236.0" layoutY="14.0" text="Mise à jour du profil">
@@ -23,10 +25,10 @@
                 </Label>
 
                 <!-- Cercle contenant l'image de profil -->
-                <Circle fx:id="profileCircle" fill="LIGHTGRAY" layoutX="351.0" layoutY="103.0" radius="50.0" stroke="BLACK" strokeWidth="2.0" />
+                <Circle fx:id="profileCircle" fill="LIGHTGRAY" layoutX="351.0" layoutY="103.0" radius="50.0" stroke="BLACK" strokeWidth="2.0" onMouseClicked="#handleChangeProfileImage"/>
 
-                <!-- Bouton pour choisir une image de profil (optionnel) -->
-                <Button fx:id="changeImageButton" layoutX="267.0" layoutY="170.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Changer Image" />
+                <!-- Bouton pour choisir une image de profil -->
+                <Button fx:id="changeImageButton" layoutX="267.0" layoutY="170.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Changer Image" onAction="#handleChangeProfileImage"/>
 
                 <!-- Champ Nom complet -->
                 <Label layoutX="26.0" layoutY="217.0" text="Nom complet:" />
