@@ -49,14 +49,13 @@ public class SideBarAdminController {
 
     @FXML
     void handleDeconnexionAction(ActionEvent event) {
-        UserSession.getInstance().clear();  // Cette méthode efface l'utilisateur et l'ID de session
+        UserSession.getInstance().clear();
 
-        // Rediriger vers la page de connexion (Signin.fxml)
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Signin.fxml"));
             Parent root = loader.load();
-            // Mettre à jour la scène actuelle pour afficher la page de connexion
-            sidebar.getScene().setRoot(root);  // "sidebar" est utilisé ici pour obtenir la scène actuelle
+
+            sidebar.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,7 +70,7 @@ public class SideBarAdminController {
     @FXML
     void handlePaiementsAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherPaiements.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherAbonnements.fxml"));
             Parent root = loader.load();
             paiements.getScene().setRoot(root);
 
@@ -97,10 +96,26 @@ public class SideBarAdminController {
     @FXML
     void handleSuiviAction(ActionEvent event) {
 
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashboardPaiement.fxml"));
+            Parent root = loader.load();
+            paiements.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @FXML
     void handleusersAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/listusers.fxml"));
+            Parent root = loader.load();
+            paiements.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -12,8 +12,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
-<AnchorPane prefHeight="439.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.AfficherAbonnementsController">
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.AfficherAbonnementsController">
+   <left>
+      <fx:include source="SideBarAdmin.fxml" />
+   </left>
+   <center>
+<AnchorPane prefHeight="439.0" prefWidth="758.0" >
    <children>
       <AnchorPane layoutX="210.0" layoutY="4.0" prefHeight="430.0" prefWidth="547.0" style="-fx-background-radius: 50;">
          <children>
@@ -135,3 +140,5 @@
       </AnchorPane>
    </children>
 </AnchorPane>
+   </center>
+</BorderPane>

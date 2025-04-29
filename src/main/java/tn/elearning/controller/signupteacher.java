@@ -2,12 +2,15 @@ package tn.elearning.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import tn.elearning.entities.User;
 import tn.elearning.services.ServiceUser;
 import org.mindrot.jbcrypt.BCrypt;  // Importation de BCrypt
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collections;
 
@@ -74,8 +77,16 @@ public class signupteacher {
         // Appel du service pour ajouter l'utilisateur dans la base de données
         ServiceUser service = new ServiceUser();
         try {
-            service.ajouter(user);  // Ajouter l'utilisateur avec le mot de passe haché
+            service.ajouter(user);
             showAlert("Succès", "Utilisateur ajouté avec succès avec le rôle TEACHER !");
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/signin.fxml"));
+                Parent root = loader.load();
+                mdpclient.getScene().setRoot(root);
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         } catch (SQLException e) {
             showAlert("Erreur SQL", e.getMessage());
         }
