@@ -60,5 +60,14 @@ public class ModuleDAO {
             stmt.executeUpdate();
         }
     }
+    public int getTotalModules() throws SQLException {
+        String query = "SELECT COUNT(*) FROM module";
+        try (PreparedStatement stmt = cnx.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            return rs.next() ? rs.getInt(1) : 0;
+        }
+    }
+
+
 }
 

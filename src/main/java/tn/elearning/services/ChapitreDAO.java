@@ -4,8 +4,7 @@ import tn.elearning.entities.Chapitre;
 import tn.elearning.utils.DataSource;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ChapitreDAO {
     private Connection cnx = DataSource.getInstance().getConnection();
@@ -80,6 +79,39 @@ public class ChapitreDAO {
         }
         return null;
     }
+    public int getTotalChapitres() throws SQLException {
+        String query = "SELECT COUNT(*) FROM chapitre";
+        try (PreparedStatement stmt = cnx.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            return rs.next() ? rs.getInt(1) : 0;
+        }
+    }
+
+    public Map<String, Long> getChaptersPerModule() throws SQLException {
+        String query = "SELECT m.nom, COUNT(ch.id) AS chapter_count " +
+                "FROM module m " +
+                "LEFT JOIN chapitre ch ON m.id = ch.module_id " +
+                "GROUP BY m.nom";
+
+        Map<String, Long> result = new LinkedHashMap<>(); // Maintains insertion order
+        try (PreparedStatement stmt = cnx.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                result.put(rs.getString("nom"), rs.getLong("chapter_count"));
+            }
+        }
+        return result;
+    }
+    public String getChapterNameById(int chapitreId) throws SQLException {
+        String query = "SELECT nom FROM chapitre WHERE id = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, chapitreId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() ? rs.getString("nom") : "Unknown Chapter";
+            }
+        }
+    }
+
 
 }
 

@@ -1,0 +1,18 @@
+.chart-bar {
+    -fx-background-radius: 3 3 0 0;
+}
+
+.default-color0.chart-bar { -fx-bar-fill: #3498db; }  /* Blue */
+.default-color1.chart-bar { -fx-bar-fill: #2ecc71; }  /* Green */
+.default-color2.chart-bar { -fx-bar-fill: #e74c3c; }  /* Red */
+.default-color3.chart-bar { -fx-bar-fill: #f39c12; }  /* Orange */
+.default-color4.chart-bar { -fx-bar-fill: #9b59b6; }  /* Purple */
+
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.axis-label {
+    -fx-font-size: 12px;
+}

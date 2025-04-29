@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.elearning.controller.DashboardController"
+            stylesheets="@dashboard.css">
+
+    <top>
+        <HBox styleClass="header">
+            <Text styleClass="title" text="E-Learning Dashboard"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true">
+            <VBox spacing="20" styleClass="dashboard-container">
+                <!-- Stats Cards Row -->
+                <HBox spacing="20" styleClass="stats-row">
+                    <VBox styleClass="stat-card">
+                        <Text styleClass="stat-value" fx:id="totalCoursesText"/>
+                        <Text styleClass="stat-label" text="Total Courses"/>
+                    </VBox>
+
+                    <VBox styleClass="stat-card">
+                        <Text styleClass="stat-value" fx:id="totalChaptersText"/>
+                        <Text styleClass="stat-label" text="Total Chapters"/>
+                    </VBox>
+
+                    <VBox styleClass="stat-card">
+                        <Text styleClass="stat-value" fx:id="totalModulesText"/>
+                        <Text styleClass="stat-label" text="Total Modules"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Charts Row -->
+                <HBox spacing="20" styleClass="charts-row">
+                    <VBox styleClass="chart-container">
+                        <Text styleClass="chart-title" text="Courses per Module"/>
+                        <PieChart fx:id="coursesPerModuleChart"/>
+                    </VBox>
+
+                    <VBox styleClass="chart-container">
+                        <Text styleClass="chart-title" text="Chapters per Module"/>
+                        <BarChart fx:id="chaptersPerModuleChart" title="Chapters per Module" legendVisible="false">
+                            <xAxis>
+                                <CategoryAxis fx:id="moduleAxis" label="Modules" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis fx:id="chapterCountAxis" label="Number of Chapters" />
+                            </yAxis>
+                        </BarChart>
+                    </VBox>
+                </HBox>
+
+                <!-- Recent Activity -->
+                <VBox styleClass="activity-container">
+                    <Text styleClass="section-title" text="Recent Activity"/>
+                    <TableView fx:id="activityTable" styleClass="activity-table">
+                        <columns>
+                            <TableColumn text="Course" fx:id="courseColumn"/>
+                            <TableColumn text="Chapter" fx:id="chapterColumn"/>
+                            <TableColumn text="Last Updated" fx:id="dateColumn"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
