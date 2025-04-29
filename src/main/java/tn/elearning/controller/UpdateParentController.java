@@ -69,7 +69,7 @@ public class UpdateParentController {
                 profileCircle.setFill(Color.LIGHTGRAY); // Ou une image par défaut
             }
         }
-        }
+    }
 
     @FXML
     private void handleUpdateProfile() {
@@ -101,7 +101,7 @@ public class UpdateParentController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choisir une image de profil");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif")
+                new FileChooser.ExtensionFilter("Images", ".png", ".jpg", ".jpeg", ".gif")
         );
         File file = fileChooser.showOpenDialog(profileCircle.getScene().getWindow());
 
@@ -131,5 +131,3 @@ public class UpdateParentController {
         }
     }
 }
-
-
