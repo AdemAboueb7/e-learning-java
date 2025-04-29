@@ -8,65 +8,68 @@
             fx:controller="tn.elearning.controller.DashboardController"
             stylesheets="@dashboard.css">
 
-    <top>
-        <HBox styleClass="header">
-            <Text styleClass="title" text="E-Learning Dashboard"/>
-        </HBox>
-    </top>
+    <!-- Barre latérale -->
+    <left>
+        <fx:include source="SideBarEnseignant.fxml"/>
+    </left>
 
+    <!-- Contenu principal -->
     <center>
         <ScrollPane fitToWidth="true">
             <VBox spacing="20" styleClass="dashboard-container">
-                <!-- Stats Cards Row -->
+
+                <!-- Ligne des statistiques -->
                 <HBox spacing="20" styleClass="stats-row">
                     <VBox styleClass="stat-card">
                         <Text styleClass="stat-value" fx:id="totalCoursesText"/>
-                        <Text styleClass="stat-label" text="Total Courses"/>
+                        <Text styleClass="stat-label" text="Total des cours"/>
                     </VBox>
 
                     <VBox styleClass="stat-card">
                         <Text styleClass="stat-value" fx:id="totalChaptersText"/>
-                        <Text styleClass="stat-label" text="Total Chapters"/>
+                        <Text styleClass="stat-label" text="Total des chapitres"/>
                     </VBox>
 
                     <VBox styleClass="stat-card">
                         <Text styleClass="stat-value" fx:id="totalModulesText"/>
-                        <Text styleClass="stat-label" text="Total Modules"/>
+                        <Text styleClass="stat-label" text="Total des modules"/>
                     </VBox>
                 </HBox>
 
-                <!-- Charts Row -->
+                <!-- Graphiques -->
                 <HBox spacing="20" styleClass="charts-row">
                     <VBox styleClass="chart-container">
-                        <Text styleClass="chart-title" text="Courses per Module"/>
+                        <Text styleClass="chart-title" text="Cours par module"/>
                         <PieChart fx:id="coursesPerModuleChart"/>
                     </VBox>
 
                     <VBox styleClass="chart-container">
-                        <Text styleClass="chart-title" text="Chapters per Module"/>
-                        <BarChart fx:id="chaptersPerModuleChart" title="Chapters per Module" legendVisible="false">
+                        <Text styleClass="chart-title" text="Chapitres par module"/>
+                        <BarChart fx:id="chaptersPerModuleChart" title="Chapitres par module" legendVisible="false">
                             <xAxis>
                                 <CategoryAxis fx:id="moduleAxis" label="Modules" />
                             </xAxis>
                             <yAxis>
-                                <NumberAxis fx:id="chapterCountAxis" label="Number of Chapters" />
+                                <NumberAxis fx:id="chapterCountAxis" label="Nombre de chapitres" />
                             </yAxis>
                         </BarChart>
                     </VBox>
                 </HBox>
 
-                <!-- Recent Activity -->
+                <!-- Activité récente -->
                 <VBox styleClass="activity-container">
-                    <Text styleClass="section-title" text="Recent Activity"/>
+                    <Text styleClass="section-title" text="Activité récente"/>
                     <TableView fx:id="activityTable" styleClass="activity-table">
                         <columns>
-                            <TableColumn text="Course" fx:id="courseColumn"/>
-                            <TableColumn text="Chapter" fx:id="chapterColumn"/>
-                            <TableColumn text="Last Updated" fx:id="dateColumn"/>
+                            <TableColumn text="Cours" fx:id="courseColumn"/>
+                            <TableColumn text="Chapitre" fx:id="chapterColumn"/>
+                            <TableColumn text="Dernière mise à jour" fx:id="dateColumn"/>
                         </columns>
                     </TableView>
                 </VBox>
+
             </VBox>
         </ScrollPane>
     </center>
+
 </BorderPane>
