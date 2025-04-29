@@ -1,34 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="tn.elearning.controller.ChapitreController" stylesheets="@CMCStyle.css">
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.elearning.controller.ChapitreController"
+            stylesheets="@alpha-education.css">
+
+    <!-- Sidebar -->
     <left>
-        <fx:include source="sidebar.fxml"/>
+        <fx:include source="SideBarEnseignant.fxml"/>
     </left>
+
+    <!-- Centre : contenu -->
     <center>
-        <AnchorPane prefWidth="600.0" prefHeight="500.0">
+        <AnchorPane prefWidth="900.0" prefHeight="600.0">
             <children>
-                <VBox layoutX="10.0" layoutY="10.0" spacing="10" style="-fx-padding: 10px;">
-                    <TextField fx:id="chapitreNameField" promptText="Nom du Chapitre"/>
-                    <TextArea fx:id="chapitreDescriptionField" promptText="Description du Chapitre"/>
+                <VBox layoutX="30.0" layoutY="20.0" spacing="20" style="-fx-padding: 20;">
 
-                    <ComboBox fx:id="moduleComboBox" promptText="Sélectionner un Module"/>
+                    <!-- Titre -->
+                    <Label text="Gestion des Chapitres" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
-                    <HBox spacing="10">
-                        <Button text="Ajouter" onAction="#addChapitre"/>
-                        <Button text="Mettre à Jour" onAction="#updateChapitre"/>
-                        <Button text="Supprimer" onAction="#deleteChapitre"/>
+                    <!-- Formulaire -->
+                    <GridPane hgap="15" vgap="15">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="30"/>
+                            <ColumnConstraints percentWidth="70"/>
+                        </columnConstraints>
+
+                        <Label text="Nom du Chapitre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="chapitreNameField" promptText="Nom du Chapitre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextArea fx:id="chapitreDescriptionField" promptText="Description du Chapitre" prefRowCount="3" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Module associé:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <ComboBox fx:id="moduleComboBox" promptText="Sélectionner un Module" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    </GridPane>
+
+                    <!-- Boutons d'action -->
+                    <HBox spacing="15" alignment="CENTER">
+                        <Button text="Ajouter" onAction="#addChapitre" styleClass="primary-button"/>
+                        <Button text="Mettre à jour" onAction="#updateChapitre" styleClass="update-button"/>
+                        <Button text="Supprimer" onAction="#deleteChapitre" styleClass="delete-button"/>
                     </HBox>
 
-                    <TableView fx:id="chapitreTable" prefHeight="300" prefWidth="500">
+                    <!-- Tableau -->
+                    <TableView fx:id="chapitreTable" prefHeight="400" prefWidth="850">
                         <columns>
-                            <TableColumn fx:id="colNom" text="Nom"/>
-                            <TableColumn fx:id="colDescription" text="Description"/>
+                            <TableColumn fx:id="colNom" text="Nom" prefWidth="400"/>
+                            <TableColumn fx:id="colDescription" text="Description" prefWidth="450"/>
                         </columns>
                     </TableView>
+
                 </VBox>
             </children>
         </AnchorPane>
     </center>
+
 </BorderPane>

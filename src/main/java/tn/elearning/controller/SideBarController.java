@@ -90,30 +90,6 @@ public class SideBarController {
         }
     }
 
-    @FXML
-    private void handleModuleAction(ActionEvent event) {
-        try {
-            NavigationUtil.navigateToModule();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    @FXML
-    private void handleChapitreAction(ActionEvent event) {
-        try {
-            NavigationUtil.navigateToChapitre();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    @FXML
-    private void handleDashboardAction(ActionEvent event) {
-        try {
-            NavigationUtil.navigateToDashboard();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 }

@@ -1,41 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="tn.elearning.controller.CoursController" stylesheets="@CMCStyle.css">
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.elearning.controller.CoursController"
+            stylesheets="@alpha-education.css">
+
+    <!-- Sidebar à gauche -->
     <left>
-        <fx:include source="sidebar.fxml"/>
+        <fx:include source="SideBarEnseignant.fxml"/>
     </left>
+
+    <!-- Contenu principal -->
     <center>
-        <AnchorPane prefWidth="700.0" prefHeight="500.0">
+        <AnchorPane prefWidth="1000.0" prefHeight="600.0">
             <children>
-                <VBox layoutX="10.0" layoutY="10.0" spacing="10" style="-fx-padding: 10px;">
-                    <TextField fx:id="coursNameField" promptText="Nom du Cours"/>
-                    <TextArea fx:id="coursDescriptionField" promptText="Description du Cours"/>
-                    <Label text="Chapitre"/>
-                    <ComboBox fx:id="chapitreComboBox" promptText="Sélectionnez un Chapitre"/>
+                <VBox layoutX="30.0" layoutY="20.0" spacing="20" style="-fx-padding: 20;">
 
-                    <HBox spacing="10">
-                        <Button text="Téléverser un Fichier" onAction="#uploadFile"/>
-                        <Label fx:id="uploadedFileNameLabel" text="Aucun fichier sélectionné"/>
+                    <!-- Titre -->
+                    <Label text="Gestion des Cours" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+                    <!-- Formulaire -->
+                    <GridPane hgap="15" vgap="15">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="30"/>
+                            <ColumnConstraints percentWidth="70"/>
+                        </columnConstraints>
+
+                        <Label text="Nom du Cours:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="coursNameField" promptText="Nom du Cours" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextArea fx:id="coursDescriptionField" promptText="Description du Cours" prefRowCount="3" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Chapitre:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <ComboBox fx:id="chapitreComboBox" promptText="Sélectionnez un Chapitre" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Fichier:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1">
+                            <Button text="Téléverser un Fichier" onAction="#uploadFile"/>
+                            <Label fx:id="uploadedFileNameLabel" text="Aucun fichier sélectionné"/>
+                        </HBox>
+                    </GridPane>
+
+                    <!-- Boutons Actions -->
+                    <HBox spacing="15" alignment="CENTER">
+                        <Button text="Ajouter" onAction="#addCours" styleClass="primary-button"/>
+                        <Button text="Mettre à Jour" onAction="#updateCours" styleClass="update-button"/>
+                        <Button text="Supprimer" onAction="#deleteCours" styleClass="delete-button"/>
                     </HBox>
 
-                    <HBox spacing="10">
-                        <Button text="Ajouter" onAction="#addCours"/>
-                        <Button text="Mettre à Jour" onAction="#updateCours"/>
-                        <Button text="Supprimer" onAction="#deleteCours"/>
-                    </HBox>
-
-                    <TableView fx:id="coursTable" prefHeight="300" prefWidth="600">
+                    <!-- Tableau des Cours -->
+                    <TableView fx:id="coursTable" prefHeight="400" prefWidth="850">
                         <columns>
-                            <TableColumn fx:id="colNom" text="Nom"/>
-                            <TableColumn fx:id="colDescription" text="Description"/>
-                            <TableColumn fx:id="colChapitreNom" text="Nom du Chapitre"/>
-                            <TableColumn fx:id="colDownload" text="Télécharger"/>
+                            <TableColumn fx:id="colNom" text="Nom" prefWidth="200"/>
+                            <TableColumn fx:id="colDescription" text="Description" prefWidth="300"/>
+                            <TableColumn fx:id="colChapitreNom" text="Chapitre" prefWidth="200"/>
+                            <TableColumn fx:id="colDownload" text="Télécharger" prefWidth="150"/>
                         </columns>
                     </TableView>
+
                 </VBox>
             </children>
         </AnchorPane>
     </center>
+
 </BorderPane>

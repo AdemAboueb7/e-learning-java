@@ -10,6 +10,10 @@ import java.io.IOException;
 
 public class SideBarEnseignantController {
 
+    public Button coursBtn;
+    public Button moduleBtn;
+    public Button chapitreBtn;
+    public Button dashboardBtn;
     @FXML
     private Button articles;
 
@@ -71,6 +75,14 @@ public class SideBarEnseignantController {
     private void handleChapitreAction(ActionEvent event) {
         try {
             NavigationUtil.navigateToChapitre();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void handleDashboardAction(ActionEvent event) {
+        try {
+            NavigationUtil.navigateToDashboard();
         } catch (IOException e) {
             e.printStackTrace();
         }
