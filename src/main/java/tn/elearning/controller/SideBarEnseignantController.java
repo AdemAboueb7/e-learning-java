@@ -13,6 +13,9 @@ import java.io.IOException;
 
 public class SideBarEnseignantController {
 
+    public Button coursBtn;
+    public Button moduleBtn;
+    public Button chapitreBtn;
     @FXML
     private Button articles;
 
