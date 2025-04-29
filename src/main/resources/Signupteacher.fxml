@@ -9,23 +9,35 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="tn.elearning.controller.signupteacher"
-            prefHeight="400.0" prefWidth="600.0"
+            prefHeight="600.0" prefWidth="600.0"
             stylesheets="@signup.css">
     <children>
         <Hyperlink layoutX="10" layoutY="10" text="← Retour"
                    onAction="#handleBack" />
-        <TextField fx:id="nomclient" layoutX="153.0" layoutY="77.0" prefHeight="26.0" prefWidth="350.0" />
-        <TextField fx:id="emailclient" layoutX="153.0" layoutY="147.0" prefHeight="26.0" prefWidth="350.0" />
-        <TextField fx:id="mdpclient" layoutX="153.0" layoutY="211.0" prefHeight="26.0" prefWidth="350.0" />
-        <Button layoutX="195.0" layoutY="478.0" mnemonicParsing="false" onAction="#signup" prefHeight="26.0" prefWidth="256.0" text="Créer compte" textFill="#2797c2" />
-        <TextField fx:id="numclient" layoutX="153.0" layoutY="281.0" prefHeight="26.0" prefWidth="350.0" />
-        <TextField fx:id="adresseclient" layoutX="153.0" layoutY="349.0" prefHeight="26.0" prefWidth="350.0" />
-        <Label layoutX="153.0" layoutY="47.0" text="Nom Complet :" />
-        <Label layoutX="158.0" layoutY="118.0" text="Email :" />
-        <Label layoutX="161.0" layoutY="188.0" text="Mot de passe :" />
-        <Label layoutX="158.0" layoutY="252.0" text="Numero de téléphone :" />
-        <Label layoutX="161.0" layoutY="320.0" text="Adresse :" />
-        <Hyperlink layoutX="265.0" layoutY="520.0" text="Mot de passe oublié ?" />
-    </children>
 
+        <Label layoutX="153.0" layoutY="47.0" text="Nom Complet :" />
+        <TextField fx:id="nomclient" layoutX="153.0" layoutY="77.0" prefHeight="26.0" prefWidth="350.0" />
+
+        <Label layoutX="158.0" layoutY="118.0" text="Email :" />
+        <TextField fx:id="emailclient" layoutX="153.0" layoutY="147.0" prefHeight="26.0" prefWidth="350.0" />
+
+        <Label layoutX="161.0" layoutY="188.0" text="Mot de passe :" />
+        <TextField fx:id="mdpclient" layoutX="153.0" layoutY="211.0" prefHeight="26.0" prefWidth="350.0" />
+
+        <Label layoutX="158.0" layoutY="240.0" text="Numéro de téléphone :" />
+        <TextField fx:id="numclient" layoutX="153.0" layoutY="265.0" prefHeight="26.0" prefWidth="350.0" />
+
+        <Label layoutX="158.0" layoutY="300.0" text="Expérience :" />
+        <TextField fx:id="experience" layoutX="153.0" layoutY="325.0" prefHeight="26.0" prefWidth="350.0" />
+
+        <Label layoutX="161.0" layoutY="360.0" text="Adresse :" />
+        <TextField fx:id="adresseclient" layoutX="153.0" layoutY="385.0" prefHeight="26.0" prefWidth="350.0" />
+
+        <Label layoutX="158.0" layoutY="420.0" text="Matière :" />
+        <ComboBox fx:id="matiereComboBox" layoutX="153.0" layoutY="445.0" prefHeight="26.0" prefWidth="350.0" />
+
+        <Button layoutX="195.0" layoutY="490.0" mnemonicParsing="false" onAction="#signup" prefHeight="26.0" prefWidth="256.0" text="Créer compte" textFill="#2797c2" />
+
+        <Hyperlink layoutX="265.0" layoutY="530.0" text="Mot de passe oublié ?" />
+    </children>
 </AnchorPane>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="tn.elearning.controller.suiviadmincontroller"
+            prefWidth="600.0" prefHeight="400.0">
+
+    <VBox alignment="TOP_CENTER" spacing="15" layoutX="50.0" layoutY="30.0">
+        <Label text="Statistiques des rôles" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        <Label fx:id="adminCountLabel" text="Admins : 0" />
+        <Label fx:id="teacherCountLabel" text="Professeurs : 0" />
+        <Label fx:id="parentCountLabel" text="Parents : 0" />
+        <Label fx:id="totalCountLabel" text="Utilisateurs totaux : 0" />
+        <PieChart fx:id="matierePieChart" layoutX="300.0" layoutY="100.0" prefWidth="280.0" prefHeight="250.0"/>
+        <BarChart fx:id="experienceBarChart" title="Expérience des enseignants"
+                  prefHeight="300.0" prefWidth="500.0">
+            <xAxis>
+                <CategoryAxis label="Plages d'expérience (années)" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="Nombre d'enseignants" />
+            </yAxis>
+        </BarChart>
+
+    </VBox>
+</AnchorPane>
+

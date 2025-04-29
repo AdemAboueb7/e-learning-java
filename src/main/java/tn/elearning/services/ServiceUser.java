@@ -16,13 +16,14 @@ public class ServiceUser implements IServices<User> {
     private final Connection cnx;
 
     public ServiceUser() {
+
         cnx = MyDataBase.getInstance().getCnx();
     }
 
     @Override
     public void ajouter(User user) throws SQLException {
-        String sql = "INSERT INTO user (email, nom, phonenumber, matiere, experience, reason, password, work, adress, pref, is_active, roles) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO user (email, nom, phonenumber, matiere, experience, reason, password, work, adress, pref, is_active, roles, idmatiereprof) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement ps = cnx.prepareStatement(sql);
         ps.setString(1, user.getEmail());
@@ -30,6 +31,7 @@ public class ServiceUser implements IServices<User> {
         ps.setString(3, user.getPhoneNumber());
         ps.setString(4, user.getMatiere());
         ps.setString(12, String.join(",", user.getRoles()));
+        ps.setInt(13, user.getMatiereProf().getId());
 
         // Si l'expérience est nulle, on insère une valeur NULL dans la base de données
         if (user.getExperience() != null) {
@@ -157,9 +159,9 @@ public class ServiceUser implements IServices<User> {
         return null;  // Retourner null si aucun utilisateur n'est trouvé
     }
 
-    public List<User> getAllUsers() throws SQLException {
+    public   List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT id, email, nom, phoneNumber, roles, is_active FROM user";
+        String sql = "SELECT id, email, nom, phoneNumber, roles, is_active, experience FROM user";
         try (Statement st = cnx.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
 
@@ -170,6 +172,7 @@ public class ServiceUser implements IServices<User> {
                 user.setNom(rs.getString("nom"));
                 user.setPhoneNumber(rs.getString("phoneNumber"));
                 user.setActive(rs.getBoolean("is_active"));
+                user.setExperience(rs.getObject("experience") != null ? rs.getInt("experience") : null);
 
                 // Traitement des rôles
                 String rolesJson = rs.getString("roles");
@@ -301,6 +304,20 @@ public class ServiceUser implements IServices<User> {
             ps.executeUpdate();
             System.out.println("Mot de passe mis à jour pour l'email: " + email);
         }
+    }
+    public int getTeachersCountByMatiere(String matiere) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM user u " +
+                "JOIN matiereprof mp ON u.idmatiereprof = mp.idmatiereprof " +
+                "WHERE mp.nommatiereprof = ? AND u.roles LIKE '%ROLE_TEACHER%'";
+        PreparedStatement ps = cnx.prepareStatement(sql);
+        ps.setString(1, matiere);
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1); // Récupérer le nombre d'enseignants pour cette matière
+        }
+
+        return 0;
     }
     public User findByEmail(String email) throws SQLException {
         String query = "SELECT * FROM user WHERE email = ?";

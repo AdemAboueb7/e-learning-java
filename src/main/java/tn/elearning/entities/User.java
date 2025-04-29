@@ -46,7 +46,12 @@ public class User {
     private boolean isActive = false;
 
     @ManyToOne
-    @JoinColumn(name = "id_matiere")
+    @JoinColumn(name = "idmatiereprof") // nom exact de la colonne dans la table user
+    private matiereprof matiereProf;
+
+
+    @ManyToOne
+    @JoinColumn(name = "idmatiere_id")
     private Module idMatiere;
     @Column(name = "nomimage")
     private String imageName;
@@ -84,6 +89,14 @@ public class User {
         this.nom=nom;
 
     }
+    public matiereprof getMatiereProf() {
+        return matiereProf;
+    }
+
+    public void setMatiereProf(matiereprof matiereProf) {
+        this.matiereProf = matiereProf;
+    }
+
 
 
     public Integer getId() {
