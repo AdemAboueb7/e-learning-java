@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 import tn.elearning.utils.NavigationUtil;
+import tn.elearning.utils.UserSession;
 
 public class SideBarAdminController {
 
@@ -48,6 +49,16 @@ public class SideBarAdminController {
 
     @FXML
     void handleDeconnexionAction(ActionEvent event) {
+        UserSession.getInstance().clear();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Signin.fxml"));
+            Parent root = loader.load();
+
+            sidebar.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -59,7 +70,7 @@ public class SideBarAdminController {
     @FXML
     void handlePaiementsAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VoirArticles.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherAbonnements.fxml"));
             Parent root = loader.load();
             paiements.getScene().setRoot(root);
 
@@ -70,16 +81,41 @@ public class SideBarAdminController {
 
     @FXML
     void handleProfilAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/updateadmin.fxml"));
+            Parent root = loader.load();
+            paiements.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
     @FXML
     void handleSuiviAction(ActionEvent event) {
 
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashboardPaiement.fxml"));
+            Parent root = loader.load();
+            paiements.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @FXML
     void handleusersAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/listusers.fxml"));
+            Parent root = loader.load();
+            paiements.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

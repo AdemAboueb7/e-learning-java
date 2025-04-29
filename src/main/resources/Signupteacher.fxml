@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.elearning.controller.signupteacher"
+            prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@signup.css">
+    <children>
+        <Hyperlink layoutX="10" layoutY="10" text="← Retour"
+                   onAction="#handleBack" />
+        <TextField fx:id="nomclient" layoutX="153.0" layoutY="77.0" prefHeight="26.0" prefWidth="350.0" />
+        <TextField fx:id="emailclient" layoutX="153.0" layoutY="147.0" prefHeight="26.0" prefWidth="350.0" />
+        <TextField fx:id="mdpclient" layoutX="153.0" layoutY="211.0" prefHeight="26.0" prefWidth="350.0" />
+        <Button layoutX="195.0" layoutY="478.0" mnemonicParsing="false" onAction="#signup" prefHeight="26.0" prefWidth="256.0" text="Créer compte" textFill="#2797c2" />
+        <TextField fx:id="numclient" layoutX="153.0" layoutY="281.0" prefHeight="26.0" prefWidth="350.0" />
+        <TextField fx:id="adresseclient" layoutX="153.0" layoutY="349.0" prefHeight="26.0" prefWidth="350.0" />
+        <Label layoutX="153.0" layoutY="47.0" text="Nom Complet :" />
+        <Label layoutX="158.0" layoutY="118.0" text="Email :" />
+        <Label layoutX="161.0" layoutY="188.0" text="Mot de passe :" />
+        <Label layoutX="158.0" layoutY="252.0" text="Numero de téléphone :" />
+        <Label layoutX="161.0" layoutY="320.0" text="Adresse :" />
+        <Hyperlink layoutX="265.0" layoutY="520.0" text="Mot de passe oublié ?" />
+    </children>
+
+</AnchorPane>

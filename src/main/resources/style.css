@@ -1,0 +1,23 @@
+/* style.css */
+.label-bold {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.text-field, .text-area {
+    -fx-pref-width: 300px;
+    -fx-padding: 5px;
+}
+
+.button {
+    -fx-padding: 5px 10px;
+}
+
+.table-view {
+    -fx-pref-width: 760px;
+    -fx-pref-height: 250px;
+}
+
+.table-column {
+    -fx-pref-width: 250px;
+}

@@ -27,6 +27,10 @@ import javafx.geometry.Pos;
 import javafx.application.Platform;
 import tn.elearning.utils.NavigationUtil;
 import tn.elearning.utils.UserSession;
+import tn.elearning.utils.InappropriateContentDetector;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import java.io.IOException;
 import java.net.URL;
@@ -81,6 +85,9 @@ public class ArticleDetailController implements Initializable {
     @FXML
     private Button deleteButton;
 
+    @FXML
+    private Button listenButton;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -90,19 +97,20 @@ public class ArticleDetailController implements Initializable {
             // Configuration des boutons d'action selon le rôle
             User currentUser = UserSession.getInstance().getUser();
             boolean isAdmin = currentUser != null && currentUser.getRoles() != null && 
-                            currentUser.getRoles().stream().anyMatch(role -> role.equals("ROLE_ADMIN"));
+                            currentUser.getRoles().contains("ROLE_ADMIN");
+            
+            System.out.println("Current user: " + currentUser);
+            System.out.println("Is admin: " + isAdmin);
             
             // Afficher les boutons Modifier et Supprimer pour l'admin
             if (editButton != null) {
                 editButton.setVisible(isAdmin);
                 editButton.setManaged(isAdmin);
-                editButton.setOnAction(this::openEditForm);
             }
             
             if (deleteButton != null) {
                 deleteButton.setVisible(isAdmin);
                 deleteButton.setManaged(isAdmin);
-                deleteButton.setOnAction(this::deleteArticle);
             }
             
             if (submitCommentButton != null) {
@@ -313,10 +321,14 @@ public class ArticleDetailController implements Initializable {
     
     @FXML
     private void addComment(ActionEvent event) {
-        if (currentArticle == null) return;
+        if (currentArticle == null) {
+            showAlert(AlertType.ERROR, "Erreur", "Impossible d'ajouter un commentaire : article non sélectionné.");
+            return;
+        }
         
         // Vérifier si l'utilisateur est connecté
-        if (UserSession.getInstance().getUser() == null) {
+        User currentUser = UserSession.getInstance().getUser();
+        if (currentUser == null) {
             showAlert(AlertType.WARNING, "Non connecté", "Vous devez être connecté pour ajouter un commentaire.");
             return;
         }
@@ -326,9 +338,11 @@ public class ArticleDetailController implements Initializable {
         // Validation du commentaire
         StringBuilder errors = new StringBuilder();
         
+        // Validation de base
         if (commentContent.isEmpty()) {
             errors.append("Le commentaire ne peut pas être vide.\n");
         } else {
+            // Validation de la longueur
             if (commentContent.length() < 2) {
                 errors.append("Le commentaire doit contenir au moins 2 caractères.\n");
             }
@@ -338,8 +352,25 @@ public class ArticleDetailController implements Initializable {
             if (commentContent.replaceAll("\\s+", "").isEmpty()) {
                 errors.append("Le commentaire doit contenir du texte.\n");
             }
+            
+            // Vérification du contenu inapproprié
+            if (InappropriateContentDetector.containsInappropriateContent(commentContent)) {
+                errors.append(InappropriateContentDetector.getInappropriateContentMessage()).append("\n");
+                // Mettre en évidence le champ de commentaire
+                newCommentArea.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                // Réinitialiser le style après 3 secondes
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(3000);
+                        Platform.runLater(() -> newCommentArea.setStyle(""));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+            }
         }
         
+        // Si des erreurs sont trouvées, les afficher et arrêter
         if (errors.length() > 0) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Erreur de Validation");
@@ -349,17 +380,24 @@ public class ArticleDetailController implements Initializable {
             return;
         }
         
+        // Si tout est valide, ajouter le commentaire
         try {
             Comment comment = new Comment();
             comment.setContenu(commentContent);
             comment.setArticle(currentArticle);
-            comment.setUserId(UserSession.getInstance().getUser().getId());
+            comment.setUserId(currentUser.getId());
+            comment.setCreatedAt(LocalDateTime.now());
             
+            // Ajouter le commentaire
             commentService.ajouter(comment);
             
+            // Réinitialiser le champ de commentaire
             newCommentArea.clear();
+            
+            // Recharger les commentaires
             loadComments();
             
+            // Afficher un message de succès
             showAlert(AlertType.INFORMATION, "Succès", "Votre commentaire a été ajouté avec succès !");
             
         } catch (SQLException e) {
@@ -398,9 +436,25 @@ public class ArticleDetailController implements Initializable {
     @FXML
     private void openEditForm(ActionEvent event) {
         if (currentArticle == null) return;
+        
+        // Vérifier les permissions
+        User currentUser = UserSession.getInstance().getUser();
+        boolean isAdmin = currentUser != null && currentUser.getRoles() != null && 
+                         currentUser.getRoles().contains("ROLE_ADMIN");
+        
+        if (!isAdmin) {
+            showAlert(AlertType.ERROR, "Non autorisé", "Vous n'avez pas les permissions nécessaires pour modifier cet article.");
+            return;
+        }
+        
         try {
             ensureStageIsSet();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ArticleEdit.fxml"));
+            URL fxmlUrl = getClass().getResource("/fxml/ArticleEdit.fxml");
+            if (fxmlUrl == null) {
+                throw new IOException("Cannot find ArticleEdit.fxml in /fxml/ArticleEdit.fxml");
+            }
+            
+            FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Parent root = loader.load();
 
             ArticleEditController controller = loader.getController();
@@ -409,19 +463,21 @@ public class ArticleDetailController implements Initializable {
             // Navigate by setting the scene on the main stage
             Stage mainStage = NavigationUtil.getMainStage();
             if (mainStage != null) {
-                 // Set the scene, adjusting size if needed
-                 // Consider storing original size or using root's pref size
-                mainStage.setScene(new Scene(root)); 
-                // Optional: Reset title if necessary
-                mainStage.setTitle("Modifier l'Article"); 
+                Scene scene = new Scene(root);
+                URL cssUrl = getClass().getResource("/alpha-education.css");
+                if (cssUrl != null) {
+                    scene.getStylesheets().add(cssUrl.toExternalForm());
+                }
+                mainStage.setScene(scene);
+                mainStage.setTitle("Modifier l'Article - " + currentArticle.getTitle());
             } else {
-                 System.err.println("Main stage not found in NavigationUtil for editing.");
-                 showAlert(AlertType.ERROR, "Erreur Interne", "Impossible d'ouvrir le formulaire de modification.");
+                System.err.println("Main stage not found in NavigationUtil for editing.");
+                showAlert(AlertType.ERROR, "Erreur Interne", "Impossible d'ouvrir le formulaire de modification.");
             }
 
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(AlertType.ERROR, "Erreur", "Impossible de charger le formulaire de modification."); // Adjusted message
+            showAlert(AlertType.ERROR, "Erreur", "Impossible de charger le formulaire de modification : " + e.getMessage());
         }
     }
 
@@ -564,6 +620,24 @@ public class ArticleDetailController implements Initializable {
                 e.printStackTrace();
                 showAlert(AlertType.ERROR, "Erreur", "Impossible de supprimer le commentaire : " + e.getMessage());
             }
+        }
+    }
+
+    @FXML
+    private void listenToArticle(ActionEvent event) {
+        String texte = titleLabel.getText() + ". " + contentLabel.getText();
+        lireTexte(texte);
+    }
+
+    private void lireTexte(String texte) {
+        try {
+            String command = "PowerShell -Command \"Add-Type –AssemblyName System.Speech; " +
+                    "$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer; " +
+                    "$speak.SelectVoice('Microsoft Hortense Desktop'); " +
+                    "$speak.Speak('" + texte.replace("'", "''") + "');\"";
+            Runtime.getRuntime().exec(command);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 } 

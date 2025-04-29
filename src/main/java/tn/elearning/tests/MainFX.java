@@ -17,7 +17,10 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Signin.fxml"));
+
+            tn.elearning.utils.NavigationUtil.setMainStage(primaryStage);
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Acceuil.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -25,10 +28,7 @@ public class MainFX extends Application {
 
             primaryStage.show();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace(); // Better than just printing the message
         }
-
-
-
     }
 }

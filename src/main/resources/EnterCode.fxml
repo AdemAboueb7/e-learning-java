@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.elearning.controller.EnterCode"
+            prefHeight="400.0" prefWidth="600.0">
+    <VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER">
+        <!-- Champ pour entrer le code -->
+        <TextField fx:id="codeField" promptText="Enter code" prefWidth="200"/>
+
+        <!-- Champ pour entrer le nouveau mot de passe -->
+        <PasswordField fx:id="newPasswordField" promptText="Enter new password" prefWidth="200"/>
+
+        <!-- Champ pour confirmer le mot de passe -->
+        <PasswordField fx:id="confirmPasswordField" promptText="Confirm password" prefWidth="200"/>
+
+        <!-- Label pour afficher les statuts -->
+        <Label fx:id="statusLabel" text="" />
+
+        <!-- Bouton pour soumettre -->
+        <Button text="Submit" onMouseClicked="#handleValidate" prefWidth="200"/>
+    </VBox>
+</AnchorPane>

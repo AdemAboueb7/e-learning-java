@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.elearning.controller.ModuleController"
+            stylesheets="@alpha-education.css">
+
+    <!-- Sidebar -->
+    <left>
+        <fx:include source="SideBarEnseignant.fxml"/>
+    </left>
+
+    <!-- Centre : contenu -->
+    <center>
+        <AnchorPane prefWidth="900.0" prefHeight="600.0">
+            <children>
+                <VBox layoutX="30.0" layoutY="20.0" spacing="20" style="-fx-padding: 20;">
+
+                    <!-- Titre -->
+                    <Label text="Gestion des Modules" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+                    <!-- Formulaire -->
+                    <GridPane hgap="15" vgap="15">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="30"/>
+                            <ColumnConstraints percentWidth="70"/>
+                        </columnConstraints>
+
+                        <Label text="Nom du Module:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="moduleNameField" promptText="Nom du module" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextArea fx:id="moduleDescriptionField" promptText="Description du module" prefRowCount="3" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    </GridPane>
+
+                    <!-- Boutons d'action -->
+                    <HBox spacing="15" alignment="CENTER">
+                        <Button text="Ajouter" onAction="#addModule" styleClass="primary-button"/>
+                        <Button text="Mettre à jour" onAction="#updateModule" styleClass="update-button"/>
+                        <Button text="Supprimer" onAction="#deleteModule" styleClass="delete-button"/>
+                    </HBox>
+
+                    <!-- Tableau -->
+                    <TableView fx:id="moduleTable" prefHeight="400" prefWidth="850">
+                        <columns>
+                            <TableColumn fx:id="colNom" text="Nom" prefWidth="400"/>
+                            <TableColumn fx:id="colDescription" text="Description" prefWidth="450"/>
+                        </columns>
+                    </TableView>
+
+                </VBox>
+            </children>
+        </AnchorPane>
+    </center>
+
+</BorderPane>

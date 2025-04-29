@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CKEditor in JavaFX</title>
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 10px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <textarea name="editor1" id="editor1"></textarea>
+        <script>
+            var editor = CKEDITOR.replace('editor1', {
+                height: '400px',
+                removePlugins: 'elementspath,resize',
+                toolbar: [
+                    { name: 'document', items: [ 'Source' ] },
+                    { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+                    { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript' ] },
+                    { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+                    { name: 'links', items: [ 'Link', 'Unlink' ] },
+                    { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] },
+                    { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+                    { name: 'colors', items: [ 'TextColor', 'BGColor' ] }
+                ]
+            });
+
+            // Function to get editor content
+            function getContent() {
+                return CKEDITOR.instances.editor1.getData();
+            }
+
+            // Function to set editor content
+            function setContent(content) {
+                CKEDITOR.instances.editor1.setData(content);
+            }
+        </script>
+    </form>
+</body>
+</html> 
