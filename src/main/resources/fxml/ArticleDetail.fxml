@@ -36,7 +36,6 @@
                                                 <Font name="System Bold" size="24.0" />
                                             </font>
                                         </Label>
-                                        <Button fx:id="listenButton" text="Écouter l'article" onAction="#listenToArticle" styleClass="button" />
                                         <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="metadata-hbox">
                                             <Label fx:id="categoryLabel" styleClass="card-category" />
                                             <Label fx:id="dateLabel" styleClass="card-date" />

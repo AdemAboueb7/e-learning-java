@@ -3,15 +3,18 @@ package tn.elearning.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
+import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
 import javafx.stage.Stage;
 import tn.elearning.entities.Article;
 import tn.elearning.services.ArticleService;
 import tn.elearning.utils.NavigationUtil;
+import javafx.concurrent.Worker.State;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.Arrays;
 
@@ -23,13 +26,45 @@ public class AjouterArticleController {
     private ComboBox<String> categoryComboBox;
 
     @FXML
-    private TextArea contentTF;
+    private WebView webView;
 
     @FXML
     private TextField titleTF;
 
+    private WebEngine webEngine;
+
     @FXML
     public void initialize() {
+        // Initialize WebView with necessary permissions
+        webView.setContextMenuEnabled(true);
+        webEngine = webView.getEngine();
+        
+        // Enable JavaScript
+        webEngine.setJavaScriptEnabled(true);
+        
+        // Load the editor
+        URL editorUrl = getClass().getResource("/html/editor.html");
+        if (editorUrl != null) {
+            System.out.println("Loading editor from: " + editorUrl.toExternalForm());
+            webEngine.load(editorUrl.toExternalForm());
+            
+            // Add a listener to handle loading errors
+            webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+                if (newState == State.FAILED) {
+                    System.err.println("Failed to load editor: " + webEngine.getLoadWorker().getException());
+                } else if (newState == State.SUCCEEDED) {
+                    System.out.println("Editor loaded successfully");
+                }
+            });
+        } else {
+            System.err.println("Could not find editor.html resource");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Editor Loading Error");
+            alert.setContentText("Could not find the editor resource file.");
+            alert.showAndWait();
+        }
+
         // Remplir les catégories pour enfants 6-12
         categoryComboBox.getItems().addAll(Arrays.asList(
             "Aventures Mathématiques", 
@@ -52,7 +87,6 @@ public class AjouterArticleController {
         try {
             // Validation détaillée
             String title = titleTF.getText().trim();
-            String content = contentTF.getText().trim();
             String selectedCategory = categoryComboBox.getValue();
             
             StringBuilder errors = new StringBuilder();
@@ -66,18 +100,21 @@ public class AjouterArticleController {
                 errors.append("Le titre ne doit pas dépasser 100 caractères.\n");
             }
             
-            // Validation du contenu
-            if (content.isEmpty()) {
-                errors.append("Le contenu est obligatoire.\n");
-            } else if (content.length() < 10) {
-                errors.append("Le contenu doit contenir au moins 10 caractères.\n");
-            } else if (content.length() > 10000) {
-                errors.append("Le contenu ne doit pas dépasser 10000 caractères.\n");
-            }
-            
             // Validation de la catégorie
             if (selectedCategory == null || selectedCategory.trim().isEmpty()) {
                 errors.append("La catégorie est obligatoire.\n");
+            }
+            
+            // Get content from CKEditor
+            String content = (String) webEngine.executeScript("getContent()");
+            
+            // Validation du contenu
+            if (content == null || content.trim().isEmpty()) {
+                errors.append("Le contenu est obligatoire.\n");
+            } else if (content.length() < 10) {
+                errors.append("Le contenu doit contenir au moins 10 caractères.\n");
+            } else if (content.length() > 50000) {
+                errors.append("Le contenu ne doit pas dépasser 50000 caractères.\n");
             }
             
             // S'il y a des erreurs, les afficher
@@ -178,19 +215,6 @@ public class AjouterArticleController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur de Navigation");
             alert.setContentText("Impossible de naviguer vers la vue des articles : " + e.getMessage());
-            alert.showAndWait();
-        }
-    }
-
-    private void navigateToArticleManager() {
-        try {
-            NavigationUtil.navigateToArticleManager();
-        } catch (IOException e) {
-            e.printStackTrace();
-            
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur de Navigation");
-            alert.setContentText("Impossible de naviguer vers le gestionnaire d'articles : " + e.getMessage());
             alert.showAndWait();
         }
     }

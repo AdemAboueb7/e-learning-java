@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane prefHeight="700.0" prefWidth="800.0" styleClass="root" stylesheets="@alpha-education.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.ArticleEditController">
+   <children>
+      <VBox prefHeight="700.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" styleClass="header">
+               <children>
+                  <Label styleClass="header-label" text="Modifier l'Article" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#saveArticle" styleClass="button" text="Enregistrer">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#cancel" styleClass="button-secondary" text="Annuler" />
+               </children>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </HBox>
+            
+            <!-- Form Content -->
+            <VBox prefWidth="780.0" spacing="20.0" styleClass="form" VBox.vgrow="ALWAYS">
+               <children>
+                  <!-- Title -->
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Titre :" />
+                        <TextField fx:id="titleField" promptText="Entrez le titre de l'article" />
+                     </children>
+                  </VBox>
+                  
+                  <!-- Category -->
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Catégorie :" />
+                        <ComboBox fx:id="categoryComboBox" prefWidth="250.0" promptText="Sélectionnez une catégorie" />
+                     </children>
+                  </VBox>
+                  
+                  <!-- Published CheckBox -->
+                  <CheckBox fx:id="publishedCheckBox" text="Publié" />
+                  
+                  <!-- Content -->
+                  <VBox spacing="5.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label text="Contenu :" />
+                        <WebView fx:id="webView" prefHeight="400.0" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane> 

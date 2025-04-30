@@ -259,4 +259,210 @@
 .star-decoration {
     -fx-fill: #ffd54f; /* Jaune */
     -fx-stroke: transparent;
-} 
+}
+
+/* Statistics Styles */
+.stats-container {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 10px;
+}
+
+.stat-card {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0, 0, 2);
+    -fx-alignment: center;
+    -fx-min-width: 200px;
+    -fx-min-height: 100px;
+}
+
+.stat-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 4);
+    -fx-translate-y: -2px;
+    -fx-cursor: hand;
+}
+
+.stat-icon {
+    -fx-font-size: 24px;
+}
+
+.stat-number {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2196F3;
+}
+
+.stat-title {
+    -fx-font-size: 14px;
+    -fx-text-fill: #757575;
+    -fx-font-weight: normal;
+}
+
+.chart-container {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0, 0, 2);
+    -fx-min-height: 400px;
+}
+
+.chart-container:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 4);
+}
+
+.chart-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #424242;
+    -fx-padding: 0 0 15 0;
+}
+
+.stats-table {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.stats-table .column-header {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #e0e0e0;
+    -fx-padding: 10px;
+    -fx-font-weight: bold;
+}
+
+.stats-table .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #e0e0e0 transparent;
+    -fx-padding: 5px;
+}
+
+.stats-table .table-row-cell:hover {
+    -fx-background-color: #f8f9fa;
+}
+
+.stats-table .table-row-cell:selected {
+    -fx-background-color: #e9ecef;
+}
+
+.table-container {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+}
+
+/* Chart Customization */
+.chart-pie-label {
+    -fx-fill: #424242;
+    -fx-font-size: 12px;
+}
+
+.chart-pie-label-line {
+    -fx-stroke: #757575;
+    -fx-stroke-width: 1px;
+}
+
+.chart-legend {
+    -fx-background-color: transparent;
+    -fx-padding: 20px;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #424242;
+    -fx-font-size: 12px;
+}
+
+.axis {
+    -fx-tick-label-fill: #757575;
+    -fx-tick-label-font-size: 12px;
+}
+
+.axis-label {
+    -fx-text-fill: #424242;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 2.5px;
+}
+
+.chart-line-symbol {
+    -fx-padding: 5px;
+}
+
+.default-color0.chart-series-line { -fx-stroke: #2196F3; }
+.default-color1.chart-series-line { -fx-stroke: #4CAF50; }
+.default-color2.chart-series-line { -fx-stroke: #FFC107; }
+
+.default-color0.chart-line-symbol { 
+    -fx-background-color: #2196F3, white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+.default-color1.chart-line-symbol { 
+    -fx-background-color: #4CAF50, white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+.default-color2.chart-line-symbol { 
+    -fx-background-color: #FFC107, white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.chart-pie {
+    -fx-border-color: derive(-fx-pie-color, 40%);
+    -fx-border-width: 1px;
+}
+
+.chart-pie-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+/* Animation for stat cards */
+.stat-card {
+    -fx-transition: all 0.3s ease;
+}
+
+.chart-container {
+    -fx-transition: all 0.3s ease;
+}
+
+.no-content-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #757575;
+    -fx-padding: 20px;
+}
+
+.stats-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.stats-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.stats-scroll-pane > .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 5;
+}
+
+.stats-scroll-pane > .scroll-bar:vertical > .thumb {
+    -fx-background-color: #8bc34a;
+    -fx-background-radius: 5px;
+}
+
+.stats-scroll-pane > .scroll-bar:vertical > .track {
+    -fx-background-color: transparent;
+}
+
+.stats-scroll-pane > .scroll-bar:vertical > .increment-button,
+.stats-scroll-pane > .scroll-bar:vertical > .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+}

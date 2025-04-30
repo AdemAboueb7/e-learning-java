@@ -1,6 +1,5 @@
 package tn.elearning.controller;
 
-import com.mysql.cj.Session;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,13 +9,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import tn.elearning.entities.Abonnement;
 import tn.elearning.entities.Paiement;
 import tn.elearning.entities.User;
 import tn.elearning.services.ServiceAbonnement;
 import tn.elearning.services.ServicePaiement;
-import tn.elearning.services.StripeService;
 import tn.elearning.utils.UserSession;
 
 import java.io.IOException;
@@ -66,57 +63,19 @@ public class cardsAbonnementController {
         Abonnement id_abonnement = ab;
         LocalDateTime datePaiement = LocalDateTime.now();
         User user = UserSession.getInstance().getUser();
-        ServicePaiement sp = new ServicePaiement();
-
-        // Crée une instance du service Stripe
-        StripeService stripeService = new StripeService();
-
+        Paiement paiement = new Paiement(montant, id_abonnement, datePaiement,user);
+        ServicePaiement sp=new ServicePaiement();
         try {
-            // Crée une session de paiement Stripe pour l'abonnement
-            com.stripe.model.checkout.Session stripeSession = stripeService.createCheckoutSession(ab);
-
-            // Ouvre l'URL de la session Stripe dans le navigateur par défaut
-            String checkoutUrl = stripeSession.getUrl();
-            if (checkoutUrl != null) {
-                java.awt.Desktop.getDesktop().browse(java.net.URI.create(checkoutUrl));
-            }
-
-
-            // Attendre que l'utilisateur ait le temps de payer (facultatif mais conseillé)
-            Thread.sleep(50000); // Pause 15 secondes pour lui laisser le temps
-
-            // Vérifier l'état du paiement
-            com.stripe.model.checkout.Session retrievedSession = stripeService.retrieveSession(stripeSession.getId());
-
-            if ("paid".equals(retrievedSession.getPaymentStatus())) {
-                // Paiement réussi → Ajouter dans la base
-                Paiement paiement = new Paiement(montant, id_abonnement, datePaiement, user);
-                sp.ajouter(paiement);
-
-                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                successAlert.setTitle("Succès");
-                successAlert.setHeaderText(null);
-                successAlert.setContentText("Paiement effectué avec succès !");
-                successAlert.showAndWait();
-            } else {
-                // Paiement échoué ou annulé
-                Alert failAlert = new Alert(Alert.AlertType.ERROR);
-                failAlert.setTitle("Échec du Paiement");
-                failAlert.setHeaderText(null);
-                failAlert.setContentText("Le paiement n'a pas été finalisé. Veuillez réessayer.");
-                failAlert.showAndWait();
-            }
-
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur de Paiement");
-            alert.setHeaderText("Une erreur s'est produite");
-            alert.setContentText("Erreur : " + e.getMessage());
+            sp.ajouter(paiement);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Paiement");
+            alert.setHeaderText(null);
+            alert.setContentText("Paiement effectué avec succès !");
             alert.showAndWait();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
-
-
     @FXML
     void ToPaiements(ActionEvent event) {
         try {

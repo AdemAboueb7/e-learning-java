@@ -1,5 +1,7 @@
 package tn.elearning.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,8 +9,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tn.elearning.entities.Article;
@@ -20,84 +27,190 @@ import tn.elearning.utils.NavigationUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class VoirArticlesController implements Initializable {
 
+    @FXML private FlowPane articlesContainer;
+    @FXML private TextField searchField;
+    @FXML private ScrollPane articlesPane;
+    @FXML private VBox statisticsContainer;
+    
+    // Statistics components
+    @FXML private Label totalArticlesLabel;
+    @FXML private Label totalCommentsLabel;
+    @FXML private Label avgCommentsLabel;
+    @FXML private PieChart categoriesChart;
+    @FXML private LineChart<String, Number> timelineChart;
+    @FXML private TableView<Article> topArticlesTable;
+    @FXML private TableColumn<Article, String> titleColumn;
+    @FXML private TableColumn<Article, String> categoryColumn;
+    @FXML private TableColumn<Article, Integer> commentsColumn;
+    @FXML private TableColumn<Article, LocalDateTime> dateColumn;
+
     private final ArticleService articleService = new ArticleService();
-    private List<Article> allArticles = new ArrayList<>();
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
-
-    @FXML
-    private FlowPane articlesContainer;
-
-    @FXML
-    private TextField searchField;
+    private final CommentService commentService = new CommentService();
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.FRENCH);
+    private List<Article> allArticles;
+    private List<Comment> allComments;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadArticles();
-        setupSearch();
-    }
-
-    private void setupSearch() {
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filterArticles(newValue);
-        });
-    }
-
-    private void filterArticles(String searchText) {
-        if (searchText == null || searchText.isEmpty()) {
-            displayArticles(allArticles);
-            return;
-        }
-
-        List<Article> filtered = allArticles.stream()
-                .filter(article ->
-                        article.getTitle().toLowerCase().contains(searchText.toLowerCase()) ||
-                                (article.getCategory() != null && article.getCategory().toLowerCase().contains(searchText.toLowerCase())) ||
-                                (article.getContent() != null && article.getContent().toLowerCase().contains(searchText.toLowerCase())))
-                .collect(Collectors.toList());
-
-        displayArticles(filtered);
-    }
-
-    private void loadArticles() {
+    public void initialize(URL url, ResourceBundle rb) {
         try {
-            allArticles = articleService.recuperer();
+            // Load initial data first
+            loadData();
 
-            // Sort articles by creation date (newest first), handling nulls
-            allArticles.sort(Comparator.comparing(Article::getCreatedAt,
-                    Comparator.nullsLast(Comparator.reverseOrder())));
+            // Initialize table columns
+            titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+            dateColumn.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
+            
+            // Format date column
+            dateColumn.setCellFactory(column -> new TableCell<Article, LocalDateTime>() {
+                @Override
+                protected void updateItem(LocalDateTime date, boolean empty) {
+                    super.updateItem(date, empty);
+                    if (empty || date == null) {
+                        setText(null);
+                    } else {
+                        setText(date.format(formatter));
+                    }
+                }
+            });
 
-            loadCommentsForArticles(); // Load comments after getting articles
-            displayArticles(allArticles); // Display the sorted list
+            // Format comments column
+            commentsColumn.setCellValueFactory(cellData -> {
+                Article article = cellData.getValue();
+                if (article != null && allComments != null) {
+                    long commentCount = allComments.stream()
+                        .filter(c -> c.getArticle() != null && c.getArticle().getId() == article.getId())
+                        .count();
+                    return new javafx.beans.property.SimpleIntegerProperty((int) commentCount).asObject();
+                }
+                return new javafx.beans.property.SimpleIntegerProperty(0).asObject();
+            });
+
+            // Initialize search functionality
+            searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    displayArticles(allArticles);
+                } else {
+                    String searchTerm = newValue.toLowerCase();
+                    List<Article> filteredArticles = allArticles.stream()
+                        .filter(article -> 
+                            article.getTitle().toLowerCase().contains(searchTerm) ||
+                            article.getCategory().toLowerCase().contains(searchTerm) ||
+                            article.getContent().toLowerCase().contains(searchTerm))
+                        .collect(Collectors.toList());
+                    displayArticles(filteredArticles);
+                }
+            });
+
+            // Initialize visibility
+            statisticsContainer.setVisible(true);
+            articlesPane.setVisible(false);
+
+            // Update statistics after everything is initialized
+            updateStatistics();
+
         } catch (SQLException e) {
+            e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger les articles : " + e.getMessage());
         }
     }
 
-    private void loadCommentsForArticles() {
-        try {
-            CommentService commentService = new CommentService();
-            List<Comment> allComments = commentService.recuperer();
+    private void loadData() throws SQLException {
+        allArticles = articleService.recuperer();
+        allComments = commentService.recuperer();
+        displayArticles(allArticles);
+    }
 
-            // Group comments by article ID
-            Map<Integer, List<Comment>> commentsByArticle = allComments.stream()
-                    .filter(comment -> comment != null && comment.getArticle() != null)
-                    .collect(Collectors.groupingBy(comment -> comment.getArticle().getId()));
+    private void updateStatistics() {
+        if (allArticles == null || allComments == null) return;
 
-            // Assign comments to each article
-            for (Article article : allArticles) {
-                List<Comment> articleComments = commentsByArticle.getOrDefault(article.getId(), Collections.emptyList());
-                article.setComments(articleComments);
+        // Update summary statistics
+        int totalArticles = allArticles.size();
+        int totalComments = allComments.size();
+        double avgComments = totalArticles > 0 ? (double) totalComments / totalArticles : 0;
+
+        totalArticlesLabel.setText(String.valueOf(totalArticles));
+        totalCommentsLabel.setText(String.valueOf(totalComments));
+        avgCommentsLabel.setText(String.format("%.1f", avgComments));
+
+        // Update categories chart
+        Map<String, Long> categoryCounts = allArticles.stream()
+            .collect(Collectors.groupingBy(Article::getCategory, Collectors.counting()));
+        
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        categoryCounts.forEach((category, count) -> 
+            pieChartData.add(new PieChart.Data(category, count))
+        );
+        categoriesChart.setData(pieChartData);
+
+        // Update timeline chart
+        Map<String, Long> monthlyArticles = allArticles.stream()
+            .collect(Collectors.groupingBy(
+                article -> article.getCreatedAt().format(DateTimeFormatter.ofPattern("MMM yyyy")),
+                Collectors.counting()
+            ));
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Articles publiés");
+        monthlyArticles.forEach((month, count) -> 
+            series.getData().add(new XYChart.Data<>(month, count))
+        );
+        timelineChart.getData().clear();
+        timelineChart.getData().add(series);
+
+        // Update top articles table
+        Map<Article, Long> articleCommentCounts = allArticles.stream()
+            .collect(Collectors.toMap(
+                article -> article,
+                article -> allComments.stream()
+                    .filter(comment -> comment.getArticle() != null && comment.getArticle().getId() == article.getId())
+                    .count()
+            ));
+
+        List<Article> topArticles = articleCommentCounts.entrySet().stream()
+            .sorted(Map.Entry.<Article, Long>comparingByValue().reversed())
+            .limit(10)
+            .map(Map.Entry::getKey)
+            .collect(Collectors.toList());
+
+        // Format date column
+        dateColumn.setCellFactory(column -> new TableCell<Article, LocalDateTime>() {
+            @Override
+            protected void updateItem(LocalDateTime date, boolean empty) {
+                super.updateItem(date, empty);
+                if (empty || date == null) {
+                    setText(null);
+                } else {
+                    setText(date.format(formatter));
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Just log the error but continue - comments count is not critical
-            System.err.println("Erreur lors du chargement des commentaires : " + e.getMessage());
+        });
+
+        // Format comments column to show the actual comment count
+        commentsColumn.setCellValueFactory(cellData -> {
+            Article article = cellData.getValue();
+            long commentCount = articleCommentCounts.getOrDefault(article, 0L);
+            return new javafx.beans.property.SimpleIntegerProperty((int) commentCount).asObject();
+        });
+
+        topArticlesTable.setItems(FXCollections.observableArrayList(topArticles));
+    }
+
+    @FXML
+    private void toggleStatistics() {
+        boolean showStats = !statisticsContainer.isVisible();
+        statisticsContainer.setVisible(showStats);
+        articlesPane.setVisible(!showStats);
+        
+        if (showStats) {
+            updateStatistics();
         }
     }
 
@@ -106,7 +219,7 @@ public class VoirArticlesController implements Initializable {
 
         if (articles.isEmpty()) {
             Label noArticlesLabel = new Label("Aucun article trouvé.");
-            noArticlesLabel.getStyleClass().add("section-title");
+            noArticlesLabel.getStyleClass().add("no-content-label");
             articlesContainer.getChildren().add(noArticlesLabel);
             return;
         }
@@ -128,19 +241,11 @@ public class VoirArticlesController implements Initializable {
                 if (categoryLabel != null) categoryLabel.setText(article.getCategory());
                 if (contentLabel != null) {
                     String content = article.getContent();
-                    contentLabel.setText(content != null && content.length() > 150 ? content.substring(0, 150) + "..." : content);
+                    contentLabel.setText(content != null && content.length() > 150 ? 
+                        content.substring(0, 150) + "..." : content);
                 }
-                if (dateLabel != null) {
-                    if (article.getCreatedAt() != null) {
-                        String dateText = article.getCreatedAt().format(formatter);
-                        if (article.getComments() != null && !article.getComments().isEmpty()) {
-                            int commentCount = article.getComments().size();
-                            dateText += " • " + commentCount + " " + (commentCount == 1 ? "commentaire" : "commentaires");
-                        }
-                        dateLabel.setText(dateText);
-                    } else {
-                        dateLabel.setText("Date indisponible");
-                    }
+                if (dateLabel != null && article.getCreatedAt() != null) {
+                    dateLabel.setText(article.getCreatedAt().format(formatter));
                 }
 
                 articlesContainer.getChildren().add(articleCard);
@@ -203,49 +308,5 @@ public class VoirArticlesController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
-    }
-
-    // --- Sidebar Action Handlers (Placeholders) ---
-
-    @FXML
-    private void handleProfilAction(ActionEvent event) {
-        System.out.println("Profil button clicked");
-        // TODO: Implement navigation to Profil view
-    }
-
-    @FXML
-    private void handlePaiementsAction(ActionEvent event) {
-        System.out.println("Paiements button clicked");
-        // TODO: Implement navigation to Paiements view
-    }
-
-    @FXML
-    private void handleCoursAction(ActionEvent event) {
-        System.out.println("Cours button clicked");
-        // TODO: Implement navigation to Cours view
-    }
-
-    @FXML
-    private void handleSuiviAction(ActionEvent event) {
-        System.out.println("Suivre mon enfant button clicked");
-        // TODO: Implement navigation to Suivi view
-    }
-
-    @FXML
-    private void handleEvenementsAction(ActionEvent event) {
-        System.out.println("Évènements button clicked");
-        // TODO: Implement navigation to Evenements view
-    }
-
-    @FXML
-    private void handleArticlesAction(ActionEvent event) {
-        System.out.println("Articles button clicked - already here");
-        // No action needed, maybe just ensure style is active?
-    }
-
-    @FXML
-    private void handleDeconnexionAction(ActionEvent event) {
-        System.out.println("Déconnexion button clicked");
-        // TODO: Implement logout logic and navigate to login/main screen
     }
 }

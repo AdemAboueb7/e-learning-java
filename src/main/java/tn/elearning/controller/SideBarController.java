@@ -34,8 +34,17 @@ public class SideBarController {
     @FXML
     private Button suivi;
 
+
     @FXML
     void handleArticlesAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VoirArticlesParent.fxml"));
+            Parent root = loader.load();
+            articles.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
