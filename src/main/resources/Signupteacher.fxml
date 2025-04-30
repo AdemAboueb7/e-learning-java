@@ -38,6 +38,6 @@
 
         <Button layoutX="195.0" layoutY="490.0" mnemonicParsing="false" onAction="#signup" prefHeight="26.0" prefWidth="256.0" text="Créer compte" textFill="#2797c2" />
 
-        <Hyperlink layoutX="265.0" layoutY="530.0" text="Mot de passe oublié ?" />
+        <Hyperlink layoutX="265.0" layoutY="530.0" text="Mot de passe oublié ?" onAction="#handleForgotPassword" />
     </children>
 </AnchorPane>

@@ -1,12 +1,15 @@
 package tn.elearning.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import tn.elearning.services.ServiceUser;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class EnterCode {
@@ -48,6 +51,15 @@ public class EnterCode {
 
             statusLabel.setText("Mot de passe réinitialisé !");
             statusLabel.setStyle("-fx-text-fill: green;");
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/signin .fxml"));
+                Parent root = loader.load();
+                codeField.getScene().setRoot(root);
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+
         } else {
             statusLabel.setText("Code incorrect !");
             statusLabel.setStyle("-fx-text-fill: red;");

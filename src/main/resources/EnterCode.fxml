@@ -9,21 +9,21 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="tn.elearning.controller.EnterCode"
-            prefHeight="400.0" prefWidth="600.0">
-    <VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER">
-        <!-- Champ pour entrer le code -->
-        <TextField fx:id="codeField" promptText="Enter code" prefWidth="200"/>
+            prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@entercode.css">
 
-        <!-- Champ pour entrer le nouveau mot de passe -->
-        <PasswordField fx:id="newPasswordField" promptText="Enter new password" prefWidth="200"/>
+    <VBox fx:id="formContainer"
+          alignment="CENTER"
+          spacing="15.0"
+          AnchorPane.topAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0">
 
-        <!-- Champ pour confirmer le mot de passe -->
-        <PasswordField fx:id="confirmPasswordField" promptText="Confirm password" prefWidth="200"/>
-
-        <!-- Label pour afficher les statuts -->
-        <Label fx:id="statusLabel" text="" />
-
-        <!-- Bouton pour soumettre -->
+        <TextField fx:id="codeField" promptText="Enter code"/>
+        <PasswordField fx:id="newPasswordField" promptText="Enter new password" />
+        <PasswordField fx:id="confirmPasswordField" promptText="Confirm password"/>
+        <Label fx:id="statusLabel" text=""/>
         <Button text="Submit" onMouseClicked="#handleValidate" prefWidth="200"/>
     </VBox>
 </AnchorPane>

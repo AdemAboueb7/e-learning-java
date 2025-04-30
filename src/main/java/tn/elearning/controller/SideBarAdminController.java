@@ -16,6 +16,8 @@ public class SideBarAdminController {
 
     @FXML
     private Button articles;
+    @FXML
+    private Button statistiques;
 
     @FXML
     private Button evenements;
@@ -61,6 +63,18 @@ public class SideBarAdminController {
         }
 
     }
+    @FXML
+    void handlestatistiquesAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/suiviadmin.fxml"));
+            Parent root = loader.load();
+            paiements.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     @FXML
     void handleEvenementsAction(ActionEvent event) {
