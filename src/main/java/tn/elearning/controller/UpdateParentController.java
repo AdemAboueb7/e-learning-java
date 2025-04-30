@@ -78,7 +78,6 @@ public class UpdateParentController {
             return;
         }
 
-        // Récupérer les nouvelles données depuis les champs
         String fullName = fullNameField.getText();
         String email = emailField.getText();
         String phoneNumber = phoneField.getText();
