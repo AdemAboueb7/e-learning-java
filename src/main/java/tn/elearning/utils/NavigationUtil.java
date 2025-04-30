@@ -146,22 +146,22 @@ public class NavigationUtil {
     }
 
     public static void navigateToCours() throws IOException {
-        navigateTo("/fxml/Cours.fxml");
+        navigateTo("/cours.fxml");
         mainStage.setTitle("Cours");
     }
 
     public static void navigateToModule() throws IOException {
-        navigateTo("/fxml/Module.fxml");
+        navigateTo("/module.fxml");
         mainStage.setTitle("Modules");
     }
 
     public static void navigateToChapitre() throws IOException {
-        navigateTo("/fxml/Chapitre.fxml");
+        navigateTo("/chapitre.fxml");
         mainStage.setTitle("Chapitres");
     }
 
     public static void navigateToListeCours() throws IOException {
-        navigateTo("/fxml/ListCours.fxml");
+        navigateTo("/ListCours.fxml");
         mainStage.setTitle("Liste des cours");
     }
     public static void navigateToDashboard() throws IOException {
