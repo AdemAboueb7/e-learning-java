@@ -3,10 +3,12 @@ package tn.elearning.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import tn.elearning.entities.User;
@@ -23,6 +25,8 @@ import java.util.List;
 public class signupteacher {
     @FXML
     public TextField experience;
+    @FXML
+    private Label errorLabel;
     @FXML
     private TextField adresseclient;
 
@@ -132,6 +136,25 @@ public class signupteacher {
             // Définir la nouvelle scène avec la page d'accueil
             stage.setScene(new Scene(homePage));
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void handleForgotPassword(ActionEvent event) {
+        try {
+            // Charger la vue forgot-password.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/forgotpassword.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer la scène actuelle
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Changer de scène
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            errorLabel.setText("Erreur lors du chargement de la page");
             e.printStackTrace();
         }
     }

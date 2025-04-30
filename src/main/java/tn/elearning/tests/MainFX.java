@@ -20,7 +20,7 @@ public class MainFX extends Application {
 
             tn.elearning.utils.NavigationUtil.setMainStage(primaryStage);
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/suiviadmin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/acceuil.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

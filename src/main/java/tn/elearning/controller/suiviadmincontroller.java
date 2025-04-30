@@ -17,11 +17,9 @@ import java.util.List;
 
 public class suiviadmincontroller {
 
-    @FXML private Label adminCountLabel;
-    @FXML private Label teacherCountLabel;
-    @FXML private Label parentCountLabel;
-    @FXML private Label totalCountLabel;
     @FXML private BarChart<String, Number> experienceBarChart;
+    @FXML private PieChart rolePieChart;
+
 
     @FXML private PieChart matierePieChart;
 
@@ -52,23 +50,28 @@ public class suiviadmincontroller {
                 }
             }
 
-            adminCountLabel.setText("Admins : " + adminCount);
-            teacherCountLabel.setText("Professeurs : " + teacherCount);
-            parentCountLabel.setText("Parents : " + parentCount);
-            totalCountLabel.setText("Utilisateurs totaux : " + allUsers.size());
+
 
             // Charger les statistiques des matières
             chargerStatistiquesParMatiere();
             chargerExperienceParPlage(allUsers);
+            chargerStatistiquesParRole(adminCount, teacherCount, parentCount);
+
 
         } catch (SQLException e) {
-            adminCountLabel.setText("Erreur");
-            teacherCountLabel.setText("Erreur");
-            parentCountLabel.setText("Erreur");
-            totalCountLabel.setText("Erreur");
             e.printStackTrace();
         }
     }
+    private void chargerStatistiquesParRole(int adminCount, int teacherCount, int parentCount) {
+        ObservableList<PieChart.Data> roleData = FXCollections.observableArrayList(
+                new PieChart.Data("Admins", adminCount),
+                new PieChart.Data("Professeurs", teacherCount),
+                new PieChart.Data("Parents", parentCount)
+        );
+        rolePieChart.setData(roleData);
+        rolePieChart.setTitle("Répartition des rôles");
+    }
+
     private void chargerExperienceParPlage(List<User> users) {
         int range0_2 = 0;
         int range3_5 = 0;

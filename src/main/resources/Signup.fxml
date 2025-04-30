@@ -26,6 +26,6 @@
       <Label layoutX="158.0" layoutY="252.0" text="Numero de téléphone :" />
       <Label layoutX="161.0" layoutY="320.0" text="Adresse :" />
       <Label layoutX="161.0" layoutY="387.0" text="Profession :" />
-      <Hyperlink layoutX="265.0" layoutY="520.0" text="Mot de passe oublié ?" />
+      <Hyperlink layoutX="265.0" layoutY="520.0" text="Mot de passe oublié ?" onAction="#handleForgotPassword"/>
    </children>
 </AnchorPane>
