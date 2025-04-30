@@ -33,6 +33,14 @@ public class SideBarEnseignantController {
 
     @FXML
     void handleArticlesAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VoirArticlesTeacher.fxml"));
+            Parent root = loader.load();
+            articles.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 

@@ -2,24 +2,59 @@ package tn.elearning.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
 import tn.elearning.entities.Article;
 import tn.elearning.services.ArticleService;
 import tn.elearning.utils.NavigationUtil;
+import javafx.application.Platform;
+import javafx.concurrent.Worker;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 
 public class ArticleEditController {
     @FXML private TextField titleField;
     @FXML private ComboBox<String> categoryComboBox;
-    @FXML private TextArea contentArea;
+    @FXML private WebView webView;
     @FXML private CheckBox publishedCheckBox;
 
     private Article currentArticle;
     private ArticleService articleService;
+    private WebEngine webEngine;
 
     public void initialize() {
         articleService = new ArticleService();
+        
+        // Initialize WebView
+        webEngine = webView.getEngine();
+        URL editorUrl = getClass().getResource("/html/editor.html");
+        if (editorUrl != null) {
+            System.out.println("Loading editor from: " + editorUrl.toExternalForm());
+            webEngine.load(editorUrl.toExternalForm());
+            
+            // Add a listener for the page load
+            webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+                if (newState == Worker.State.SUCCEEDED) {
+                    System.out.println("Editor loaded successfully");
+                    // If we have a pending article to set, set it now
+                    if (currentArticle != null) {
+                        Platform.runLater(() -> {
+                            try {
+                                webEngine.executeScript("setContent('" + currentArticle.getContent().replace("'", "\\'") + "')");
+                            } catch (Exception e) {
+                                System.err.println("Error setting content: " + e.getMessage());
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+            System.err.println("Could not find editor.html resource");
+        }
+        
         // Updated categories for children 6-12 with encouragement/tracking themes
         categoryComboBox.getItems().clear();
         categoryComboBox.getItems().addAll(Arrays.asList(
@@ -42,8 +77,20 @@ public class ArticleEditController {
         this.currentArticle = article;
         titleField.setText(article.getTitle());
         categoryComboBox.setValue(article.getCategory());
-        contentArea.setText(article.getContent());
         publishedCheckBox.setSelected(article.isPublished());
+        
+        // Only try to set content if the page is already loaded
+        if (webEngine.getLoadWorker().getState() == Worker.State.SUCCEEDED) {
+            Platform.runLater(() -> {
+                try {
+                    webEngine.executeScript("setContent('" + article.getContent().replace("'", "\\'") + "')");
+                } catch (Exception e) {
+                    System.err.println("Error setting content: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            });
+        }
+        // If not loaded, the content will be set when the page loads (see initialize())
     }
 
     @FXML
@@ -52,7 +99,8 @@ public class ArticleEditController {
             try {
                 currentArticle.setTitle(titleField.getText());
                 currentArticle.setCategory(categoryComboBox.getValue());
-                currentArticle.setContent(contentArea.getText());
+                String content = (String) webEngine.executeScript("getContent()");
+                currentArticle.setContent(content);
                 currentArticle.setPublished(publishedCheckBox.isSelected());
                 
                 articleService.modifier(currentArticle);
@@ -86,7 +134,9 @@ public class ArticleEditController {
             showError("Erreur de Validation", "La catégorie est requise");
             return false;
         }
-        if (contentArea.getText().trim().isEmpty()) {
+        
+        String content = (String) webEngine.executeScript("getContent()");
+        if (content == null || content.trim().isEmpty()) {
             showError("Erreur de Validation", "Le contenu est requis");
             return false;
         }
