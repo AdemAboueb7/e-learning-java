@@ -2,9 +2,12 @@ package tn.elearning.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import tn.elearning.utils.NavigationUtil;
+import tn.elearning.utils.UserSession;
 
 import java.io.IOException;
 
@@ -37,7 +40,20 @@ public class SideBarEnseignantController {
     @FXML
     void handleDeconnexionAction(ActionEvent event) {
 
-    }
+            UserSession.getInstance().clear();  // Cette méthode efface l'utilisateur et l'ID de session
+
+            // Rediriger vers la page de connexion (Signin.fxml)
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Signin.fxml"));
+                Parent root = loader.load();
+                // Mettre à jour la scène actuelle pour afficher la page de connexion
+                sidebar.getScene().setRoot(root);  // "sidebar" est utilisé ici pour obtenir la scène actuelle
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
 
     @FXML
     void handleEvenementsAction(ActionEvent event) {
@@ -86,6 +102,9 @@ public class SideBarEnseignantController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
     }
 
 }

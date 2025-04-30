@@ -16,9 +16,10 @@
     <!-- Main Content -->
     <center>
         <VBox styleClass="list-container" spacing="20" prefWidth="750" prefHeight="550">
-            <!-- Title with decorative underline -->
+            <ComboBox fx:id="languageComboBox" prefWidth="150" />
             <StackPane styleClass="title-container">
                 <VBox alignment="CENTER" spacing="5">
+
                     <Text styleClass="title" text="Liste des Cours" />
                     <Line styleClass="title-underline" startX="0" endX="150" />
                 </VBox>

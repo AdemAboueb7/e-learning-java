@@ -1,11 +1,13 @@
 package tn.elearning.controller;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import tn.elearning.entities.Cours;
 import tn.elearning.entities.Chapitre;
@@ -13,11 +15,17 @@ import tn.elearning.services.CoursDAO;
 import tn.elearning.services.ChapitreDAO;
 
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.SQLException;
 
 public class ListeDesCoursController {
-
+    @FXML
+    private ComboBox<String> languageComboBox;
     @FXML private ListView<Chapitre> chapitreListView;
+    @FXML
+    private Text titleText;
+
 
     private final CoursDAO coursDAO = new CoursDAO();
     private final ChapitreDAO chapitreDAO = new ChapitreDAO();
@@ -106,10 +114,21 @@ public class ListeDesCoursController {
                 }
             });
 
+            languageComboBox.getItems().addAll("en", "fr", "ar"); // Ajouter les langues
+            languageComboBox.setValue("fr"); // Valeur par défaut
+
+            // Action sur la ComboBox
+            languageComboBox.setOnAction(event -> {
+                String selectedLang = languageComboBox.getValue();
+                translateLabels(selectedLang); // Fonction pour gérer la traduction des éléments
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Erreur", "Erreur lors de l'initialisation : " + e.getMessage());
         }
+
+
     }
 
     private void downloadCourse(Cours course) {
@@ -156,4 +175,117 @@ public class ListeDesCoursController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    private String translateText(String text, String targetLang) {
+        try {
+            String requestBody = "{\"texts\": [\"" + text + "\"], \"target_language\": \"" + targetLang + "\"}";
+
+            HttpURLConnection connection = (HttpURLConnection) new URL("http://127.0.0.1:5000/translate").openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setDoOutput(true);
+
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = requestBody.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            if (connection.getResponseCode() != 200) {
+                throw new IOException("Erreur API : " + connection.getResponseMessage());
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
+            StringBuilder response = new StringBuilder();
+            String responseLine;
+
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine.trim());
+            }
+
+            // Déboguer la réponse JSON
+            System.out.println("Réponse API : " + response.toString());
+
+            // Extrait le texte traduit
+            String jsonResponse = response.toString();
+            int start = jsonResponse.indexOf("[\"") + 2;
+            int end = jsonResponse.indexOf("\"]");
+            return jsonResponse.substring(start, end);
+
+
+
+
+} catch (IOException e) {
+            e.printStackTrace();
+            return text; // fallback
+        }
+    }
+
+    private void translateLabels(String lang) {
+        for (Chapitre chapitre : chapitreListView.getItems()) {
+            ObservableList<Cours> courses;
+            try {
+                courses = FXCollections.observableArrayList(coursDAO.getCoursByChapitre(chapitre.getId()));
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            for (Cours course : courses) {
+                // Translate title and description asynchronously
+                Task<String> titleTranslationTask = new Task<>() {
+                    @Override
+                    protected String call() {
+                        return translateText(course.getTitre(), lang);
+                    }
+                };
+
+                titleTranslationTask.setOnSucceeded(event -> {
+                    String translatedTitle = titleTranslationTask.getValue();
+                    course.setTitre(translatedTitle);
+
+                    // Repeating for description
+                    Task<String> descTranslationTask = new Task<>() {
+                        @Override
+                        protected String call() {
+                            return translateText(course.getDescription(), lang);
+                        }
+                    };
+
+                    descTranslationTask.setOnSucceeded(descEvent -> {
+                        String translatedDesc = descTranslationTask.getValue();
+                        course.setDescription(translatedDesc);
+
+                        // Refresh the view after updating titles and descriptions
+                        chapitreListView.refresh();
+                    });
+
+                    new Thread(descTranslationTask).start();
+                });
+
+                new Thread(titleTranslationTask).start();
+            }
+        }
+
+        // Translate static text labels
+        BorderPane root = (BorderPane) languageComboBox.getScene().getRoot();
+        VBox centerVBox = (VBox) ((StackPane) ((VBox) root.getCenter()).getChildren().get(0)).getChildren().get(0);
+        Text titleText = (Text) centerVBox.getChildren().get(0);
+
+        // Translate static labels asynchronously as well
+        Task<String> labelTranslationTask = new Task<>() {
+            @Override
+            protected String call() {
+                return translateText("Liste des Cours", lang);
+            }
+        };
+
+        labelTranslationTask.setOnSucceeded(labelEvent -> {
+            titleText.setText(labelTranslationTask.getValue());
+        });
+
+        new Thread(labelTranslationTask).start();
+    }
+
+
+
 }
