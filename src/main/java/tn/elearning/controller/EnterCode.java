@@ -52,7 +52,7 @@ public class EnterCode {
             statusLabel.setText("Mot de passe réinitialisé !");
             statusLabel.setStyle("-fx-text-fill: green;");
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/signin .fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/signin.fxml"));
                 Parent root = loader.load();
                 codeField.getScene().setRoot(root);
 

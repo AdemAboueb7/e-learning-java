@@ -65,7 +65,7 @@ public class SideBarEnseignantController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/updateenseignant.fxml"));
             Parent root = loader.load();
-            cours.getScene().setRoot(root);
+            profil.getScene().setRoot(root);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
