@@ -31,8 +31,11 @@ public class ServiceUser implements IServices<User> {
         ps.setString(3, user.getPhoneNumber());
         ps.setString(4, user.getMatiere());
         ps.setString(12, String.join(",", user.getRoles()));
+        if (user.getMatiereProf() != null) {
         ps.setInt(13, user.getMatiereProf().getId());
-
+        } else {
+            ps.setNull(13, Types.INTEGER); // ou gérer selon tes règles métier
+        }
         // Si l'expérience est nulle, on insère une valeur NULL dans la base de données
         if (user.getExperience() != null) {
             ps.setInt(5, user.getExperience());
@@ -49,6 +52,28 @@ public class ServiceUser implements IServices<User> {
         ps.setString(9, user.getAddress());
         ps.setString(10, user.getPref());
         ps.setBoolean(11, user.isActive());
+
+        // Exécution de l'insertion
+        ps.executeUpdate();
+        System.out.println("User ajouté !");
+    }
+
+    public void ajouterparent(User user) throws SQLException {
+        String sql = "INSERT INTO user (email, nom, phonenumber, password, work, adress, is_active, roles) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement ps = cnx.prepareStatement(sql);
+        ps.setString(1, user.getEmail());
+        ps.setString(2, user.getNom());
+        ps.setString(3, user.getPhoneNumber());
+        ps.setString(8, String.join(",", user.getRoles()));
+
+        // Utilisez le mot de passe haché (assurez-vous que vous avez haché avant de passer à cette méthode)
+        ps.setString(4, user.getPassword()); // Ici vous passez le mot de passe haché
+
+        ps.setString(5, user.getWork());
+        ps.setString(6, user.getAddress());
+        ps.setBoolean(7, user.isActive());
 
         // Exécution de l'insertion
         ps.executeUpdate();

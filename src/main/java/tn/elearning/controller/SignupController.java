@@ -89,7 +89,7 @@ public class SignupController {
         // Appel du service pour ajouter l'utilisateur dans la base de données
         ServiceUser service = new ServiceUser();
         try {
-            service.ajouter(user);
+            service.ajouterparent(user);
             showAlert("Succès", "Utilisateur ajouté avec succès avec le rôle PARENT !");
         } catch (SQLException e) {
             showAlert("Erreur SQL", e.getMessage());
