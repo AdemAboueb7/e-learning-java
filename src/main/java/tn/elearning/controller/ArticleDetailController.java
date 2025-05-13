@@ -16,6 +16,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
 import javafx.stage.Stage;
 import tn.elearning.entities.Article;
 import tn.elearning.entities.Comment;
@@ -62,7 +65,7 @@ public class ArticleDetailController implements Initializable {
     private Label dateLabel;
 
     @FXML
-    private Label contentLabel;
+    private WebView contentWebView;
 
     @FXML
     private FlowPane relatedArticlesContainer;
@@ -87,10 +90,24 @@ public class ArticleDetailController implements Initializable {
 
     @FXML
     private Button listenButton;
+    
+    private WebEngine webEngine;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            // Initialize WebView for content display
+            if (contentWebView != null) {
+                webEngine = contentWebView.getEngine();
+                
+                // Apply some styling to make content look better
+                contentWebView.setMaxWidth(Double.MAX_VALUE);
+                contentWebView.setMaxHeight(Double.MAX_VALUE);
+                
+                // Disable context menu and other browser features
+                contentWebView.setContextMenuEnabled(false);
+            }
+            
             // Initialiser les articles
             List<Article> articles = articleService.recuperer();
             
@@ -151,7 +168,67 @@ public class ArticleDetailController implements Initializable {
 
         titleLabel.setText(currentArticle.getTitle());
         categoryLabel.setText(currentArticle.getCategory());
-        contentLabel.setText(currentArticle.getContent());
+        
+        // Render HTML content instead of displaying raw HTML
+        if (webEngine != null && currentArticle.getContent() != null) {
+            // Create a full HTML document with proper styling
+            String htmlContent = "<!DOCTYPE html><html><head>" +
+                "<meta charset=\"UTF-8\">" +
+                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" +
+                "<style>" +
+                "body { font-family: Arial, sans-serif; margin: 0; padding: 0; line-height: 1.6; }" +
+                "p { margin-bottom: 15px; }" +
+                "img { max-width: 100%; height: auto; display: block; margin: 10px auto; }" +
+                "table { border-collapse: collapse; width: 100%; margin-bottom: 15px; }" +
+                "table, th, td { border: 1px solid #ddd; }" +
+                "th, td { padding: 8px; text-align: left; }" +
+                "ul, ol { margin-bottom: 15px; padding-left: 25px; }" +
+                "h1, h2, h3, h4, h5, h6 { margin-top: 20px; margin-bottom: 10px; }" +
+                "</style>" +
+                "<script type=\"text/javascript\">" +
+                "document.addEventListener('DOMContentLoaded', function() {" +
+                "  // Notify JavaFX about content height when loaded" +
+                "  window.setTimeout(function() {" +
+                "    var height = document.body.scrollHeight;" +
+                "    window.status = 'height:' + height;" +
+                "  }, 100);" +
+                "});" +
+                "</script>" +
+                "</head>" +
+                "<body>" + currentArticle.getContent() + "</body></html>";
+            
+            webEngine.loadContent(htmlContent);
+            
+            // Add a listener to adjust WebView height based on content
+            webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+                if (newState == javafx.concurrent.Worker.State.SUCCEEDED) {
+                    // Allow the page to fully render
+                    Platform.runLater(() -> {
+                        // Set WebView to fit content
+                        contentWebView.setPrefHeight(10); // Reset to small height first
+                        
+                        // Add a status listener to get content height from JavaScript
+                        webEngine.setOnStatusChanged(event -> {
+                            String status = event.getData();
+                            if (status != null && status.startsWith("height:")) {
+                                try {
+                                    double height = Double.parseDouble(status.substring(7));
+                                    // Add some padding to avoid scrollbar
+                                    contentWebView.setPrefHeight(height + 30);
+                                } catch (NumberFormatException e) {
+                                    System.err.println("Failed to parse content height: " + e.getMessage());
+                                }
+                            }
+                        });
+                        
+                        // Allow WebView to expand to fit its container
+                        contentWebView.prefWidthProperty().bind(
+                            ((StackPane)contentWebView.getParent()).widthProperty()
+                        );
+                    });
+                }
+            });
+        }
 
         if (currentArticle.getCreatedAt() != null) {
             dateLabel.setText("Publié le : " + currentArticle.getCreatedAt().format(formatter));
@@ -437,10 +514,10 @@ public class ArticleDetailController implements Initializable {
     private void openEditForm(ActionEvent event) {
         if (currentArticle == null) return;
         
-        // Vérifier les permissions
+        // Check if the user is an admin
         User currentUser = UserSession.getInstance().getUser();
         boolean isAdmin = currentUser != null && currentUser.getRoles() != null && 
-                         currentUser.getRoles().contains("ROLE_ADMIN");
+                         currentUser.getRoles().stream().anyMatch(role -> role.equals("ROLE_ADMIN"));
         
         if (!isAdmin) {
             showAlert(AlertType.ERROR, "Non autorisé", "Vous n'avez pas les permissions nécessaires pour modifier cet article.");
@@ -449,9 +526,9 @@ public class ArticleDetailController implements Initializable {
         
         try {
             ensureStageIsSet();
-            URL fxmlUrl = getClass().getResource("/fxml/ArticleEdit.fxml");
+            URL fxmlUrl = getClass().getResource("/ArticleEdit.fxml");
             if (fxmlUrl == null) {
-                throw new IOException("Cannot find ArticleEdit.fxml in /fxml/ArticleEdit.fxml");
+                throw new IOException("Cannot find ArticleEdit.fxml in /ArticleEdit.fxml");
             }
             
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
@@ -625,7 +702,20 @@ public class ArticleDetailController implements Initializable {
 
     @FXML
     private void listenToArticle(ActionEvent event) {
-        String texte = titleLabel.getText() + ". " + contentLabel.getText();
+        if (currentArticle == null) return;
+        
+        // Extract text from article content by removing HTML tags
+        String htmlContent = currentArticle.getContent();
+        String plainText = htmlContent.replaceAll("<[^>]*>", "")
+                                     .replaceAll("&nbsp;", " ")
+                                     .replaceAll("&amp;", "&")
+                                     .replaceAll("&lt;", "<")
+                                     .replaceAll("&gt;", ">")
+                                     .replaceAll("&quot;", "\"")
+                                     .replaceAll("\\s+", " ")
+                                     .trim();
+        
+        String texte = titleLabel.getText() + ". " + plainText;
         lireTexte(texte);
     }
 

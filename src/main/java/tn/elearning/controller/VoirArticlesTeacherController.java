@@ -100,7 +100,7 @@ public class VoirArticlesTeacherController implements Initializable {
 
         if (articles.isEmpty()) {
             Label noArticlesLabel = new Label("Aucun article trouvé.");
-            noArticlesLabel.getStyleClass().add("section-title");
+            noArticlesLabel.getStyleClass().add("no-content-label");
             articlesContainer.getChildren().add(noArticlesLabel);
             return;
         }
@@ -115,23 +115,9 @@ public class VoirArticlesTeacherController implements Initializable {
 
                 Label titleLabel = (Label) articleCard.lookup("#titleLabel");
                 Label categoryLabel = (Label) articleCard.lookup("#categoryLabel");
-                Label contentLabel = (Label) articleCard.lookup("#contentLabel");
-                Label dateLabel = (Label) articleCard.lookup("#dateLabel");
 
                 if (titleLabel != null) titleLabel.setText(article.getTitle());
                 if (categoryLabel != null) categoryLabel.setText(article.getCategory());
-                if (contentLabel != null) {
-                    String content = article.getContent();
-                    contentLabel.setText(content != null && content.length() > 150 ? content.substring(0, 150) + "..." : content);
-                }
-                if (dateLabel != null && article.getCreatedAt() != null) {
-                    String dateText = article.getCreatedAt().format(formatter);
-                    if (article.getComments() != null && !article.getComments().isEmpty()) {
-                        int commentCount = article.getComments().size();
-                        dateText += " • " + commentCount + " " + (commentCount == 1 ? "commentaire" : "commentaires");
-                    }
-                    dateLabel.setText(dateText);
-                }
 
                 articlesContainer.getChildren().add(articleCard);
             } catch (IOException e) {

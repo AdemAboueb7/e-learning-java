@@ -263,7 +263,7 @@
 
 /* Statistics Styles */
 .stats-container {
-    -fx-background-color: #f8f9fa;
+    -fx-background-color: #faf8f8;
     -fx-background-radius: 10px;
 }
 
@@ -326,7 +326,7 @@
 }
 
 .stats-table .column-header {
-    -fx-background-color: #f8f9fa;
+
     -fx-border-color: #e0e0e0;
     -fx-padding: 10px;
     -fx-font-weight: bold;
@@ -397,17 +397,17 @@
 .default-color1.chart-series-line { -fx-stroke: #4CAF50; }
 .default-color2.chart-series-line { -fx-stroke: #FFC107; }
 
-.default-color0.chart-line-symbol { 
+.default-color0.chart-line-symbol {
     -fx-background-color: #2196F3, white;
     -fx-background-radius: 5px;
     -fx-padding: 5px;
 }
-.default-color1.chart-line-symbol { 
+.default-color1.chart-line-symbol {
     -fx-background-color: #4CAF50, white;
     -fx-background-radius: 5px;
     -fx-padding: 5px;
 }
-.default-color2.chart-line-symbol { 
+.default-color2.chart-line-symbol {
     -fx-background-color: #FFC107, white;
     -fx-background-radius: 5px;
     -fx-padding: 5px;

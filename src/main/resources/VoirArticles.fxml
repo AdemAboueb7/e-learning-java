@@ -109,7 +109,7 @@
                                        <PieChart fx:id="categoriesChart" legendVisible="true" animated="true"/>
                                     </children>
                                  </VBox>
-                                 
+
                                  <!-- Articles Timeline -->
                                  <VBox styleClass="chart-container" HBox.hgrow="ALWAYS">
                                     <children>
@@ -138,10 +138,10 @@
                                     </HBox>
                                     <TableView fx:id="topArticlesTable" VBox.vgrow="ALWAYS" styleClass="stats-table" minHeight="200.0">
                                        <columns>
-                                          <TableColumn fx:id="titleColumn" text="Titre" prefWidth="300.0"/>
-                                          <TableColumn fx:id="categoryColumn" text="Catégorie" prefWidth="150.0"/>
-                                          <TableColumn fx:id="commentsColumn" text="Commentaires" prefWidth="100.0"/>
-                                          <TableColumn fx:id="dateColumn" text="Date de Publication" prefWidth="150.0"/>
+                                          <TableColumn fx:id="titleColumn" text="Titre" />
+                                          <TableColumn fx:id="categoryColumn" text="Catégorie"  />
+                                          <TableColumn fx:id="commentsColumn" text="Commentaires" prefWidth="150" />
+                                          <TableColumn fx:id="dateColumn" text="Date de Publication" prefWidth="200"/>
                                        </columns>
                                        <placeholder>
                                           <Label text="Aucun article trouvé" styleClass="no-content-label"/>
@@ -171,4 +171,4 @@
          </children>
       </VBox>
    </center>
-</BorderPane> 
+</BorderPane>

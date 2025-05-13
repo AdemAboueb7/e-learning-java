@@ -1,44 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- Imports des composants JavaFX nécessaires -->
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.layout.Region?>
 
-<VBox fx:id="articleCardRoot" maxWidth="300.0" minHeight="200.0" prefHeight="250.0" prefWidth="300.0" styleClass="article-card" stylesheets="@alpha-education.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<!-- Conteneur principal de la carte d'article -->
+<VBox fx:id="articleCardRoot"
+      maxWidth="300.0"
+      minHeight="120.0"
+      prefHeight="120.0"
+      prefWidth="300.0"
+      styleClass="article-card"
+      stylesheets="@alpha-education.css"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1">
+
+   <!-- Contenu du conteneur -->
    <children>
+      <!-- Ligne pour la catégorie -->
+      <HBox alignment="CENTER_LEFT" spacing="8.0">
+         <children>
+            <Circle radius="6.0" styleClass="category-indicator" />
+            <Label fx:id="categoryLabel" styleClass="card-category" text="Technologie" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="8.0" />
+         </VBox.margin>
+      </HBox>
+
+      <!-- Titre de l'article -->
       <Label fx:id="titleLabel" styleClass="card-title" text="Titre de l'article" wrapText="true">
          <VBox.margin>
-            <Insets bottom="5.0" />
-         </VBox.margin>
-      </Label>
-      <HBox alignment="CENTER_LEFT" spacing="5.0">
-         <children>
-            <Circle radius="5.0" styleClass="category-indicator" />
-            <Label fx:id="categoryLabel" styleClass="card-category" text="Technologie">
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </Label>
-         </children>
-         <VBox.margin>
-            <Insets bottom="10.0" />
-         </VBox.margin>
-      </HBox>
-      <Label fx:id="contentLabel" prefHeight="100.0" styleClass="card-content" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac commodo risus, vel tempus nisl. Duis sit amet semper massa. Nulla id feugiat purus, eu tempus ante." wrapText="true" VBox.vgrow="ALWAYS">
-         <VBox.margin>
             <Insets bottom="10.0" />
          </VBox.margin>
       </Label>
-      <HBox alignment="CENTER_LEFT" styleClass="card-footer">
-         <children>
-            <Label fx:id="dateLabel" styleClass="card-date" text="25 Mai 2023" HBox.hgrow="ALWAYS" />
-         </children>
-      </HBox>
+
+      <!-- Espace flexible pour occuper le reste de la hauteur -->
+      <Region VBox.vgrow="ALWAYS" />
    </children>
+
+   <!-- Padding global de la carte -->
    <padding>
-      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+      <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
    </padding>
-</VBox> 
+</VBox>

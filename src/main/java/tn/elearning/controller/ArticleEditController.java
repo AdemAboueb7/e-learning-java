@@ -9,10 +9,12 @@ import tn.elearning.services.ArticleService;
 import tn.elearning.utils.NavigationUtil;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
+import netscape.javascript.JSObject;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Base64;
 
 public class ArticleEditController {
     @FXML private TextField titleField;
@@ -23,6 +25,7 @@ public class ArticleEditController {
     private Article currentArticle;
     private ArticleService articleService;
     private WebEngine webEngine;
+    private boolean editorLoaded = false;
 
     public void initialize() {
         articleService = new ArticleService();
@@ -38,16 +41,11 @@ public class ArticleEditController {
             webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
                 if (newState == Worker.State.SUCCEEDED) {
                     System.out.println("Editor loaded successfully");
+                    editorLoaded = true;
+                    
                     // If we have a pending article to set, set it now
                     if (currentArticle != null) {
-                        Platform.runLater(() -> {
-                            try {
-                                webEngine.executeScript("setContent('" + currentArticle.getContent().replace("'", "\\'") + "')");
-                            } catch (Exception e) {
-                                System.err.println("Error setting content: " + e.getMessage());
-                                e.printStackTrace();
-                            }
-                        });
+                        Platform.runLater(this::setEditorContent);
                     }
                 }
             });
@@ -80,17 +78,47 @@ public class ArticleEditController {
         publishedCheckBox.setSelected(article.isPublished());
         
         // Only try to set content if the page is already loaded
-        if (webEngine.getLoadWorker().getState() == Worker.State.SUCCEEDED) {
-            Platform.runLater(() -> {
-                try {
-                    webEngine.executeScript("setContent('" + article.getContent().replace("'", "\\'") + "')");
-                } catch (Exception e) {
-                    System.err.println("Error setting content: " + e.getMessage());
-                    e.printStackTrace();
-                }
-            });
+        if (editorLoaded) {
+            Platform.runLater(this::setEditorContent);
         }
         // If not loaded, the content will be set when the page loads (see initialize())
+    }
+    
+    private void setEditorContent() {
+        try {
+            if (currentArticle != null && currentArticle.getContent() != null) {
+                // Method 1: Use a safer approach with Base64 encoding to avoid escaping issues
+                String base64Content = Base64.getEncoder().encodeToString(
+                    currentArticle.getContent().getBytes("UTF-8"));
+                
+                // Decode the content in JavaScript and set it in CKEditor
+                webEngine.executeScript(
+                    "setContent(decodeURIComponent(escape(window.atob('" + base64Content + "'))))");
+                
+                // Log success
+                System.out.println("Content set in editor successfully");
+            } else {
+                System.out.println("No content to set in editor");
+            }
+        } catch (Exception e) {
+            System.err.println("Error setting content in editor: " + e.getMessage());
+            e.printStackTrace();
+            
+            // Fallback method if the first approach fails
+            try {
+                String content = currentArticle.getContent()
+                    .replace("\\", "\\\\")
+                    .replace("'", "\\'")
+                    .replace("\n", "\\n")
+                    .replace("\r", "\\r");
+                
+                webEngine.executeScript("setContent('" + content + "')");
+                System.out.println("Content set using fallback method");
+            } catch (Exception ex) {
+                System.err.println("Fallback method also failed: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
     }
 
     @FXML
@@ -104,6 +132,10 @@ public class ArticleEditController {
                 currentArticle.setPublished(publishedCheckBox.isSelected());
                 
                 articleService.modifier(currentArticle);
+                
+                // Show success message
+                showSuccess("Article Modifié", "L'article a été modifié avec succès.");
+                
                 // Navigate back to list view instead of closing window
                 NavigationUtil.navigateToViewArticles();
             } catch (Exception e) {
@@ -145,6 +177,14 @@ public class ArticleEditController {
 
     private void showError(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    
+    private void showSuccess(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

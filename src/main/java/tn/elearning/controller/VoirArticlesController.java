@@ -38,7 +38,7 @@ public class VoirArticlesController implements Initializable {
     @FXML private TextField searchField;
     @FXML private ScrollPane articlesPane;
     @FXML private VBox statisticsContainer;
-    
+
     // Statistics components
     @FXML private Label totalArticlesLabel;
     @FXML private Label totalCommentsLabel;
@@ -67,7 +67,7 @@ public class VoirArticlesController implements Initializable {
             titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
             categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
             dateColumn.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
-            
+
             // Format date column
             dateColumn.setCellFactory(column -> new TableCell<Article, LocalDateTime>() {
                 @Override
@@ -86,8 +86,8 @@ public class VoirArticlesController implements Initializable {
                 Article article = cellData.getValue();
                 if (article != null && allComments != null) {
                     long commentCount = allComments.stream()
-                        .filter(c -> c.getArticle() != null && c.getArticle().getId() == article.getId())
-                        .count();
+                            .filter(c -> c.getArticle() != null && c.getArticle().getId() == article.getId())
+                            .count();
                     return new javafx.beans.property.SimpleIntegerProperty((int) commentCount).asObject();
                 }
                 return new javafx.beans.property.SimpleIntegerProperty(0).asObject();
@@ -100,18 +100,18 @@ public class VoirArticlesController implements Initializable {
                 } else {
                     String searchTerm = newValue.toLowerCase();
                     List<Article> filteredArticles = allArticles.stream()
-                        .filter(article -> 
-                            article.getTitle().toLowerCase().contains(searchTerm) ||
-                            article.getCategory().toLowerCase().contains(searchTerm) ||
-                            article.getContent().toLowerCase().contains(searchTerm))
-                        .collect(Collectors.toList());
+                            .filter(article ->
+                                    article.getTitle().toLowerCase().contains(searchTerm) ||
+                                            article.getCategory().toLowerCase().contains(searchTerm) ||
+                                            article.getContent().toLowerCase().contains(searchTerm))
+                            .collect(Collectors.toList());
                     displayArticles(filteredArticles);
                 }
             });
 
-            // Initialize visibility
-            statisticsContainer.setVisible(true);
-            articlesPane.setVisible(false);
+            // Initialize visibility: articlesPane visible, statisticsContainer hidden by default
+            articlesPane.setVisible(true);
+            statisticsContainer.setVisible(false);
 
             // Update statistics after everything is initialized
             updateStatistics();
@@ -142,43 +142,43 @@ public class VoirArticlesController implements Initializable {
 
         // Update categories chart
         Map<String, Long> categoryCounts = allArticles.stream()
-            .collect(Collectors.groupingBy(Article::getCategory, Collectors.counting()));
-        
+                .collect(Collectors.groupingBy(Article::getCategory, Collectors.counting()));
+
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        categoryCounts.forEach((category, count) -> 
-            pieChartData.add(new PieChart.Data(category, count))
+        categoryCounts.forEach((category, count) ->
+                pieChartData.add(new PieChart.Data(category, count))
         );
         categoriesChart.setData(pieChartData);
 
         // Update timeline chart
         Map<String, Long> monthlyArticles = allArticles.stream()
-            .collect(Collectors.groupingBy(
-                article -> article.getCreatedAt().format(DateTimeFormatter.ofPattern("MMM yyyy")),
-                Collectors.counting()
-            ));
+                .collect(Collectors.groupingBy(
+                        article -> article.getCreatedAt().format(DateTimeFormatter.ofPattern("MMM yyyy")),
+                        Collectors.counting()
+                ));
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Articles publiés");
-        monthlyArticles.forEach((month, count) -> 
-            series.getData().add(new XYChart.Data<>(month, count))
+        monthlyArticles.forEach((month, count) ->
+                series.getData().add(new XYChart.Data<>(month, count))
         );
         timelineChart.getData().clear();
         timelineChart.getData().add(series);
 
         // Update top articles table
         Map<Article, Long> articleCommentCounts = allArticles.stream()
-            .collect(Collectors.toMap(
-                article -> article,
-                article -> allComments.stream()
-                    .filter(comment -> comment.getArticle() != null && comment.getArticle().getId() == article.getId())
-                    .count()
-            ));
+                .collect(Collectors.toMap(
+                        article -> article,
+                        article -> allComments.stream()
+                                .filter(comment -> comment.getArticle() != null && comment.getArticle().getId() == article.getId())
+                                .count()
+                ));
 
         List<Article> topArticles = articleCommentCounts.entrySet().stream()
-            .sorted(Map.Entry.<Article, Long>comparingByValue().reversed())
-            .limit(10)
-            .map(Map.Entry::getKey)
-            .collect(Collectors.toList());
+                .sorted(Map.Entry.<Article, Long>comparingByValue().reversed())
+                .limit(10)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
 
         // Format date column
         dateColumn.setCellFactory(column -> new TableCell<Article, LocalDateTime>() {
@@ -208,7 +208,7 @@ public class VoirArticlesController implements Initializable {
         boolean showStats = !statisticsContainer.isVisible();
         statisticsContainer.setVisible(showStats);
         articlesPane.setVisible(!showStats);
-        
+
         if (showStats) {
             updateStatistics();
         }
@@ -234,19 +234,9 @@ public class VoirArticlesController implements Initializable {
 
                 Label titleLabel = (Label) articleCard.lookup("#titleLabel");
                 Label categoryLabel = (Label) articleCard.lookup("#categoryLabel");
-                Label contentLabel = (Label) articleCard.lookup("#contentLabel");
-                Label dateLabel = (Label) articleCard.lookup("#dateLabel");
 
                 if (titleLabel != null) titleLabel.setText(article.getTitle());
                 if (categoryLabel != null) categoryLabel.setText(article.getCategory());
-                if (contentLabel != null) {
-                    String content = article.getContent();
-                    contentLabel.setText(content != null && content.length() > 150 ? 
-                        content.substring(0, 150) + "..." : content);
-                }
-                if (dateLabel != null && article.getCreatedAt() != null) {
-                    dateLabel.setText(article.getCreatedAt().format(formatter));
-                }
 
                 articlesContainer.getChildren().add(articleCard);
             } catch (IOException e) {

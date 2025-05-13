@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
 <!-- Ensure alpha-education.css is used -->
 <AnchorPane prefHeight="700.0" prefWidth="900.0" styleClass="root" stylesheets="@alpha-education.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.elearning.controller.ArticleDetailController">
@@ -41,14 +42,12 @@
                                             <Label fx:id="categoryLabel" styleClass="card-category" />
                                             <Label fx:id="dateLabel" styleClass="card-date" />
                                         </HBox>
-                                        <VBox styleClass="content-frame">
-                                            <children>
-                                                <Label fx:id="contentLabel" styleClass="article-content" wrapText="true" />
-                                            </children>
+                                        <StackPane VBox.vgrow="ALWAYS" styleClass="content-frame">
+                                            <WebView fx:id="contentWebView" minHeight="100.0" maxWidth="Infinity" maxHeight="Infinity" />
                                             <padding>
                                                 <Insets top="15.0" right="15.0" bottom="15.0" left="15.0" />
                                             </padding>
-                                        </VBox>
+                                        </StackPane>
                                     </children>
                                 </VBox>
 
