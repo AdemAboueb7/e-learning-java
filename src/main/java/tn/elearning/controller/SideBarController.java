@@ -106,10 +106,7 @@ public class SideBarController {
 
     }
 
-    @FXML
-    void handleSuiviAction(ActionEvent event) {
 
-    }
     @FXML
     private void handleCoursAction(ActionEvent event) {
         try {
