@@ -1,84 +1,117 @@
-# 🎓 AlphaEducation
+# E-Learning Platform
 
-## 📌 Description du Projet
+Une plateforme d'apprentissage en ligne moderne développée avec JavaFX, offrant une expérience d'apprentissage interactive et engageante.
 
-**AlphaEducation** est une plateforme e-learning dédiée aux enfants de 6 à 12 ans, intégrant un système de suivi parental. Elle a pour objectif d'offrir un environnement numérique éducatif à la fois attractif, accessible et adapté à l’âge des enfants, grâce à une interface colorée, intuitive et ludique.
+## 📝 Description
 
-Contrairement aux plateformes classiques souvent peu adaptées aux jeunes utilisateurs, **AlphaEducation** propose une solution ciblée avec une navigation simplifiée et un contenu structuré.
-Ses fonctionnalités principales sont:
+Cette application e-learning est une solution complète pour la gestion de l'apprentissage en ligne, construite avec JavaFX et utilisant les technologies modernes. Elle permet aux utilisateurs de gérer des cours, des contenus pédagogiques, et des interactions entre apprenants et formateurs.
 
-- Participation à des événements en présentiel ou en ligne  
-- Abonnement à des packs éducatifs (mensuels ou annuels)  
-- Paiement sécurisé en ligne  
-- Suivi personnalisé de l’enfant (statiqtiques des progrès)  
-- Accès à des cours interactifs  
-- Possibilité de passer des quiz et consulter les résultats  
-- Accès à des articles avec options de commentaire  
+### Fonctionnalités principales
 
-## 📚 Table des matières
+- 🎓 Gestion des cours et du contenu pédagogique
+- 👥 Gestion des utilisateurs (apprenants et formateurs)
+- 💳 Système de paiement intégré avec Stripe
+- 📊 Génération de rapports et factures PDF
+- 📧 Système de notification par email
+- 🔐 Authentification sécurisée avec chiffrement BCrypt
 
-- [Installation] (#Installation)
-- [Utilisation] (#utilisation)
-- [Contributions] (#contributions)
-- [Licence] (#licence)
+## 📋 Table des matières
 
-## ⚙️ Installation
+- [Prérequis](#prérequis)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Utilisation](#utilisation)
+- [Structure du projet](#structure-du-projet)
+- [Technologies utilisées](#technologies-utilisées)
+- [Contribution](#contribution)
+- [Licence](#licence)
 
-Pour utiliser ce projet, vous devez suivre ces étapes:
+## ⚙️ Prérequis
 
-1. Clonez le repository:
-   ```bash
-   git clone [https](https://github.com/InesBenDhifallah/e-learning-.git)
-   
-2. Si vous utilisez WAMP ou XAMPP:
-   * Placez le projet dans le dossier www (WAMP) ou htdocs (XAMPP)
-     
-   * Démarrez Apache et MySQL depuis l'interface de WAMP/XAMPP
-     
-   * Accèder au projet via [localhost](http://127.0.0.1:8000/)
+- Java JDK 21 ou supérieur
+- Maven 3.8+
+- MySQL 8.0+
+- JavaFX SDK 21.0.2
+- Un compte Stripe (pour les paiements)
+- Un serveur SMTP (pour les emails)
 
-## Utilisation
+## 🚀 Installation
 
-Ce projet a utilisé les technologies et outils suivants :
+1. Clonez le repository :
+```bash
+git clone https://github.com/votre-username/e-learning.git
+cd e-learning
+```
 
-* Symfony 6
-* PHP 8.2+
-* Twig
-* Doctrine ORM
-* MySQL
-* Composer
-* Git & Github
-* Symfony CLI
-  
-## Contribution
+2. Configurez la base de données MySQL :
+```bash
+mysql -u root -p
+CREATE DATABASE elearning;
+```
 
-Nous remercions tous ceux qui ont contribué à ce projet !
+3. Installez les dépendances avec Maven :
+```bash
+mvn clean install
+```
 
-### Contributeurs
+## ⚙️ Configuration
 
-Les personnes quivantes ont contribué à ce projet en ajoutant des fonctionnalités, en corrigeant des bugd ou en améliorant la documentation:
+1. Créez un fichier `.env` à la racine du projet avec les configurations suivantes :
+```properties
+DB_URL=jdbc:mysql://localhost:3306/elearning
+DB_USERNAME=votre_username
+DB_PASSWORD=votre_password
+STRIPE_API_KEY=votre_cle_stripe
+SMTP_HOST=votre_smtp_host
+SMTP_PORT=587
+SMTP_USERNAME=votre_email
+SMTP_PASSWORD=votre_password
+```
 
--[Ines Ben Dhifallah]() -Gestion des abonnements et paiements
+## 💻 Utilisation
 
--[Mohamed Aziz Bellagha]() -Gestion des utilisateurs
+Pour lancer l'application :
 
--[Oumaima Ghediri]() -Gestion des modules, chapitres et cours
+```bash
+mvn javafx:run
+```
 
--[Ahmed Khlifi]() -Gestion des évènements
+Ou exécutez directement depuis votre IDE en lançant la classe `tn.elearning.tests.MainFX`.
 
--[Adem Aboueb]() -Gestion du blog
+## 📁 Structure du projet
 
--[Hajer Maatoug]() -Gestion des Quizz
+```
+src/main/java/tn/elearning/
+├── components/     # Composants réutilisables JavaFX
+├── controller/     # Contrôleurs FXML
+├── entities/       # Entités JPA
+├── services/       # Services métier
+├── tools/         # Utilitaires
+└── utils/         # Classes utilitaires
+```
 
-## Licence
+## 🛠️ Technologies utilisées
 
-Ce projet est sous licence MIT.
+- JavaFX 21.0.2 - Interface utilisateur
+- Hibernate 6.2.7 - Persistance des données
+- MySQL Connector 8.0.33 - Base de données
+- Stripe Java 24.19.0 - Paiements
+- iText PDF 5.5.13 - Génération de PDF
+- Jakarta Mail 2.0.1 - Envoi d'emails
+- Project Lombok - Réduction du boilerplate
+- BCrypt - Sécurité des mots de passe
+- SLF4J/Logback - Logging
 
-Cela signifie que vous êtes libre de :
+## 🤝 Contribution
 
-* Utiliser
+Les contributions sont les bienvenues ! Pour contribuer :
 
-* Modifier
+1. Forkez le projet
+2. Créez une branche pour votre fonctionnalité (`git checkout -b feature/AmazingFeature`)
+3. Committez vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. Poussez vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrez une Pull Request
 
-* Distribuer
+## 📄 Licence
 
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
